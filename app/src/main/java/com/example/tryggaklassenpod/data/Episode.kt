@@ -1,7 +1,6 @@
 package com.example.tryggaklassenpod.data
 
-import java.time.Duration
-
+import kotlin.time.Duration
 data class Episode(
     val imageUrl: String,
     val audio: String,
@@ -9,7 +8,6 @@ data class Episode(
 
     val title: String,
     val description: String,
-
-    val comments: List<Comments>,
-    val categories: List<String>
+    val comments: List<Comment> = emptyList(),
+    val categories: List<String> = emptyList()
 )
