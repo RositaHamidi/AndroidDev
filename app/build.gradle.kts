@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.example.tryggaklassenpod"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.tryggaklassenpod"
-        minSdk = 24
+        minSdk = 23
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"

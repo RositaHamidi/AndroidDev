@@ -74,13 +74,11 @@ fun HomeScreen() {
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(40.dp)
 
                     )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 1",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -91,7 +89,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -106,12 +103,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 2",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -122,7 +117,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -138,12 +132,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 3",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -154,7 +146,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -170,12 +161,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 4",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -186,7 +175,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -202,12 +190,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 5",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -218,7 +204,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -234,12 +219,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 6",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -250,7 +233,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -266,12 +248,10 @@ fun HomeScreen() {
                 Image(
                     painter = painterResource(id = R.drawable.imageplaceholder),
                     contentDescription = "sample",
-                    modifier = Modifier.size(40.dp)
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Column (verticalArrangement = Arrangement.Center){
                     Text(text = "Podcast 7",
-                        color = Color.White,
                         textAlign = TextAlign.Start,
                         style = TextStyle(
                             fontWeight = FontWeight.Bold,
@@ -282,7 +262,6 @@ fun HomeScreen() {
                             .fillMaxSize())
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text(text = "Details / description of each podcast",
-                        color = Color.White,
                         textAlign = TextAlign.Justify,
                         modifier = Modifier
                             .wrapContentHeight()
@@ -292,7 +271,9 @@ fun HomeScreen() {
 
         }
 
+
         BottomAppBar (
+            modifier = Modifier.fillMaxWidth()
         ){
             /* for later */
         }
