@@ -1,8 +1,8 @@
-package com.example.tryggaklassenpod.data
+package com.example.tryggaklassenpod.dataClasses
 
 import java.util.Date
 
-data class Comment(
+data class Comments(
     val commentId: Int,
     val comment: String,
     val author: String,
