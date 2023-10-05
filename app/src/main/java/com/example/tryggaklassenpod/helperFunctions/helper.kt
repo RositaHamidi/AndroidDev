@@ -1,4 +1,4 @@
-package com.example.tryggaklassenpod.ui.screen.playerScreen
+package com.example.tryggaklassenpod.helperFunctions
 
 fun Int.toHoursMinuteSeconds(): String {
     val hours = this / 3600

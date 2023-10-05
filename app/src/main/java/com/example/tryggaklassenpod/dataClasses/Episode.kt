@@ -1,7 +1,5 @@
 package com.example.tryggaklassenpod.dataClasses
 
-import org.w3c.dom.Comment
-
 data class Episode(
     val id: Int,
     val imageUrl: String,

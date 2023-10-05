@@ -1,4 +1,4 @@
-package com.example.tryggaklassenpod.ui.screen.playerScreen
+package com.example.tryggaklassenpod.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -38,9 +38,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tryggaklassenpod.R
-import com.example.tryggaklassenpod.dataClasses.Comments
 import com.example.tryggaklassenpod.dataClasses.Episode
 import com.example.tryggaklassenpod.dataClasses.episodesList
+import com.example.tryggaklassenpod.helperFunctions.toHoursMinuteSeconds
 
 
 @Composable
@@ -210,8 +210,6 @@ fun EpisodeCoverImage(
             .clip(MaterialTheme.shapes.medium)
     )
 }
-
-
 
 @Composable
 private fun TopBarBack(goBack: () -> Unit) {
