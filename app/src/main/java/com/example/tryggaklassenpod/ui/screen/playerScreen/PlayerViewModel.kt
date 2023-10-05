@@ -1,5 +1,7 @@
 package com.example.tryggaklassenpod.ui.screen.playerScreen
 
-class PlayerViewModel {
+import androidx.lifecycle.ViewModel
+
+class PlayerViewModel(): ViewModel() {
 
 }
