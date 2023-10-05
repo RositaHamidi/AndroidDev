@@ -2,8 +2,6 @@ package com.example.tryggaklassenpod.navigations
 
 import androidx.compose.runtime.Composable
 import com.example.tryggaklassenpod.screens.Screen
-
-
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
