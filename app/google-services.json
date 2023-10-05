@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1022675677080",
+    "firebase_url": "https://trygga-klassen-podcast-default-rtdb.firebaseio.com",
+    "project_id": "trygga-klassen-podcast",
+    "storage_bucket": "trygga-klassen-podcast.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022675677080:android:1b3e9b36c6d277eb0345ed",
+        "android_client_info": {
+          "package_name": "com.example.tryggaklassenpod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzc_vkfTU7NqllFODSI4UUyt5YFDqJxxI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
