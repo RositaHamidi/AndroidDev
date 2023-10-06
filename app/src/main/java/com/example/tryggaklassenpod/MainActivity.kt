@@ -21,10 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PlayerScreen(
-                        episodesList[0],
-                        goBack = { }
-                    )
+                    Navigation()
                 }
             }
         }
