@@ -1,9 +1,39 @@
 ![Logo](https://tryggaklassen.se/img/tryggaklassen_color.svg)
 
+
 # Trygga Klassen Podcast
 
-Introducing the Trygga Klassen Podcast app — an Android app uniting us in the fight
-against mental illness in children and young people. Tailored for school-age kids, families,
-and teachers, we delve into topics that matter most to our young minds. Find hope, help,
-and relatable stories, creating a space where understanding and support thrive.
-Join us as we stand together for a brighter, resilient tomorrow.
+Trygga Klassen Podcast app — an Android app about the kids that discusses the issues that the kids are having, where the topics that matter most to the young minds are discussed. Find hope, help,
+and relatable stories. The app is tailored for school-age kids, families, and teachers. For a brighter, resilient tomorrow.
+
+
+## Features
+
+For user:
+- Home screen/list of episodes
+- About the Trygga Klassen section
+- Episode media player
+- Possibility to add comments on episodes
+- Search
+
+For Admins/Owner:
+- Admin/Owner account
+    - Create admin accounts
+    - Approve/delete comments
+    - Add/upload/delete episodes
+- Login/Authentication
+- Database connection
+
+
+## License - Coming Soon
+
+[License](https://choosealicense.com/licenses/)
+
+
+## Authors
+
+- [@Liz0001](https://github.com/Liz0001)
+- [@Fera13](https://github.com/Fera13)
+- [@RositaHamidi](https://github.com/RositaHamidi)
+- [@AruneeThongkrathok](https://github.com/AruneeThongkrathok)
+- [@Anazeb](https://github.com/Anazeb)
