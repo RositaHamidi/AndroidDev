@@ -3,8 +3,7 @@
 
 # Trygga Klassen Podcast
 
-Trygga Klassen Podcast app — an Android app about the kids that discusses the issues that the kids are having, where the topics that matter most to the young minds are discussed. Find hope, help,
-and relatable stories. The app is tailored for school-age kids, families, and teachers. For a brighter, resilient tomorrow.
+Trygga Klassen Podcast app — an Android app about the kids that discusses the issues that the kids are having, where the topics that matter most to the young minds are discussed. The app is tailored for school-age kids, families, and teachers. For a brighter, resilient tomorrow.
 
 
 ## Features
