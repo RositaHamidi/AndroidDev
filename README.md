@@ -1,4 +1,4 @@
-![Logo](https://tryggaklassen.se/img/tryggaklassen_color.svg)
+<img src="https://tryggaklassen.se/img/tryggaklassen_color.svg" height="50%" width="50%">
 
 
 # Trygga Klassen Podcast
