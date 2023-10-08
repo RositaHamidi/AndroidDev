@@ -1,7 +1,6 @@
 package com.example.tryggaklassenpod.screens
 
 import coil.compose.AsyncImage
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -26,8 +24,8 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,17 +38,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tryggaklassenpod.R
-import com.example.tryggaklassenpod.dataClasses.Episode
 import com.example.tryggaklassenpod.dataClasses.episodesList
 import com.example.tryggaklassenpod.helperFunctions.toHoursMinuteSeconds
 
-
 @Composable
 fun PlayerScreen(
-    episode: Episode,
+    episodeId: Int?,
     goBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val episode = episodesList[episodeId!!]
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -141,7 +139,7 @@ fun EpisodeDescription(description: String, modifier:Modifier = Modifier) {
 
 @Composable
 fun PlayerControllerArea(duration: Int, modifier: Modifier = Modifier) {
-    var sliderPosition by remember { mutableStateOf(0F) }
+    var sliderPosition by remember { mutableFloatStateOf(0F) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -178,19 +176,22 @@ fun PlayerControllerArea(duration: Int, modifier: Modifier = Modifier) {
                 painter = painterResource(id = R.drawable.replay10),
                 contentDescription = stringResource(R.string.replay10),
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(45.dp),
+                tint = MaterialTheme.colorScheme.secondary
             )
             Icon(
                 painter = painterResource(id = R.drawable.play),
                 contentDescription = stringResource(R.string.play_pause),
                 modifier = Modifier
-                    .size(70.dp)
+                    .size(70.dp),
+                tint = MaterialTheme.colorScheme.secondary
             )
             Icon(
                 painter = painterResource(id = R.drawable.forward30),
                 contentDescription = stringResource(R.string.forward30),
                 modifier = Modifier
-                    .size(45.dp)
+                    .size(45.dp),
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -230,7 +231,7 @@ private fun TopBarBack(goBack: () -> Unit) {
 @Composable
 fun PlayerScreenPreview() {
     PlayerScreen(
-        episodesList[0],
+        episodeId = 0,
         goBack = { }
     )
 }
