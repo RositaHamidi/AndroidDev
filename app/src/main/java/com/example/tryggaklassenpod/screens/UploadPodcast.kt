@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.tryggaklassenpod.dataClasses.Episode
 import com.google.firebase.database.FirebaseDatabase
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,15 +85,32 @@ import com.google.firebase.database.FirebaseDatabase
             ) {
                 Button(
                     onClick = {
-                        val podcastData = mapOf(
-                            "title" to podcastName,
-                            "description" to podcastDescription
+                        // Create a unique episode ID
+                        val newEpisodeReference = databaseReference
+                            .child("podcasts")
+                            .child("episodes")
+                            .push()
+
+                        // Create episode data
+                        val episodeData = Episode(
+                            id= 112,
+                            episodeUrl = "djkjsadhkasdhkadhka",
+                            duration = 60,
+                            imageUrl = "hhhihohohohh",
+                            title = podcastName,
+                            description = podcastDescription,
                             // Add more fields as needed
                         )
-                        // Push data to Firebase
-                        val newPodcastReference = databaseReference.push()
-                        newPodcastReference.setValue(podcastData)
 
+                        // Set episode data
+                        newEpisodeReference.setValue(episodeData)
+//                        val podcastData = mapOf(
+//                            "title" to podcastName,
+//                            "description" to podcastDescription
+                            // Add more fields as needed
+//                        )
+                        // Set episode data
+                        newEpisodeReference.setValue(episodeData)
                         // Clear input fields
                         podcastName = ""
                         podcastDescription = ""
