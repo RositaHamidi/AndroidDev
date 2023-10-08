@@ -1,6 +1,8 @@
 package com.example.tryggaklassenpod.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,26 +22,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.database.FirebaseDatabase
 
-    @OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun UploadPodcast(navController: NavController) {
         var podcastName by remember { mutableStateOf("") }
         var podcastDescription by remember { mutableStateOf("") }
 
+        val database = FirebaseDatabase.getInstance()
+        val databaseReference = database.getReference("podcasts")
+
         Column(
             modifier = Modifier.padding(16.dp)
         )
         {
-                Text(
-                    text = "Add the title/name of the podcast",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(16.dp)
-                )
+            Text(
+                text = "Add the title/name of the podcast",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(16.dp)
+            )
             OutlinedTextField(
                 value = podcastName,
-                onValueChange = {newValue ->
-                    podcastName = newValue },
+                onValueChange = { newValue ->
+                    podcastName = newValue
+                },
                 label = { Text("Title") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,8 +61,9 @@ import androidx.navigation.NavController
 
             OutlinedTextField(
                 value = podcastDescription,
-                onValueChange = {newValue ->
-                    podcastDescription = newValue },
+                onValueChange = { newValue ->
+                    podcastDescription = newValue
+                },
                 label = { Text("Description ") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -69,6 +77,30 @@ import androidx.navigation.NavController
                 }
             ) {
                 Text(text = "Upload podcast")
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    onClick = {
+                        val podcastData = mapOf(
+                            "title" to podcastName,
+                            "description" to podcastDescription
+                            // Add more fields as needed
+                        )
+                        // Push data to Firebase
+                        val newPodcastReference = databaseReference.push()
+                        newPodcastReference.setValue(podcastData)
+
+                        // Clear input fields
+                        podcastName = ""
+                        podcastDescription = ""
+
+                    }
+                ) {
+                    Text(text = "Done")
+                }
             }
         }
     }
