@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tryggaklassenpod.R
@@ -44,7 +45,6 @@ fun LoginScreen(navController: NavController) {
     var showError by remember { mutableStateOf(false) }
     var userRole by remember { mutableStateOf<String?>(null) }
     var loggedIn by remember { mutableStateOf(false) }
-    var prevUsername by remember { mutableStateOf(username) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -93,6 +93,7 @@ fun LoginScreen(navController: NavController) {
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
                 ),
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
