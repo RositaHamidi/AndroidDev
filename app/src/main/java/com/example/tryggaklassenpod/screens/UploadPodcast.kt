@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,98 +29,94 @@ import com.google.firebase.database.FirebaseDatabase
 @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun UploadPodcast(navController: NavController) {
-        var podcastName by remember { mutableStateOf("") }
-        var podcastDescription by remember { mutableStateOf("") }
+    var podcastName by remember { mutableStateOf("") }
+    var podcastDescription by remember { mutableStateOf("") }
 
-        val database = FirebaseDatabase.getInstance()
-        val databaseReference = database.getReference("podcasts")
+    val database = FirebaseDatabase.getInstance()
+    val databaseReference = database.getReference("podcasts")
 
-        Column(
+    Column(
+        modifier = Modifier.padding(16.dp)
+    )
+    {
+        Text(
+            text = "Add the title/name of the podcast",
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(16.dp)
         )
-        {
-            Text(
-                text = "Add the title/name of the podcast",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(16.dp)
-            )
-            OutlinedTextField(
-                value = podcastName,
-                onValueChange = { newValue ->
-                    podcastName = newValue
-                },
-                label = { Text("Title") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Add the summary/description of the podcast",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(16.dp)
-            )
+        OutlinedTextField(
+            value = podcastName,
+            onValueChange = { newValue ->
+                podcastName = newValue
+            },
+            label = { Text("Title") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
 
-            OutlinedTextField(
-                value = podcastDescription,
-                onValueChange = { newValue ->
-                    podcastDescription = newValue
-                },
-                label = { Text("Description ") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "Add the summary/description of the podcast",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(16.dp)
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = podcastDescription,
+            onValueChange = { newValue ->
+                podcastDescription = newValue
+            },
+            label = { Text("Description ") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        )
+        Log.d("YourTag", "podcastName: $podcastName")
+        Log.d("YourTag", "podcastDescription: $podcastDescription")
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+            }
+        ) {
+            Text(text = "Upload podcast")
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             Button(
                 onClick = {
-                }
-            ) {
-                Text(text = "Upload podcast")
-            }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Button(
-                    onClick = {
-                        // Create a unique episode ID
-                        val newEpisodeReference = databaseReference
-                            .child("podcasts")
-                            .child("episodes")
-                            .push()
+                    val newEpisodeReference = databaseReference
+                        .child("episodes")
+                        .push()
 
-                        // Create episode data
-                        val episodeData = Episode(
-                            id= 112,
-                            episodeUrl = "djkjsadhkasdhkadhka",
-                            duration = 60,
-                            imageUrl = "hhhihohohohh",
-                            title = podcastName,
-                            description = podcastDescription,
-                            // Add more fields as needed
-                        )
+                    // Create episode data
+                    val episodeData = Episode(
+                        id = 112,
+                        episodeUrl = "djkjsadhkasdhkadhka",
+                        duration = 60,
+                        imageUrl = "hhhihohohohh",
+                        title = podcastName,
+                        description = podcastDescription,
+                        // Add more fields as needed
+                    )
 
-                        // Set episode data
-                        newEpisodeReference.setValue(episodeData)
-//                        val podcastData = mapOf(
-//                            "title" to podcastName,
-//                            "description" to podcastDescription
-                            // Add more fields as needed
-//                        )
-                        // Set episode data
-                        newEpisodeReference.setValue(episodeData)
-                        // Clear input fields
-                        podcastName = ""
-                        podcastDescription = ""
-
+                    // Set episode data
+                    newEpisodeReference.setValue(episodeData).addOnSuccessListener {
+                    podcastName = ""
+                    podcastDescription = ""
+                    }.addOnFailureListener {exception ->
+                        Log.e("YourTag", "Error adding episode: ${exception.message}")
                     }
-                ) {
-                    Text(text = "Done")
+
                 }
+            ) {
+                Text(text = "Done")
             }
         }
     }
+}
 

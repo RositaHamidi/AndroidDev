@@ -33,30 +33,93 @@ import androidx.compose.ui.res.painterResource
 @Composable
 fun AdminScreen(navController: NavController) {
     TryggaKlassenPodTheme {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(16.dp),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "Welcome! Let us make a safe haven for children one podcast at a time",
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(16.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Welcome! Let us make a safe haven for children one podcast at a time",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
-        LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            item {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    item {
+                        Card(
+                            modifier = Modifier
+                                .width(180.dp)
+                                .padding(8.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
+                            onClick = {
+                                navController.navigate("uploadPodcast")
+                            }
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                val upload = painterResource(id = R.drawable.upload)
+
+                                Icon(
+                                    painter = upload,
+                                    contentDescription = "Upload Podcast"
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Upload Podcast",
+                                    style = MaterialTheme.typography.bodyMedium)
+                            }
+                        }
+                    }
+                    item {
+                        Card(
+                            modifier = Modifier
+                                .width(180.dp)
+                                .padding(8.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
+                            onClick = {
+                                navController.navigate("reviewComments")
+                            }
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                val review = painterResource(id = R.drawable.review)
+                                Icon(
+                                    painter = review,
+                                    contentDescription = "Review Comments"
+                                )
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "Review Comments",
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
+                        }
+                    }
+                }
                 Card(
                     modifier = Modifier
                         .width(180.dp)
@@ -65,52 +128,26 @@ fun AdminScreen(navController: NavController) {
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
                     onClick = {
-
-                    navController.navigate("uploadPodcast")
+                        // Handle navigation to the "Old Podcasts" screen
                     }
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        val upload = painterResource(id = R.drawable.upload)
-
+                        val oldPodcasts = painterResource(id = R.drawable.old_podcast)
                         Icon(
-                            painter = upload ,
-                            contentDescription = "Upload Podcast"
+                            painter = oldPodcasts,
+                            contentDescription = "Old Podcasts"
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Upload Podcast", style = MaterialTheme.typography.bodyMedium)
-                    }
-                }
-            }
-            item {
-                Card(
-                    modifier = Modifier
-                        .width(180.dp)
-                        .padding(8.dp),
-                    colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    onClick = {
-                        navController.navigate("reviewComments")
-                    }
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        val review = painterResource(id = R.drawable.review)
-                        Icon(
-                            painter = review,
-                            contentDescription = "Review Comments"
+                        Text(
+                            text = "Old Podcasts",
+                            style = MaterialTheme.typography.bodyMedium
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Review Comments", style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
         }
-    }
     }
 }
