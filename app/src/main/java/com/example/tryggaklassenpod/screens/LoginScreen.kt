@@ -103,7 +103,7 @@ fun LoginScreen(navController: NavController) {
 
             if (showError) {
                 Text(
-                    text = "The username or password is wrong. Please try again.",
+                    text = "The username or password is invalid. Please try again.",
                     color = Color.Red,
                     modifier = Modifier.padding(8.dp)
                 )
