@@ -114,3 +114,8 @@ fun TextWithLink(txt: String, lnk: String){
 }
 
 
+@Preview(showBackground = true)
+@Composable
+fun AboutPreview(){
+    AboutScreen(rememberNavController())
+}
