@@ -10,13 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.tryggaklassenpod"
-<<<<<<< Updated upstream
         minSdk = 24
         targetSdk = 34
-=======
-        minSdk = 23
-        targetSdk = 33
->>>>>>> Stashed changes
         versionCode = 1
         versionName = "1.0"
 

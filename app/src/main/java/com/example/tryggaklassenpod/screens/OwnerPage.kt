@@ -192,7 +192,25 @@ fun AdminOptions(modifier: Modifier = Modifier) {
             text = "Options",
             style = MaterialTheme.typography.labelSmall
         )
-
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Button(
+                onClick = {
+                    // Remove the admin from database
+                }
+            ) {
+                Text("Delete Admin")
+            }
+            Button(
+                onClick = {
+                    // Edit the admin in database
+                }
+            ) {
+                Text("Edit Admin")
+            }
+        }
     }
 }
 
@@ -200,8 +218,6 @@ fun AdminOptions(modifier: Modifier = Modifier) {
 fun TabContent2() {
     Text(text = "Tab Content 2")
 }
-
-
 
 
 
