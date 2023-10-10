@@ -12,7 +12,7 @@ import com.example.tryggaklassenpod.screens.HomeScreen
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.HomeScreen.route ){
+    NavHost(navController = navController, startDestination = Screen.AboutScreen.route ){
 
 
         composable(route = Screen.HomeScreen.route){
