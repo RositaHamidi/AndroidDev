@@ -1,14 +1,11 @@
 package com.example.tryggaklassenpod.dataClasses
 
-import java.util.Date
-
 data class Comments(
-    val comment: String,
-    val author: String,
+    val commentId: Int? = 0,
+    val comment: String? = "",
+    val author: String? = "",
 
-    val createdAt: Date,
-    val approved: Boolean = false,
-
-    val likes: Int = 0
+    val approved: Boolean? = false,
+    val createdAt: Long? = 0,
+    val likes: Int? = 0
 )
-

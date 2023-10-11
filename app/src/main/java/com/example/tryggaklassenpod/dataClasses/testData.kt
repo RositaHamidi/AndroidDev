@@ -1,9 +1,5 @@
 package com.example.tryggaklassenpod.dataClasses
 
-import org.w3c.dom.Comment
-import java.util.Date
-
-
 val episodesList: List<Episode> = listOf(
     Episode(
         //id = 0,
@@ -17,7 +13,7 @@ val episodesList: List<Episode> = listOf(
                 //commentId = 0,
                 comment = "OMG crazy story, this sucks",
                 author = "HeyThere",
-                createdAt = Date(1633873800000L),
+                createdAt = 1633873800000L,
                 approved = false,
                 likes = 0
             ),
@@ -25,7 +21,7 @@ val episodesList: List<Episode> = listOf(
                 //commentId = 1,
                 comment = "Great story!",
                 author = "Reader123",
-                createdAt = Date(1633873810000L),  // A different timestamp for the second comment
+                createdAt = 1633873810000L,  // A different timestamp for the second comment
                 approved = true,
                 likes = 10
             ),
@@ -33,7 +29,7 @@ val episodesList: List<Episode> = listOf(
                 //commentId = 2,
                 comment = "Interesting plot twists!",
                 author = "BookLover456",
-                createdAt = Date(1633873820000L),
+                createdAt = 1633873820000L,
                 approved = true,
                 likes = 5
             ),
@@ -41,7 +37,7 @@ val episodesList: List<Episode> = listOf(
                 //commentId = 3,
                 comment = "Looking forward to the sequel!",
                 author = "ExcitedReader",
-                createdAt = Date(1633873830000L),
+                createdAt = 1633873830000L,
                 approved = true,
                 likes = 7
             )
