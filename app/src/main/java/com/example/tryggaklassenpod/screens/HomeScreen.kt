@@ -119,6 +119,7 @@ import com.example.tryggaklassenpod.ui.components.LoadingScreen
 //    }
 //}
 
+
 @Composable
 fun HomeScreen(podcastUiState: State<PodcastUiState>, navController: NavController){
     when (val podcast = podcastUiState.value) {
