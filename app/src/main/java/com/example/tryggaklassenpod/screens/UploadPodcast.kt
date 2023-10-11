@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,13 +29,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.example.tryggaklassenpod.helperFunctions.AudioUploader
 import com.google.firebase.storage.FirebaseStorage
 import android.media.MediaMetadataRetriever
+import androidx.compose.foundation.layout.Column
+import com.example.tryggaklassenpod.helperFunctions.Authentication
 
 @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun UploadPodcast(navController: NavController) {
+@Composable
+fun UploadPodcast(navController: NavController) {
     var podcastName by remember { mutableStateOf("") }
     var podcastDescription by remember { mutableStateOf("") }
-    var downloadUrl by remember { mutableStateOf<String?>(null) } // Declare a mutableState variable to store the download URL
+    var downloadUrl by remember { mutableStateOf("") } // Declare a mutableState variable to store the download URL
     var selectedFileName by remember { mutableStateOf<String?>(null) }
 
     val mediaMetadataRetriever = MediaMetadataRetriever()
@@ -52,13 +53,19 @@ import android.media.MediaMetadataRetriever
             // Create an instance of AudioUploader
             val storage = FirebaseStorage.getInstance()
             val storageReference = storage.getReference("podcasts")
-            val audioUploader = AudioUploader(storageReference)
+
+            // Retrieve user email and password (replace with actual values)
+            val email = "anam@example.com"
+            val password = "password"
+
+            val audioUploader = AudioUploader(storageReference, Authentication())
+
             // Call the uploadAudio function with the selected audioUri
-            audioUploader.uploadAudio(podcastName, audioUri) { newDownloadUrl ->
+            audioUploader.uploadAudio(podcastName, email, password, audioUri) { newDownloadUrl ->
                 // Handle the download URL here if needed
                 if (newDownloadUrl != null) {
                     downloadUrl = newDownloadUrl.toString()
-//                    Log.d(  "downloadURL", downloadUrl.get)
+                    Log.d("YourTag", "downloadUrl: $downloadUrl")
                     // The audio has been uploaded successfully, and downloadUrl contains the URL
                     // You can use it here or perform further actions
                 } else {
@@ -68,7 +75,7 @@ import android.media.MediaMetadataRetriever
         }
     }
 
-    Column(
+Column(
         modifier = Modifier.padding(16.dp)
     )
     {
@@ -141,29 +148,30 @@ import android.media.MediaMetadataRetriever
         ) {
             Button(
                 onClick = {
-                    val newEpisodeReference = databaseReference
-                        .child("episodes")
-                        .push()
+                    if (downloadUrl.isNotEmpty()) {
+                        val newEpisodeReference = databaseReference
+                            .child("episodes")
+                            .push()
 
-                    // Create episode data
-                    val episodeData = Episode(
-                        id = 112,
-                        episodeUrl = downloadUrl,
-                        duration = 60,
-                        imageUrl = "hhhihohohohh",
-                        title = podcastName,
-                        description = podcastDescription,
-                        // Add more fields as needed
-                    )
+                        // Create episode data
+                        val episodeData = Episode(
+                            id = 112,
+                            episodeUrl = downloadUrl,
+                            duration = 60,
+                            imageUrl = "hhhihohohohh",
+                            title = podcastName,
+                            description = podcastDescription,
+                            // Add more fields as needed
+                        )
 
-                    // Set episode data
-                    newEpisodeReference.setValue(episodeData).addOnSuccessListener {
-                    podcastName = ""
-                    podcastDescription = ""
-                    }.addOnFailureListener {exception ->
-                        Log.e("YourTag", "Error adding episode: ${exception.message}")
+                        // Set episode data
+                        newEpisodeReference.setValue(episodeData).addOnSuccessListener {
+                            podcastName = ""
+                            podcastDescription = ""
+                        }.addOnFailureListener { exception ->
+                            Log.e("YourTag", "Error adding episode: ${exception.message}")
+                        }
                     }
-
                 }
             ) {
                 Text(text = "Done")
