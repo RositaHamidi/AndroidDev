@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TryggaKlassenPod</string>
+    <string name="episode_heading">More about the Episode</string>
+    <string name="replay10">Replay last 10 seconds</string>
+    <string name="play_pause">Play/Pause</string>
+    <string name="forward30">Go forward 30 seconds</string>
+    <string name="back">Back</string>
 </resources>
