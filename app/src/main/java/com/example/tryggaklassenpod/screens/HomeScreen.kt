@@ -28,13 +28,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.ui.theme.md_theme_dark_primaryContainer
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
 
     Column (
         modifier = Modifier.background(Color.Transparent)
@@ -71,7 +73,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                     contentScale = ContentScale.FillBounds,
 
@@ -101,7 +103,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -130,7 +132,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -159,7 +161,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -188,7 +190,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -217,7 +219,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -246,7 +248,7 @@ fun HomeScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ){
                 Image(
-                    painter = painterResource(id = R.drawable.imageplaceholder),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "sample",
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
@@ -285,5 +287,5 @@ fun HomeScreen() {
 @Preview(showBackground = true)
 @Composable
 fun homeScreenPreview(){
-    HomeScreen()
+    HomeScreen(rememberNavController())
 }
