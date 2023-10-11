@@ -4,6 +4,9 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -19,10 +22,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.times
+import com.example.tryggaklassenpod.R
 
 
 @Composable
@@ -90,21 +99,50 @@ fun TabContent1() {
 */
 @Composable
 fun TabContent1() {
-    var admins by remember { mutableStateOf(mutableListOf<Map<String, String>>()) }
+    // test empty list
+    // var admins by remember { mutableStateOf(mutableListOf<Map<String, String>>()) }
+    var admins by remember {
+        mutableStateOf(
+            mutableListOf(
+                mapOf("name" to "John", "password" to "password123", "school" to "School A"),
+                mapOf("name" to "Alice", "password" to "alicepass", "school" to "School B"),
+                mapOf("name" to "Bob", "password" to "bobpassword", "school" to "School C"),
+                mapOf("name" to "Sarah", "password" to "sarahpassword", "school" to "School A"),
+                mapOf("name" to "Jane", "password" to "janepassword", "school" to "School D"),
+                mapOf("name" to "Sami", "password" to "samipassword", "school" to "School C")
+            )
+        )
+    }
     Column(){
-        if (admins.isEmpty()) {
-            Text("No admins yet", modifier = Modifier.padding(16.dp))
-        } else {
-            LazyColumn() {
-                items(admins) { admin ->
-                    AdminItem(
-                        admin = admin,
-                        modifier = Modifier.padding()
-                    )
+        Text(
+            text = "Current admins",
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_small), top = dimensionResource(R.dimen.padding_small))
+        )
+        Box(
+            modifier = Modifier
+                .height(400.dp)
+                .clip(shape = RoundedCornerShape(20.dp))
+                .padding(10.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color(0xFF006971), shape = RoundedCornerShape(15.dp))
+                .border(BorderStroke(2.dp, SolidColor(Color(0xFF006971))), shape = RoundedCornerShape(15.dp))
+        ){
+            if (admins.isEmpty()) {
+                Text("No admins yet", modifier = Modifier.padding(16.dp))
+            } else {
+                LazyColumn() {
+                    items(admins) { admin ->
+                        AdminItem(
+                            admin = admin,
+                            modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small), bottom = dimensionResource(R.dimen.padding_small), start = dimensionResource(R.dimen.padding_medium), end = dimensionResource(R.dimen.padding_medium))
+                        )
+                    }
                 }
             }
         }
     }
+
 }
 
 @Composable
@@ -128,6 +166,7 @@ fun AdminItem(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(dimensionResource(R.dimen.padding_small))
             ) {
                 AdminInformation(admin["name"], admin["school"])
                 Spacer(Modifier.weight(1f))
@@ -137,7 +176,12 @@ fun AdminItem(
                 )
             }
             if (expanded) {
-                AdminOptions()
+                AdminOptions(modifier = Modifier.padding(
+                    start = dimensionResource(R.dimen.padding_medium),
+                    top = dimensionResource(R.dimen.padding_small),
+                    bottom = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium)
+                ))
             }
         }
     }
@@ -153,14 +197,16 @@ fun AdminInformation(
         if (adminName != null) {
             Text(
                 text = adminName,
-                style = MaterialTheme.typography.displayMedium,
-                modifier = Modifier.padding()
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
             )
         }
         if (adminSchool != null) {
             Text(
                 text = adminSchool,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.titleMedium,
+                //
+                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
             )
         }
     }
@@ -190,7 +236,8 @@ fun AdminOptions(modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "Options",
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_small))
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
