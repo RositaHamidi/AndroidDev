@@ -10,13 +10,11 @@ android {
 
     defaultConfig {
         applicationId = "com.example.tryggaklassenpod"
-<<<<<<< HEAD
+
+        //please keep this as minSdk = 23 :)
         minSdk = 23
-        targetSdk = 33
-=======
-        minSdk = 24
         targetSdk = 34
->>>>>>> origin
+
         versionCode = 1
         versionName = "1.0"
 
