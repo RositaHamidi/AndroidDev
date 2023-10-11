@@ -11,7 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.dataClasses.episodesList
 import com.example.tryggaklassenpod.navigations.Navigation
-import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +22,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen()
                     Navigation()
                 }
             }
