@@ -10,5 +10,6 @@ sealed class Screen(val route: String){
     /*
     add your screens here as well as the Navigation.kt file
      */
+    object PlayerScreen: Screen("playerScreen")
 
 }
