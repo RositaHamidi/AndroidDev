@@ -7,22 +7,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.tryggaklassenpod.screens.HomeScreen
-import com.example.tryggaklassenpod.dataClasses.episodesList
+import androidx.lifecycle.ViewModelProvider
 import com.example.tryggaklassenpod.navigations.Navigation
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
+import com.example.tryggaklassenpod.veiwModel.GeneralViewModel
 
 class MainActivity : ComponentActivity() {
+    private lateinit var viewModel: GeneralViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(GeneralViewModel::class.java)
         setContent {
             TryggaKlassenPodTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Navigation()
+                    Navigation(viewModel)
                 }
             }
         }
