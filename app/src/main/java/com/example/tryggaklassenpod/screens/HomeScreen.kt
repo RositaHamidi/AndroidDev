@@ -108,17 +108,67 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 
         }
     } else {
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Loading...",
-                fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
-                )
-        }
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefreshing),
+            onRefresh = { onRefresh() }
+        ){
+            MaterialTheme {
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(
+                                    text = "Trygga Klassen",
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    style = TextStyle(
+                                        color = Color.Blue,
+                                        fontFamily = FontFamily.Monospace,
+                                        fontSize = 30.sp,
+                                    )
+                                )
+                            },
+                            actions = {
+                                IconButton(onClick = { menuExpanded = !menuExpanded }) {
+                                    Icon(Icons.Filled.MoreVert, contentDescription = "")
+                                }
+                                DropdownMenu(
+                                    expanded = menuExpanded,
+                                    onDismissRequest = { menuExpanded = false }) {
 
+                                    DropdownMenuItem(
+                                        text = { Text(text = "Login") },
+                                        onClick = { navController.navigate(Screen.LoginScreen.route) }  //login page will be added
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text(text = "About us") },
+                                        onClick = { navController.navigate(Screen.AboutScreen.route) }
+                                    )
+
+                                }
+                            }
+
+                        )
+                    },
+                    content = {
+                        Box(modifier = Modifier.padding(it)){
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(text = "Loading...",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 30.sp,
+                                )
+                            }
+                        }
+
+                    }
+                )
+            }
+        }
     }
+
 }
 
 
