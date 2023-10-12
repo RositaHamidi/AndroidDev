@@ -1,12 +1,9 @@
 package com.example.tryggaklassenpod.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -36,15 +33,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
-import com.example.tryggaklassenpod.veiwModel.GeneralViewModel
+import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController, homeViewModel: GeneralViewModel) {
+fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 
     val episodes by homeViewModel.episodeLiveData.observeAsState(emptyList())
     val isRefreshing by homeViewModel.isRefreshing.observeAsState(false)
@@ -162,7 +158,7 @@ fun EpisodeListItem(episode: Episode){
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview(){
-    HomeScreen(rememberNavController(), GeneralViewModel() )
+    HomeScreen(rememberNavController(), HomeViewModel() )
 }
 
 

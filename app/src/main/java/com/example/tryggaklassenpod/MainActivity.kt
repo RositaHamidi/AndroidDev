@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import com.example.tryggaklassenpod.navigations.Navigation
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
-import com.example.tryggaklassenpod.veiwModel.GeneralViewModel
+import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 
 class MainActivity : ComponentActivity() {
-    private lateinit var viewModel: GeneralViewModel
+    private lateinit var viewModel: HomeViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(GeneralViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         setContent {
             TryggaKlassenPodTheme {
                 Surface(

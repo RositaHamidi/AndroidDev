@@ -1,7 +1,6 @@
 package com.example.tryggaklassenpod.navigations
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import com.example.tryggaklassenpod.screens.Screen
@@ -13,11 +12,11 @@ import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
-import com.example.tryggaklassenpod.veiwModel.GeneralViewModel
+import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 
 
 @Composable
-fun Navigation(homeViewModel: GeneralViewModel = viewModel()) {
+fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
     val navController = rememberNavController()
     val podcastViewModel: PodcastViewModel = viewModel()
 

@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.tryggaklassenpod.dataClasses.Episode
 import com.example.tryggaklassenpod.internet.ApiService
 import com.example.tryggaklassenpod.internet.RetrofitInstance
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
 
-class GeneralViewModel: ViewModel() {
+class HomeViewModel: ViewModel() {
     private val apiService: ApiService = RetrofitInstance.api
 
     private val _episodesLiveData = MutableLiveData<List<Episode>>()
