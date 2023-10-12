@@ -11,15 +11,15 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
-//import com.example.tryggaklassenpod.screens.PlayerScreen
-//import com.example.tryggaklassenpod.screens.PodcastViewModel
+import com.example.tryggaklassenpod.screens.PlayerScreen
+import com.example.tryggaklassenpod.screens.PodcastViewModel
 import com.example.tryggaklassenpod.veiwModel.GeneralViewModel
 
 
 @Composable
 fun Navigation(homeViewModel: GeneralViewModel = viewModel()) {
     val navController = rememberNavController()
-    //val podcastViewModel: PodcastViewModel = viewModel()
+    val podcastViewModel: PodcastViewModel = viewModel()
 
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
@@ -32,22 +32,22 @@ fun Navigation(homeViewModel: GeneralViewModel = viewModel()) {
             AboutScreen(navController = navController)
         }
 
-//        composable(
-//            route = "${Screen.PlayerScreen.route}/{episodeId}",
-//            arguments = listOf(
-//                navArgument(name = "episodeId") {
-//                    type = NavType.IntType
-//                }
-//            )
-//        ) {index ->
-//            val episodeId = index.arguments?.getInt("episodeId")
-//            PlayerScreen(
-//                episodeId = episodeId,
-//                viewModel = podcastViewModel,
-//                goBack = {
-//                    navController.popBackStack()
-//                }
-//            )
-//        }
+        composable(
+            route = "${Screen.PlayerScreen.route}/{episodeId}",
+            arguments = listOf(
+                navArgument(name = "episodeId") {
+                    type = NavType.IntType
+                }
+            )
+        ) {index ->
+            val episodeId = index.arguments?.getInt("episodeId")
+            PlayerScreen(
+                episodeId = episodeId,
+                viewModel = podcastViewModel,
+                goBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
