@@ -4,7 +4,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.tryggaklassenpod.helperFunctions.PasswordHash
 import org.junit.Test
-
 import org.junit.Assert.*
 
 /**
