@@ -9,11 +9,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
+import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
 import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 import com.example.tryggaklassenpod.screens.LoginScreen
+import com.example.tryggaklassenpod.screens.UploadPodcast
 
 
 @Composable
@@ -53,5 +55,16 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
                 }
             )
         }
+
+
+        composable(route = Screen.AdminScreen.route){
+            AdminScreen(navController = navController)
+        }
+
+        composable(route = Screen.UploadPodcast.route){
+            UploadPodcast(navController = navController)
+        }
+
+
     }
 }

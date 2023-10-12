@@ -66,7 +66,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("com.google.firebase:firebase-database-ktx:20.2.2")
-
+    implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     //extra dependencies needed. please do not change
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
