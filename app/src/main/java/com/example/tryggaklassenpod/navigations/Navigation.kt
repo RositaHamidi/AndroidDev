@@ -13,6 +13,7 @@ import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
 import com.example.tryggaklassenpod.veiwModel.HomeViewModel
+import com.example.tryggaklassenpod.screens.LoginScreen
 
 
 @Composable
@@ -29,6 +30,10 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
 
         composable(route = Screen.AboutScreen.route){
             AboutScreen(navController = navController)
+        }
+
+        composable(route = Screen.LoginScreen.route){
+            LoginScreen(navController = navController)
         }
 
         composable(

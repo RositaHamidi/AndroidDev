@@ -83,7 +83,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 
                                     DropdownMenuItem(
                                         text = { Text(text = "Login") },
-                                        onClick = { /*TODO*/ }  //login page will be added
+                                        onClick = { navController.navigate(Screen.LoginScreen.route) }  //login page will be added
                                     )
                                     DropdownMenuItem(
                                         text = { Text(text = "About us") },
