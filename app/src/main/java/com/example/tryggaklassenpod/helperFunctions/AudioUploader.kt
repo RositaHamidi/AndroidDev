@@ -1,6 +1,7 @@
 package com.example.tryggaklassenpod.helperFunctions
 
 import android.net.Uri
+import android.util.Log
 
 import com.google.firebase.storage.StorageReference
 
@@ -18,6 +19,7 @@ class AudioUploader(
         uploadTask.addOnSuccessListener { taskSnapshot ->
             // Audio file uploaded successfully
             val downloadUrl = taskSnapshot.metadata?.reference?.downloadUrl.toString()
+            Log.d("YourTag", "downloadUrl: $downloadUrl")
             callback(downloadUrl)
         }.addOnFailureListener { exception ->
             callback(null) // Handle the failure case by passing null
