@@ -21,10 +21,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TryggaKlassenPodTheme {
-<<<<<<< HEAD
 
-=======
->>>>>>> ea271c278f392ec91d37d577c5a186ab15542f4c
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

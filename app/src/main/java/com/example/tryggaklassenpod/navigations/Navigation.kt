@@ -10,39 +10,22 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
-<<<<<<< HEAD
-<<<<<<< HEAD
 import com.example.tryggaklassenpod.screens.LoginScreen
-
-=======
-=======
 import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.UploadPodcast
->>>>>>> bd5112751105b8ed9a9022352eadec84b66c2816
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
->>>>>>> ea271c278f392ec91d37d577c5a186ab15542f4c
 
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-<<<<<<< HEAD
-<<<<<<< HEAD
-    NavHost(navController = navController, startDestination = Screen.LoginScreen.route ){
 
-        composable(route = Screen.LoginScreen.route) {
-            LoginScreen(navController = navController)
-        }
-=======
-=======
-
->>>>>>> bd5112751105b8ed9a9022352eadec84b66c2816
     val podcastViewModel: PodcastViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
->>>>>>> ea271c278f392ec91d37d577c5a186ab15542f4c
+
 
         composable(route = Screen.HomeScreen.route){
             HomeScreen(podcastUiState = podcastViewModel.podcastUiState, navController = navController)
@@ -58,6 +41,10 @@ fun Navigation() {
 
         composable(route = Screen.UploadPodcast.route){
             UploadPodcast(navController = navController)
+        }
+
+        composable(route = Screen.LoginScreen.route) {
+            LoginScreen(navController = navController)
         }
 
 
