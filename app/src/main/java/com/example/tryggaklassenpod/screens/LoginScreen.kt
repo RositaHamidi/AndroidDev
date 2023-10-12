@@ -115,6 +115,12 @@ fun LoginScreen(navController: NavController) {
                         if (isAuthenticated) {
                             userRole = role
                             loggedIn = true
+
+                            if (role == "admin") {
+                                // Navigate to the admin screen
+                                navController.navigate(Screen.AdminScreen.route)
+                            }
+
                         } else {
                             showError = true
                         }

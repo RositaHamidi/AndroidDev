@@ -67,15 +67,11 @@ fun UploadPodcast(navController: NavController) {
             storageLocationUrl = audioStorageRef.toString()
             Log.d("YourTag", "downloadUrl: $storageLocationUrl")
 
-            // Retrieve user email and password
-            val email = "anam@example.com"
-            val password = "password"
-
-            val audioUploader = AudioUploader(storageReference, Authentication())
+            val audioUploader = AudioUploader(storageReference)
 
 
             // Call the uploadAudio function with the selected audioUri
-            audioUploader.uploadAudio(podcastName, email, password, audioUri) { newDownloadUrl ->
+            audioUploader.uploadAudio(audioUri) { newDownloadUrl ->
                 // Handle the download URL here if needed
                 if (newDownloadUrl != null) {
                     downloadUrl = newDownloadUrl.toString()
@@ -94,12 +90,10 @@ fun UploadPodcast(navController: NavController) {
             selectedImageFileName = imageUri.lastPathSegment
             val imageStorageRef = storageReference.child("images/${selectedImageFileName}")
             imageUrl = imageStorageRef.toString()
-            val email = "anam@example.com"
-            val password = "password"
 
-            val imageUploader = ImageUploader(storageReference, Authentication())
+            val imageUploader = ImageUploader(storageReference)
             // Call the uploadAudio function with the selected audioUri
-            imageUploader.uploadImage(podcastName, email, password, imageUri) { newDownloadUrl ->
+            imageUploader.uploadImage(imageUri) { newDownloadUrl ->
                 // Handle the download URL here if needed
                 if (newDownloadUrl != null) {
                     downloadUrl = newDownloadUrl.toString()
