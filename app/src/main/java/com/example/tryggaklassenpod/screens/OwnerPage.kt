@@ -7,6 +7,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -122,6 +123,15 @@ fun TabContent1() {
             )
         )
     }
+
+    val isDarkTheme = isSystemInDarkTheme()
+
+    val backgroundColor = if (isDarkTheme) {
+        Color(0xFF4DD8E5) // Dark theme background color
+    } else {
+        Color(0xFF006971) // Light theme background color
+    }
+
     Column(){
         Text(
             text = "Current admins",
@@ -134,11 +144,8 @@ fun TabContent1() {
                 .clip(shape = RoundedCornerShape(20.dp))
                 .padding(10.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(Color(0xFF006971), shape = RoundedCornerShape(15.dp))
-                .border(
-                    BorderStroke(2.dp, SolidColor(Color(0xFF006971))),
-                    shape = RoundedCornerShape(15.dp)
-                )
+                .background(backgroundColor, shape = RoundedCornerShape(15.dp))
+                .border(BorderStroke(2.dp, SolidColor(backgroundColor)), shape = RoundedCornerShape(15.dp))
         ){
             if (admins.isEmpty()) {
                 Text("No admins yet", modifier = Modifier.padding(16.dp))
