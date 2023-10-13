@@ -1,3 +1,4 @@
+
 package com.example.tryggaklassenpod.dataClasses
 
 data class Episode(
@@ -11,3 +12,4 @@ data class Episode(
     val comments: List<Comments>? = emptyList(),
     val categories: List<String>? = emptyList()
 )
+
