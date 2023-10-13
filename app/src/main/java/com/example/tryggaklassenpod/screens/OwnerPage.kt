@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.times
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
 
 @Composable
@@ -300,6 +301,8 @@ fun AdminOptions(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddAnAdminSection() {
+    val viewModel = OwnerPageViewModel()
+
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var school by remember { mutableStateOf("") }
@@ -318,8 +321,8 @@ fun AddAnAdminSection() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-            value = name,
-            onValueChange = { name = it },
+            value = password,
+            onValueChange = { password = it },
             label = { Text("Password") }
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -331,7 +334,10 @@ fun AddAnAdminSection() {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                addAdmin(name, password, school)
+                viewModel.addNewAdmin(name, school, password)
+                name = ""
+                password = ""
+                school = ""
             }
         ) {
             Text("Add Admin")
