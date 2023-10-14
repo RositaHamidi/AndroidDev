@@ -28,7 +28,6 @@ class PodcastViewModel: ViewModel() {
 
     private val episodeMap = mutableMapOf<Int, Episode>()
 
-    private val podcastPlayerManager = PodcastPlayerManager()
 
     init {
         fetchPodcastData()
@@ -64,30 +63,16 @@ class PodcastViewModel: ViewModel() {
         )
     }
 
+
     fun getEpisodeById(episodeId: Int): Episode? {
         return episodeMap[episodeId]
     }
-    fun playEpisode(url: String) {
-        podcastPlayerManager.playEpisode(url)
-    }
-    fun pauseEpisode() {
-        podcastPlayerManager.pauseEpisode()
-    }
-    fun stopEpisode() {
-        podcastPlayerManager.stopEpisode()
-    }
-    fun releasePlayer() {
-        podcastPlayerManager.releasePlayer()
-    }
-    fun getDuration():Int {
-        return podcastPlayerManager.getFullDuration()
-    }
-
-//    var sliderPosition by mutableFloatStateOf(0F)
-
-    var isPlaying by mutableStateOf(false)
-
     var currentEpisode by mutableStateOf("")
 
+
+    // ??? stream the podcast instead of the download and play???
+
+    // remember savable !!!
+//    var isPlaying by mutableStateOf(false)
 
 }
