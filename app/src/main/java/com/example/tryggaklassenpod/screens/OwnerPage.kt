@@ -1,6 +1,5 @@
 package com.example.tryggaklassenpod.screens
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -25,8 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -34,11 +31,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.unit.times
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.sealed.DatabaseResult
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
 
@@ -52,61 +46,66 @@ fun OwnerPageContent(modifier: Modifier = Modifier){
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabbedPage() {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
+    //val snackState = remember { SnackbarHostState() }
+    //val scope = rememberCoroutineScope()
+
     // Labels for the tabs
     val tabLabels = listOf("Owner", "Admin")
+    Scaffold(
+        //snackbarHost = { SnackbarHost(snackState) },
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(it),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Create the TabRow with tabs
+                TabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    indicator = { tabPositions ->
+                        TabRowDefaults.Indicator(
+                            modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
+                        )
+                    }
+                ) {
+                    // Create tabs
+                    tabLabels.forEachIndexed { index, label ->
+                        Tab(
+                            text = { Text(text = label) },
+                            selected = selectedTabIndex == index,
+                            onClick = { selectedTabIndex = index }
+                        )
+                    }
+                }
 
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .verticalScroll(rememberScrollState())
-    ) {
-        // Create the TabRow with tabs
-        TabRow(
-            selectedTabIndex = selectedTabIndex,
-            indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
-                    modifier = Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex])
-                )
-            }
-        ) {
-            // Create tabs
-            tabLabels.forEachIndexed { index, label ->
-                Tab(
-                    text = { Text(text = label) },
-                    selected = selectedTabIndex == index,
-                    onClick = { selectedTabIndex = index }
-                )
+
+                // Display the content based on the selected tab
+                when (selectedTabIndex) {
+                    0 -> TabContent1()
+                    1 -> TabContent2()
+                }
+                /*Button(
+                    onClick = {
+                        scope.launch {
+                            snackState.showSnackbar("hello")
+                        }
+                    }
+                ){
+                    Text( "click")
+                }*/
             }
         }
-
-        // Display the content based on the selected tab
-        when (selectedTabIndex) {
-            0 -> TabContent1()
-            1 -> TabContent2()
-        }
-    }
+    )
 }
 
-//Future with database list
-/*
-@Composable
-fun TabContent1() {
-    Column(){
-        LazyColumn() {
-            items(admins) { admin ->
-                AdminItem(
-                    admin = admin,
-                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
-                )
-            }
-        }
-    }
-}
-*/
 
 @Composable
 fun TabContent1() {
@@ -124,7 +123,6 @@ fun TabContent1() {
             )
         )
     }
-
     val isDarkTheme = isSystemInDarkTheme()
 
     val backgroundColor = if (isDarkTheme) {
@@ -146,7 +144,10 @@ fun TabContent1() {
                 .padding(10.dp)
                 .clip(RoundedCornerShape(10.dp))
                 .background(backgroundColor, shape = RoundedCornerShape(15.dp))
-                .border(BorderStroke(2.dp, SolidColor(backgroundColor)), shape = RoundedCornerShape(15.dp))
+                .border(
+                    BorderStroke(2.dp, SolidColor(backgroundColor)),
+                    shape = RoundedCornerShape(15.dp)
+                )
         ){
             if (admins.isEmpty()) {
                 Text("No admins yet", modifier = Modifier.padding(16.dp))
@@ -176,9 +177,12 @@ fun TabContent1() {
                     shape = RoundedCornerShape(15.dp)
                 )
         ){
-            AddAnAdminSection()
+            val viewModel = OwnerPageViewModel()
+            AddAnAdminSection(viewModel)
+
         }
     }
+
 
 }
 
@@ -300,9 +304,7 @@ fun AdminOptions(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddAnAdminSection() {
-    val viewModel = OwnerPageViewModel()
-
+fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var school by remember { mutableStateOf("") }
@@ -332,6 +334,7 @@ fun AddAnAdminSection() {
             label = { Text("School") }
         )
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(
             onClick = {
                 viewModel.addNewAdmin(name, school, password)
@@ -342,16 +345,24 @@ fun AddAnAdminSection() {
         ) {
             Text("Add Admin")
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Display the message under the button
+        val message = viewModel.message.value
+        if (message is DatabaseResult.Success) {
+            Text(
+                text = (message).message,
+                color = Color(0xFF46B44A) // Color for success message
+            )
+        } else if (message is DatabaseResult.Failure) {
+            Text(
+                text = (message).error,
+                color = Color.Red // Color for error message
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
     }
-}
-
-
-
-
-fun addAdmin(name: String, password: String, school: String){
-    checkPass(password)
-    // add admin to database
 }
 
 
@@ -364,7 +375,3 @@ fun checkPass(pass:String){
 fun TabContent2() {
     Text(text = "Tab Content 2")
 }
-
-
-
-
