@@ -12,10 +12,13 @@ import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.dataClasses.episodesList
 import com.example.tryggaklassenpod.navigations.Navigation
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val dexOutputDir: File = codeCacheDir
+        dexOutputDir.setReadOnly()
         setContent {
             TryggaKlassenPodTheme {
                 Surface(

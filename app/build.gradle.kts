@@ -76,4 +76,6 @@ dependencies {
 
     // COIL dependency for images!
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+//    implementation("androidx.activity:activity-ktx:1.8.0")
 }
