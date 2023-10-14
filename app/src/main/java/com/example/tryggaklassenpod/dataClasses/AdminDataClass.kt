@@ -1,8 +1,8 @@
 package com.example.tryggaklassenpod.dataClasses
 
 data class AdminDataClass(
-    val name:String ="",
+    val username:String ="",
     val school:String = "",
-    val pass:String = "",
+    val password:String = "",
     val role:String = "admin"
 )

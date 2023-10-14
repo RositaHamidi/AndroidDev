@@ -31,24 +31,29 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
-import com.example.tryggaklassenpod.sealed.DatabaseResult
+import com.example.tryggaklassenpod.dataClasses.AdminDataClass
+import com.example.tryggaklassenpod.sealed.InsertAdminDataState
+import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
 
 @Composable
 fun OwnerPageContent(modifier: Modifier = Modifier){
+    val viewModel: OwnerPageViewModel = viewModel()
     Box(
         modifier = Modifier
             .fillMaxSize(),
     ){
-        TabbedPage()
+        TabbedPage(viewModel)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TabbedPage() {
+fun TabbedPage(viewModel: OwnerPageViewModel) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     //val snackState = remember { SnackbarHostState() }
@@ -89,7 +94,7 @@ fun TabbedPage() {
 
                 // Display the content based on the selected tab
                 when (selectedTabIndex) {
-                    0 -> TabContent1()
+                    0 -> TabContent1(viewModel)
                     1 -> TabContent2()
                 }
                 /*Button(
@@ -108,21 +113,9 @@ fun TabbedPage() {
 
 
 @Composable
-fun TabContent1() {
+fun TabContent1(viewModel: OwnerPageViewModel) {
     // test empty list
     // var admins by remember { mutableStateOf(mutableListOf<Map<String, String>>()) }
-    var admins by remember {
-        mutableStateOf(
-            mutableListOf(
-                mapOf("name" to "John", "password" to "password123", "school" to "School A"),
-                mapOf("name" to "Alice", "password" to "alicepass", "school" to "School B"),
-                mapOf("name" to "Bob", "password" to "bobpassword", "school" to "School C"),
-                mapOf("name" to "Sarah", "password" to "sarahpassword", "school" to "School A"),
-                mapOf("name" to "Jane", "password" to "janepassword", "school" to "School D"),
-                mapOf("name" to "Sami", "password" to "samipassword", "school" to "School C")
-            )
-        )
-    }
     val isDarkTheme = isSystemInDarkTheme()
 
     val backgroundColor = if (isDarkTheme) {
@@ -149,14 +142,37 @@ fun TabContent1() {
                     shape = RoundedCornerShape(15.dp)
                 )
         ){
-            if (admins.isEmpty()) {
-                Text("No admins yet", modifier = Modifier.padding(16.dp))
-            } else {
-                LazyColumn() {
-                    items(admins) { admin ->
-                        AdminItem(
-                            admin = admin,
-                            modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small), bottom = dimensionResource(R.dimen.padding_small), start = dimensionResource(R.dimen.padding_medium), end = dimensionResource(R.dimen.padding_medium))
+            when (val result = viewModel.response.value) {
+                is FetchingAdminDataState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is FetchingAdminDataState.Success -> {
+                    ShowLazyList(result.data)
+                }
+                is FetchingAdminDataState.Failure -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = result.message,
+                            fontSize = 16.sp,
+                        )
+                    }
+                }
+                else -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Error Fetching data",
+                            fontSize = 16.sp,
                         )
                     }
                 }
@@ -177,7 +193,6 @@ fun TabContent1() {
                     shape = RoundedCornerShape(15.dp)
                 )
         ){
-            val viewModel = OwnerPageViewModel()
             AddAnAdminSection(viewModel)
 
         }
@@ -187,8 +202,25 @@ fun TabContent1() {
 }
 
 @Composable
+fun ShowLazyList(admins: MutableList<AdminDataClass>) {
+    LazyColumn {
+        items(admins) { admin ->
+            AdminItem(admin,
+                modifier = Modifier
+                .padding(
+                    top = dimensionResource(R.dimen.padding_small),
+                    bottom = dimensionResource(R.dimen.padding_small),
+                    start = dimensionResource(R.dimen.padding_medium),
+                    end = dimensionResource(R.dimen.padding_medium)
+                )
+            )
+        }
+    }
+}
+
+@Composable
 fun AdminItem(
-    admin: Map<String, String>,
+    admin: AdminDataClass,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -209,7 +241,8 @@ fun AdminItem(
                     .fillMaxWidth()
                     .padding(dimensionResource(R.dimen.padding_small))
             ) {
-                AdminInformation(admin["name"], admin["school"])
+                //Log.i(TAG, "Hi " + admin.username)
+                AdminInformation(admin.username, admin.school)
                 Spacer(Modifier.weight(1f))
                 AdminItemButton(
                     expanded = expanded,
@@ -350,12 +383,12 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 
         // Display the message under the button
         val message = viewModel.message.value
-        if (message is DatabaseResult.Success) {
+        if (message is InsertAdminDataState.Success) {
             Text(
                 text = (message).message,
                 color = Color(0xFF46B44A) // Color for success message
             )
-        } else if (message is DatabaseResult.Failure) {
+        } else if (message is InsertAdminDataState.Failure) {
             Text(
                 text = (message).error,
                 color = Color.Red // Color for error message
