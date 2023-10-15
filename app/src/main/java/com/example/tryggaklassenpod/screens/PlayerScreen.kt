@@ -27,7 +27,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.Episode
 import com.example.tryggaklassenpod.screens.player.PlayerControllerArea
@@ -87,7 +89,10 @@ fun PlayerScreen(
                         Spacer(modifier = Modifier.height(14.dp))
                         episode?.title?.let { EpisodeTitle(title = it) }
                         episode?.episodeUrl?.let {
-                            PlayerControllerArea(episodeUrl = it, viewModel = viewModel)
+                            PlayerControllerArea(
+                                episodeUrl = it,
+                                episodeDuration = episode.duration,
+                            )
                         }
                         Spacer(modifier = Modifier.height(28.dp))
                     }
@@ -179,12 +184,12 @@ private fun TopBarBack(goBack: () -> Unit) {
     }
 }
 
-//@Preview(showSystemUi = true, showBackground = true)
-//@Composable
-//fun PlayerScreenPreview() {
-//    PlayerScreen(
-//        episodeId = 0,
-//        viewModel = viewModel(),
-//        goBack = { },
-//    )
-//}
+@Preview(showSystemUi = true, showBackground = true)
+@Composable
+fun PlayerScreenPreview() {
+    PlayerScreen(
+        episodeId = 0,
+        viewModel = viewModel(),
+        goBack = { },
+    )
+}
