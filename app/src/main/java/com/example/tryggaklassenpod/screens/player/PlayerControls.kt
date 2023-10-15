@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,30 +36,31 @@ import kotlinx.coroutines.delay
 @Composable
 fun PlayerControllerArea(
     episodeUrl: String,
-    viewModel: PodcastViewModel,
-    modifier: Modifier = Modifier
+    episodeDuration: Int,
 ) {
     val player = remember { PodcastPlayerManager() }
-    val (sliderPosition, setSliderPosition) = remember { mutableStateOf(0F) }
     var isPlaying by remember { mutableStateOf(false) }
-    val duration = player.getEpisodeDuration()
+    var newPosition by remember { mutableIntStateOf(0) }
+    val (sliderPosition, setSliderPosition) = remember { mutableFloatStateOf(0F) }
+
+    if (newPosition >= episodeDuration) {
+        isPlaying = false
+    }
 
     DisposableEffect(episodeUrl) {
         onDispose {
+            isPlaying = false
             player.releasePlayer()
         }
     }
-//    Log.d("MEDIA-PLAYER TESTING", "$duration")
-//    Log.d("ESTING slider position", "$setSliderPosition")
 
-
-    LaunchedEffect(Unit){
+    LaunchedEffect(isPlaying){
         while(isPlaying){
-            setSliderPosition((player.getCurrentPosition() / duration).toFloat())
-            delay(200)
+            newPosition = player.getCurrentInSeconds()
+            setSliderPosition(newPosition.toFloat() / episodeDuration.toFloat())
+            delay(500)
         }
     }
-    // stop on going back!!!
 
     Column(
         modifier = Modifier
@@ -67,9 +70,12 @@ fun PlayerControllerArea(
     ) {
         Slider(
             value = sliderPosition,
+            enabled = false,
             onValueChange = {
-                setSliderPosition(it)
-                player.seekTo((it * duration).toInt())
+                if (player.canPlayerStart()){
+                    setSliderPosition(it)
+                    player.seekTo((it * episodeDuration).toInt())
+                }
             },
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colorScheme.secondary,
@@ -82,8 +88,8 @@ fun PlayerControllerArea(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = (((sliderPosition*duration).toInt())).toHoursMinuteSeconds())
-            Text(text = duration.toHoursMinuteSeconds())
+            Text(text = newPosition.toHoursMinuteSeconds())
+            Text(text = episodeDuration.toHoursMinuteSeconds())
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -131,7 +137,7 @@ fun PlayerControllerArea(
                     painter = painterResource(id = R.drawable.forward30),
                     contentDescription = stringResource(R.string.forward30),
                     modifier = Modifier.size(45.dp),
-                    tint = MaterialTheme . colorScheme . secondary
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
         }
