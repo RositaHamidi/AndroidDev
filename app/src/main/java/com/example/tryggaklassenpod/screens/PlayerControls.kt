@@ -1,4 +1,4 @@
-package com.example.tryggaklassenpod.screens.player
+package com.example.tryggaklassenpod.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,23 +13,14 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tryggaklassenpod.R
-import com.example.tryggaklassenpod.helperFunctions.PodcastPlayerManager
 import com.example.tryggaklassenpod.helperFunctions.toHoursMinuteSeconds
-import com.example.tryggaklassenpod.screens.PodcastViewModel
 import kotlinx.coroutines.delay
 
 
@@ -43,25 +34,6 @@ fun PlayerControllerArea(
         viewModel.isPlaying = false
     }
 
-//    val player = viewModel.player
-//    val player = remember { PodcastPlayerManager() }
-//    var isPlaying by remember { mutableStateOf(false) }
-//    var newPosition by remember { mutableIntStateOf(0) }
-//    val (sliderPosition, setSliderPosition) = remember { mutableFloatStateOf(0F) }
-
-//    DisposableEffect(episodeUrl) {
-//        onDispose {
-//            isPlaying = false
-//            player.releasePlayer()
-//        }
-//    }
-//    LaunchedEffect(isPlaying){
-//        while(isPlaying){
-//            newPosition = player.getCurrentInSeconds()
-//            setSliderPosition(newPosition.toFloat() / episodeDuration.toFloat())
-//            delay(500)
-//        }
-//    }
     LaunchedEffect(viewModel.isPlaying) {
         while (viewModel.isPlaying) {
             viewModel.newPosition = viewModel.player.getCurrentInSeconds()

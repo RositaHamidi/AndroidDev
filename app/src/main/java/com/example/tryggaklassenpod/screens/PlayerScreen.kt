@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.Episode
-import com.example.tryggaklassenpod.screens.player.PlayerControllerArea
 import com.example.tryggaklassenpod.ui.components.ErrorScreen
 
 @Composable
