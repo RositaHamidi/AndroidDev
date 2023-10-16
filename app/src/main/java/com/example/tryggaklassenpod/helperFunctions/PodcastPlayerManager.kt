@@ -27,13 +27,11 @@ class PodcastPlayerManager {
             episodeDuration = mediaPlayer.duration / 1000
 
         }
-//        Log.d("PLAY currentPosition", "$currentPosition  ...we started playing")
     }
 
     fun pauseEpisode() {
         mediaPlayer?.let {
             currentPosition = it.currentPosition / 1000
-//            Log.d("PAUSE currentPosition", "$currentPosition")
             it.pause()
         }
     }
@@ -52,16 +50,14 @@ class PodcastPlayerManager {
     }
 
     fun seekTo(position: Int) {
-//        Log.d("SEEK currentPosition", "current s:$currentPosition, // NEW s:$position, ms:${position*1000}")
         mediaPlayer?.seekTo(position*1000)
         currentPosition = position
     }
 
     fun replay10Seconds() {
         mediaPlayer?.let {
-            val newPosition = it.currentPosition - 10000
-//            Log.d("REPLAY currentPosition", "$currentPosition, $newPosition")
 
+            val newPosition = it.currentPosition - 10000
             currentPosition = if (newPosition >= 0) (
                     newPosition / 1000
             ) else {
@@ -75,7 +71,6 @@ class PodcastPlayerManager {
         mediaPlayer?.let {
             val newPosition = it.currentPosition + 30000
             val duration = it.duration
-//            Log.d("FORWARD currentPosition", "NewPos: $newPosition, DURATION:$duration, currentPos; $currentPosition")
 
             if (newPosition < duration) {
                 currentPosition = newPosition / 1000
@@ -93,7 +88,6 @@ class PodcastPlayerManager {
                  currentPosition = it.currentPosition / 1000
             }
         }
-//        Log.d("PLAYER getCurrentInSeconds()", "$currentPosition,  <<-- current position from PLAYER MANAGER, epiDuration: $episodeDuration")
         return currentPosition
     }
 
