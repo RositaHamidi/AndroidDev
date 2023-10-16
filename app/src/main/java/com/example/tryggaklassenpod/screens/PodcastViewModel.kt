@@ -3,8 +3,8 @@ package com.example.tryggaklassenpod.screens
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.tryggaklassenpod.dataClasses.Episode
@@ -13,7 +13,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlin.reflect.KProperty
 
 sealed interface PodcastUiState {
     data class Success(val episodes: List<Episode>): PodcastUiState
@@ -59,20 +58,18 @@ class PodcastViewModel: ViewModel() {
                 override fun onCancelled(error: DatabaseError) {
                     _podcastUiState.value = PodcastUiState.Error
                 }
-            }
-        )
+            })
     }
 
 
     fun getEpisodeById(episodeId: Int): Episode? {
         return episodeMap[episodeId]
     }
-    var currentEpisode by mutableStateOf("")
 
-
-    // ??? stream the podcast instead of the download and play???
-
-    // remember savable !!!
-//    var isPlaying by mutableStateOf(false)
+    val player = PodcastPlayerManager()
+    var episodeUrl:String by mutableStateOf("")
+    var isPlaying: Boolean by mutableStateOf(false)
+    var newPosition: Int by mutableIntStateOf(0)
+    var sliderPosition: Float by mutableFloatStateOf(0F)
 
 }
