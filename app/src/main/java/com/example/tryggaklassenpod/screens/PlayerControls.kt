@@ -39,15 +39,16 @@ fun PlayerControllerArea(
     episodeDuration: Int,
     viewModel: PodcastViewModel
 ) {
+    if (viewModel.newPosition >= episodeDuration) {
+        viewModel.isPlaying = false
+    }
+
 //    val player = viewModel.player
 //    val player = remember { PodcastPlayerManager() }
 //    var isPlaying by remember { mutableStateOf(false) }
 //    var newPosition by remember { mutableIntStateOf(0) }
 //    val (sliderPosition, setSliderPosition) = remember { mutableFloatStateOf(0F) }
 
-    if (viewModel.newPosition >= episodeDuration) {
-        viewModel.isPlaying = false
-    }
 //    DisposableEffect(episodeUrl) {
 //        onDispose {
 //            isPlaying = false
