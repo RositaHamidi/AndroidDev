@@ -10,13 +10,17 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
+import com.example.tryggaklassenpod.screens.AdminScreen
+import com.example.tryggaklassenpod.screens.UploadPodcast
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
+
 
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+
     val podcastViewModel: PodcastViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
@@ -28,6 +32,15 @@ fun Navigation() {
         composable(route = Screen.AboutScreen.route){
             AboutScreen(navController = navController)
         }
+
+        composable(route = Screen.AdminScreen.route){
+            AdminScreen(navController = navController)
+        }
+
+        composable(route = Screen.UploadPodcast.route){
+            UploadPodcast(navController = navController)
+        }
+
 
         composable(
             route = "${Screen.PlayerScreen.route}/{episodeId}",
