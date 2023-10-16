@@ -19,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,13 +51,25 @@ fun PlayerScreen(
         )
     }
     val episode: Episode? = episodeId?.let { viewModel.getEpisodeById(it) }
+    if (episode != null) {
+        viewModel.episodeUrl = episode.episodeUrl
+    }
+
+    DisposableEffect(viewModel.episodeUrl) {
+        onDispose {
+            viewModel.isPlaying = false
+            viewModel.player.releasePlayer()
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 8.dp)
     ) {
-        TopBarBack(goBack = goBack)
+        TopBarBack(goBack = goBack) {
+            viewModel.player.releasePlayer()
+        }
 
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,6 +105,7 @@ fun PlayerScreen(
                             PlayerControllerArea(
                                 episodeUrl = it,
                                 episodeDuration = episode.duration,
+                                viewModel = viewModel
                             )
                         }
                         Spacer(modifier = Modifier.height(28.dp))
@@ -172,9 +186,13 @@ fun EpisodeCoverImage(
 }
 
 @Composable
-private fun TopBarBack(goBack: () -> Unit) {
+private fun TopBarBack(goBack: () -> Unit,  onBack:() -> Unit) {
     Row(Modifier.fillMaxWidth()) {
-        IconButton(onClick = goBack) {
+        IconButton(onClick = {
+            goBack.invoke()
+            onBack.invoke()
+            }
+        ) {
             Icon(
                 painter = painterResource(R.drawable.arrowback),
                 contentDescription = stringResource(R.string.back)
