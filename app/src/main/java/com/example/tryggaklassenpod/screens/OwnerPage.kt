@@ -1,5 +1,7 @@
 package com.example.tryggaklassenpod.screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -26,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.ui.draw.clip
@@ -128,7 +131,11 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
         Text(
             text = "Current admins",
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_small), top = dimensionResource(R.dimen.padding_small))
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(R.dimen.padding_small),
+                    top = dimensionResource(R.dimen.padding_small)
+                )
         )
         Box(
             modifier = Modifier
@@ -181,7 +188,11 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
         Text(
             text = "Add a new admin",
             style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_small), top = dimensionResource(R.dimen.padding_small))
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(R.dimen.padding_small),
+                    top = dimensionResource(R.dimen.padding_small)
+                )
         )
         Card(
             modifier = Modifier
@@ -341,6 +352,11 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var school by remember { mutableStateOf("") }
+    var podcastPoster by remember { mutableStateOf(true) }
+    var podcastEditor by remember { mutableStateOf(true) }
+    var commentReviewer by remember { mutableStateOf(true) }
+    var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
+
 
     Column(
         modifier = Modifier
@@ -368,16 +384,34 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
+        podcastPoster = SentenceSwitch("Can post podcasts")
+        permissions = permissions + mapOf("podcastPoster" to podcastPoster)
+        //Log.i(TAG, "Hi " + podcastPoster)
+
+        podcastEditor = SentenceSwitch("Can edit podcasts")
+        permissions = permissions + mapOf("podcastEditor" to podcastEditor)
+        //Log.i(TAG, "Hi " + podcastEditor)
+
+        commentReviewer = SentenceSwitch("Can review comments")
+        permissions = permissions + mapOf("commentReviewer" to commentReviewer)
+        //Log.i(TAG, "Hi " + permissions)
+
+
+
         Button(
             onClick = {
-                viewModel.addNewAdmin(name, school, password)
+                viewModel.addNewAdmin(name, school, password, permissions)
                 name = ""
                 password = ""
                 school = ""
+                podcastPoster = true
+                podcastEditor = true
+                commentReviewer = true
             }
         ) {
             Text("Add Admin")
         }
+
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -398,7 +432,45 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     }
 }
 
-
+@Composable
+fun SentenceSwitch(sentence:String, modifier: Modifier = Modifier):Boolean {
+    var checked by remember { mutableStateOf(true) }
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Start,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = dimensionResource(R.dimen.padding_large),
+                end = 60.dp
+            ),
+        )
+    {
+        Text(text = sentence,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = dimensionResource(R.dimen.padding_small)),
+            )
+        Switch(
+            checked = checked,
+            onCheckedChange = {
+                checked = it
+            },
+            thumbContent = if (checked) {
+                {
+                    Icon(
+                        imageVector = Icons.Filled.Check,
+                        contentDescription = null,
+                        modifier = Modifier.size(SwitchDefaults.IconSize),
+                    )
+                }
+            } else {
+                null
+            }
+        )
+    }
+    return checked
+}
 fun checkPass(pass:String){
     //Check password
 }

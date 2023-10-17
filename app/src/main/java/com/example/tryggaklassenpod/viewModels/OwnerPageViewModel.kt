@@ -5,7 +5,6 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.tryggaklassenpod.dataClasses.AdminDataClass
-import com.example.tryggaklassenpod.dataClasses.PermissionsDataClass
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.google.firebase.database.DataSnapshot
@@ -45,26 +44,28 @@ class OwnerPageViewModel : ViewModel() {
             })
     }
 
-    private fun fetchPermissions() {
 
-    }
-    fun addNewAdmin(name:String, school:String, pass:String) {
-        if(name != "" && school != "" && pass != "" ){
+    fun addNewAdmin(username:String, school:String, password:String, permissions: Map<String, Boolean>) {
+        if(username != "" && school != "" && password != "" ){
             try {
+                // Your data to be inserted
+                val admin = AdminDataClass(
+                    username = username,
+                    password = password,
+                    school = school,
+                    role = "admin", // Automatically set the role as "admin"
+                    permissions = permissions
+                )
+
                 val database = FirebaseDatabase.getInstance()
                 val adminsRef = database.getReference("admins")
-                // Your data to be inserted
-                val data = AdminDataClass(name, school, pass)
 
                 // Generate a new child location with a unique key
                 val newAdminRef = adminsRef.push()
 
-                newAdminRef.setValue(data).addOnSuccessListener {
+                newAdminRef.setValue(admin).addOnSuccessListener {
                     // Data has been successfully inserted with an automatically generated ID
                     val generatedKey = newAdminRef.key // Get the generated key
-                    if (generatedKey != null) {
-                        addAdminPermissions(generatedKey)
-                    }
                     println("Data has been inserted to admins with ID: $generatedKey")
                     _message.value = InsertAdminDataState.Success("Admin added successfully")
                 }.addOnFailureListener { error ->
@@ -83,7 +84,7 @@ class OwnerPageViewModel : ViewModel() {
 
     }
 
-    private fun addAdminPermissions(adminId:String) {
+    /*private fun addAdminPermissions(adminId:String) {
         val database = FirebaseDatabase.getInstance()
         val adminsPerRef = database.getReference("permissions")
 
@@ -103,5 +104,5 @@ class OwnerPageViewModel : ViewModel() {
             // Handle the error if the data insertion fails
             println("Error inserting data: $error")
         }
-    }
+    }*/
 }
