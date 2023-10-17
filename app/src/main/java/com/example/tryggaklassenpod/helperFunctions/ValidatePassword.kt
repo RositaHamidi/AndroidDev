@@ -1,7 +1,6 @@
 package com.example.tryggaklassenpod.helperFunctions
 
-import com.example.tryggaklassenpod.dataClasses.PasswordValidationState
-//inspired by Daniel Atitienei video on YT
+//inspired by Daniel Atitienei's video on YT
 class ValidatePassword {
 
     fun execute(password: String): Boolean {

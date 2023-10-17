@@ -360,6 +360,8 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 
     var passValid = ValidatePassword()
     var showBadPass by remember { mutableStateOf(false) }
+    var InsertionStatusMessage by remember { mutableStateOf(false) } // Track if the message is shown
+
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -409,9 +411,11 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                     name = ""
                     password = ""
                     school = ""
+                    InsertionStatusMessage = true
                 }
                 else{
                     showBadPass = true
+                    InsertionStatusMessage = false
                 }
 
 
@@ -423,22 +427,26 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
         if(showBadPass){
             Text(
-                text = "Please make sure your password is:\n- At least 8 characters long\n- Has at least 1 capital letter\n- Has at least one number",
+                text = "Please make sure your password is:\n" +
+                        "- At least 8 characters long\n" +
+                        "- Has at least one capital letter\n" +
+                        "- Has at least one number",
                 color = Color.Red)
         }
-
-        // Display the message under the button
-        val message = viewModel.message.value
-        if (message is InsertAdminDataState.Success) {
-            Text(
-                text = (message).message,
-                color = Color(0xFF46B44A) // Color for success message
-            )
-        } else if (message is InsertAdminDataState.Failure) {
-            Text(
-                text = (message).error,
-                color = Color.Red // Color for error message
-            )
+        if(InsertionStatusMessage) {
+            // Display the message under the button
+            val message = viewModel.message.value
+            if (message is InsertAdminDataState.Success) {
+                Text(
+                    text = (message).message,
+                    color = Color(0xFF46B44A) // Color for success message
+                )
+            } else if (message is InsertAdminDataState.Failure) {
+                Text(
+                    text = (message).error,
+                    color = Color.Red // Color for error message
+                )
+            }
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
