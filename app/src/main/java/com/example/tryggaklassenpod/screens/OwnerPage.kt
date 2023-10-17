@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.AdminDataClass
+import com.example.tryggaklassenpod.helperFunctions.ValidatePassword
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
@@ -357,7 +358,8 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     var commentReviewer by remember { mutableStateOf(true) }
     var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
 
-
+    var passValid = ValidatePassword()
+    var showBadPass by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -400,20 +402,30 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 
         Button(
             onClick = {
-                viewModel.addNewAdmin(name, school, password, permissions)
-                name = ""
-                password = ""
-                school = ""
-                podcastPoster = true
-                podcastEditor = true
-                commentReviewer = true
+                val passStatus = passValid.execute(password)
+                if (passStatus){
+                    viewModel.addNewAdmin(name, school, password, permissions)
+                    showBadPass = false
+                    name = ""
+                    password = ""
+                    school = ""
+                }
+                else{
+                    showBadPass = true
+                }
+
+
             }
         ) {
             Text("Add Admin")
         }
 
-
         Spacer(modifier = Modifier.height(8.dp))
+        if(showBadPass){
+            Text(
+                text = "Please make sure your password is:\n- At least 8 characters long\n- Has at least 1 capital letter\n- Has at least one number",
+                color = Color.Red)
+        }
 
         // Display the message under the button
         val message = viewModel.message.value
