@@ -417,8 +417,6 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                     showBadPass = true
                     InsertionStatusMessage = false
                 }
-
-
             }
         ) {
             Text("Add Admin")
