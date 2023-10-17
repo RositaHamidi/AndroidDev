@@ -5,4 +5,6 @@
     <string name="play_pause">Play/Pause</string>
     <string name="forward30">Go forward 30 seconds</string>
     <string name="back">Back</string>
+    <string name="expand_comments">Expand comments</string>
+    <string name="placeholder_comments">Placeholder image for comments</string>
 </resources>

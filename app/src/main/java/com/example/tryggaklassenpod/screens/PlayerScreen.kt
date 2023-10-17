@@ -117,8 +117,8 @@ fun PlayerScreen(
             }
             item {
                 Spacer(modifier = Modifier.weight(1f))
-//                episode?.comments?.let { CommentsSection(comments = it) }
-//                Spacer(modifier = Modifier.weight(1f))
+                episode?.comments?.let { CommentsSection(comments = it) }
+                Spacer(modifier = Modifier.height(28.dp))
             }
         }
     }
