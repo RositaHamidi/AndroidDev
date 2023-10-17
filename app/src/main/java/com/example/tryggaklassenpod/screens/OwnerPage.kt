@@ -1,5 +1,7 @@
 package com.example.tryggaklassenpod.screens
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -32,6 +34,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
@@ -72,7 +76,6 @@ fun TabbedPage(viewModel: OwnerPageViewModel) {
                     .fillMaxHeight()
                     .verticalScroll(rememberScrollState())
                     .padding(it),
-                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 // Create the TabRow with tabs
@@ -274,6 +277,10 @@ fun AdminItem(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var editable by remember { mutableStateOf(false)}
+    var updatedInfo by remember { mutableStateOf(mapOf<String, String>()) }
+    //var updatedInfo = remember { mutableStateOf(mapOf("name" to "", "password" to "", "school" to ""))}
+    var updatedPermissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
     Card(
         modifier = modifier
     ) {
@@ -292,7 +299,7 @@ fun AdminItem(
                     .padding(dimensionResource(R.dimen.padding_small))
             ) {
                 //Log.i(TAG, "Hi " + admin.username)
-                AdminInformation(admin.username, admin.school)
+                updatedInfo = AdminInformation(editable, admin.username, admin.school, admin.password)
                 Spacer(Modifier.weight(1f))
                 AdminItemButton(
                     expanded = expanded,
@@ -300,8 +307,9 @@ fun AdminItem(
                 )
             }
             if (expanded) {
+                updatedPermissions = ViewAdminPermissions(editable, admin.permissions)
                 if (adminId != null) {
-                    AdminOptions(adminId, admin.permissions, viewModel,  modifier = Modifier.padding(
+                    editable = AdminOptions( adminId, updatedPermissions, updatedInfo, viewModel,  modifier = Modifier.padding(
                         start = dimensionResource(R.dimen.padding_medium),
                         top = dimensionResource(R.dimen.padding_small),
                         bottom = dimensionResource(R.dimen.padding_medium),
@@ -313,29 +321,105 @@ fun AdminItem(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminInformation(
+    editable:Boolean,
     adminName: String?,
     adminSchool: String?,
+    adminPass: String?,
     modifier: Modifier = Modifier
-) {
+): Map<String, String> {
+    var name by remember { mutableStateOf(adminName) }
+    var password by remember { mutableStateOf(adminPass) }
+    var school by remember { mutableStateOf(adminSchool) }
+
+    var newName by remember { mutableStateOf("") }
+    var newPass by remember { mutableStateOf("") }
+    var newSchool by remember { mutableStateOf("")}
+
+    var newInfo by remember { mutableStateOf<Map<String, String>>((
+            mapOf(
+                "name" to adminName.orEmpty(),
+                "password" to adminPass.orEmpty(),
+                "school" to adminSchool.orEmpty()
+            ))) }
+
     Column(modifier = modifier) {
-        if (adminName != null) {
-            Text(
-                text = adminName,
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+        if(!editable){
+            if (adminName != null) {
+                Row(verticalAlignment = Alignment.CenterVertically){
+                    Text(
+                        text = "Name: " + name,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+                    )
+                }
+
+            }
+            if (adminSchool != null) {
+                Text(
+                    text = "School: "+ school,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+                )
+            }
+            if (adminPass != null) {
+                Text(
+                    text = "Password: "+ password,
+                    style = MaterialTheme.typography.titleSmall,
+                    //
+                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+                )
+            }
+        } else{
+
+            name?.let {
+                TextField(
+                    value = it,
+                    onValueChange = {
+                        newName = it
+                        name = it
+                        if(name != null){
+                            newInfo = newInfo + mapOf("name" to newName)
+                        }
+
+                    },
+                    label = { Text("Name") }
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = school!!,
+                onValueChange = {
+                    newSchool = it
+                    school = it
+                    if(school != null){
+                        newInfo = newInfo + mapOf("school" to newSchool)
+                    }
+
+                                },
+                label = { Text("School") }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            TextField(
+                value = password!!,
+                onValueChange = {
+                    newPass = it
+                    password = it
+                    if(password != null){
+                        newInfo = newInfo + mapOf("password" to newPass)
+                    }
+                                },
+                label = { Text("Password") }
             )
         }
-        if (adminSchool != null) {
-            Text(
-                text = adminSchool,
-                style = MaterialTheme.typography.titleSmall,
-                //
-                modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
-            )
-        }
+
     }
+    return newInfo
 }
 @Composable
 private fun AdminItemButton(
@@ -354,9 +438,10 @@ private fun AdminItemButton(
         )
     }
 }
-
 @Composable
-fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, viewModel: OwnerPageViewModel, modifier: Modifier = Modifier) {
+fun ViewAdminPermissions(editable:Boolean, adminPermissions:Map<String, Boolean>?): Map<String, Boolean> {
+
+
     var podcastPoster by remember { mutableStateOf(adminPermissions?.get("podcastPoster")) }
     var podcastEditor by remember { mutableStateOf(adminPermissions?.get("podcastEditor")) }
     var commentReviewer by remember { mutableStateOf(adminPermissions?.get("commentReviewer"))}
@@ -365,9 +450,27 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, viewMod
     var newPodcastEditorState by remember { mutableStateOf(true) }
     var newCommentReviewerState by remember { mutableStateOf(true)}
 
-    var enableSwitcher by remember { mutableStateOf(false) }
-
     var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
+
+    newPodcastPosterState = podcastPoster?.let { SentenceSwitch(it, editable, "Can post podcasts") }!!
+    permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
+
+    newPodcastEditorState = podcastEditor?.let { SentenceSwitch(it, editable,  "Can edit podcasts") }!!
+    permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
+
+    newCommentReviewerState = commentReviewer?.let { SentenceSwitch(it, editable,  "Can review comments") }!!
+    permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
+    Spacer(modifier = Modifier.height(8.dp))
+    return permissions
+}
+@Composable
+fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, adminInfo:Map<String, String>?, viewModel: OwnerPageViewModel, modifier: Modifier = Modifier):Boolean {
+    var editable by remember { mutableStateOf(false)}
+
+    var buttonText by remember { mutableStateOf("Enable editing info") }
+    Log.i(TAG, "Hi " + adminPermissions)
+    Log.i(TAG, "Hi " + adminInfo)
+
     Column(
         modifier = modifier
     ) {
@@ -386,15 +489,22 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, viewMod
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                newPodcastPosterState = podcastPoster?.let { SentenceSwitch(it, enableSwitcher, "Can post podcasts") }!!
-                permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
 
-                newPodcastEditorState = podcastEditor?.let { SentenceSwitch(it, enableSwitcher,  "Can edit podcasts") }!!
-                permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
+                Button(
+                    onClick = {
+                        if(editable){
+                            buttonText = "Enable editing info"
+                            editable = false
+                        }else{
+                            // Edit the admin in database
+                            editable = true
+                            buttonText = "Submit changes"
+                        }
 
-                newCommentReviewerState = commentReviewer?.let { SentenceSwitch(it, enableSwitcher,  "Can review comments") }!!
-                permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
-                Spacer(modifier = Modifier.height(8.dp))
+                    }
+                ) {
+                    Text(buttonText)
+                }
                 Button(
                     onClick = {
                         // Remove the admin from database
@@ -403,20 +513,12 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, viewMod
                 ) {
                     Text("Delete Admin")
                 }
-                Button(
-                    onClick = {
-                        // Edit the admin in database
-                        enableSwitcher = true
-                    }
-                ) {
-                    Text("Edit Admin info")
-                }
-
 
             }
 
         }
     }
+    return editable
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
