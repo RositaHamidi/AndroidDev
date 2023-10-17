@@ -12,7 +12,6 @@ class ImageUploader(
             if (success) {
                 // Generate a unique storage reference for the image file
                 val imageStorageRef = storageRef.child("images/${imageUri.lastPathSegment}")
-
                 // Upload the image file to Firebase Storage
                 val uploadTask = imageStorageRef.putFile(imageUri)
 

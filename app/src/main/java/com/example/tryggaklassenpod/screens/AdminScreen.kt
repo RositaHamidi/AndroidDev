@@ -67,7 +67,7 @@ fun AdminScreen(navController: NavController) {
                                 .width(180.dp)
                                 .padding(8.dp),
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = MaterialTheme.colorScheme.tertiary
                             ),
                             onClick = {
                                 navController.navigate("uploadPodcast")
@@ -96,7 +96,7 @@ fun AdminScreen(navController: NavController) {
                                 .width(180.dp)
                                 .padding(8.dp),
                             colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = MaterialTheme.colorScheme.tertiary
                             ),
                             onClick = {
                                 navController.navigate("reviewComments")
@@ -125,10 +125,10 @@ fun AdminScreen(navController: NavController) {
                         .width(180.dp)
                         .padding(8.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.tertiary
                     ),
                     onClick = {
-                        // Handle navigation to the "Old Podcasts" screen
+                        navController.navigate("PodcastsList")
                     }
                 ) {
                     Column(

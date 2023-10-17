@@ -6,6 +6,8 @@ sealed class Screen(val route: String){
     object AboutScreen: Screen("aboutScreen")
     object AdminScreen: Screen("adminScreen")
     object UploadPodcast: Screen("uploadPodcast")
+    object PodcastsList: Screen("podcastsList")
+    object EditPodcasts: Screen("editPodcasts")
 
     /*
     add your screens here as well as the Navigation.kt file
