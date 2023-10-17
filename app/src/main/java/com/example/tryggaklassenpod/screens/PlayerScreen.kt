@@ -54,7 +54,7 @@ fun PlayerScreen(
         viewModel.episodeUrl = episode.episodeUrl
     }
 
-    DisposableEffect(viewModel.episodeUrl) {
+    DisposableEffect(episodeId) {
         onDispose {
             viewModel.isPlaying = false
             viewModel.player.releasePlayer()
