@@ -5,8 +5,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.tryggaklassenpod.dataClasses.AdminDataClass
+import com.example.tryggaklassenpod.sealed.DeleteAdminState
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
+import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -17,28 +19,56 @@ class OwnerPageViewModel : ViewModel() {
     private val _message = mutableStateOf<InsertAdminDataState?>(null)
     val message: State<InsertAdminDataState?> = _message
 
-    val response: MutableState<FetchingAdminDataState> = mutableStateOf(FetchingAdminDataState.Empty)
+    private val _message2 = mutableStateOf<DeleteAdminState?>(null)
+    val deleteMessage: State<DeleteAdminState?> = _message2
+
+    val fetchAdminresponse: MutableState<FetchingAdminDataState> = mutableStateOf(FetchingAdminDataState.Empty)
+    val fetchIDresponse: MutableState<FetchingAdminIDsState> = mutableStateOf(FetchingAdminIDsState.Empty)
 
     init{
         fetchAdmins()
+        fetchAdminsIDs()
     }
 
     private fun fetchAdmins() {
         val tempList = mutableListOf<AdminDataClass>()
-        response.value = FetchingAdminDataState.Loading
+        fetchAdminresponse.value = FetchingAdminDataState.Loading
         FirebaseDatabase.getInstance().getReference("admins")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (dataSnap in snapshot.children) {
+
                         val adminItem = dataSnap.getValue(AdminDataClass::class.java)
                         if (adminItem != null)
+
                             tempList.add(adminItem)
                     }
-                    response.value = FetchingAdminDataState.Success(tempList)
+                    fetchAdminresponse.value = FetchingAdminDataState.Success(tempList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    response.value = FetchingAdminDataState.Failure(error.message)
+                    fetchAdminresponse.value = FetchingAdminDataState.Failure(error.message)
+                }
+
+            })
+    }
+
+    private fun fetchAdminsIDs() {
+        val tempList = mutableListOf<String>()
+        fetchIDresponse.value = FetchingAdminIDsState.Loading
+        FirebaseDatabase.getInstance().getReference("admins")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (dataSnap in snapshot.children) {
+                        val adminID = dataSnap.key
+                        if (adminID != null)
+                            tempList.add(adminID)
+                    }
+                    fetchIDresponse.value = FetchingAdminIDsState.Success(tempList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    fetchIDresponse.value = FetchingAdminIDsState.Failure(error.message)
                 }
 
             })
@@ -84,25 +114,19 @@ class OwnerPageViewModel : ViewModel() {
 
     }
 
-    /*private fun addAdminPermissions(adminId:String) {
-        val database = FirebaseDatabase.getInstance()
-        val adminsPerRef = database.getReference("permissions")
-
-        // Your data to be inserted
-        val data = PermissionsDataClass(adminId)
-
-        // Generate a new child location with a unique key
-        val newAdminPerRef = adminsPerRef.push()
-
-        // Set the key-value pairs under the generated key
-        newAdminPerRef.setValue(data).addOnSuccessListener {
-            // Data has been successfully inserted with an automatically generated ID
-            val generatedKey = newAdminPerRef.key // Get the generated key
-            println("Data has been inserted to permissions with ID: $generatedKey")
-
-        }.addOnFailureListener { error ->
-            // Handle the error if the data insertion fails
-            println("Error inserting data: $error")
+    fun deleteAdminById(id:String){
+        try {
+            val myRef = FirebaseDatabase.getInstance().getReference("admins")
+            myRef.child(id).removeValue().addOnSuccessListener {
+                println("Admin deleted")
+                _message2.value = DeleteAdminState.Success("Admin deleted successfully")
+            }.addOnFailureListener { error ->
+                // Handle the error if the data insertion fails
+                println("Error deleteing admin: $error")
+                _message2.value = DeleteAdminState.Failure("Admin couldn't be deleted")
+            }
+        } catch (e: Exception) {
+            _message2.value = DeleteAdminState.Failure("An error occurred.")
         }
-    }*/
+    }
 }

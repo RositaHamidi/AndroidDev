@@ -1,7 +1,5 @@
 package com.example.tryggaklassenpod.screens
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -23,7 +21,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -41,6 +39,7 @@ import com.example.tryggaklassenpod.dataClasses.AdminDataClass
 import com.example.tryggaklassenpod.helperFunctions.ValidatePassword
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
+import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
 
@@ -120,6 +119,7 @@ fun TabbedPage(viewModel: OwnerPageViewModel) {
 fun TabContent1(viewModel: OwnerPageViewModel) {
     // test empty list
     // var admins by remember { mutableStateOf(mutableListOf<Map<String, String>>()) }
+    var adminIds by remember { mutableStateOf(mutableListOf<String>()) }
     val isDarkTheme = isSystemInDarkTheme()
 
     val backgroundColor = if (isDarkTheme) {
@@ -150,7 +150,42 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                     shape = RoundedCornerShape(15.dp)
                 )
         ){
-            when (val result = viewModel.response.value) {
+            when (val result2 = viewModel.fetchIDresponse.value) {
+                is FetchingAdminIDsState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+                is FetchingAdminIDsState.Success -> {
+                    adminIds = result2.data
+                }
+                is FetchingAdminIDsState.Failure -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = result2.message,
+                            fontSize = 16.sp,
+                        )
+                    }
+                }
+                else -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "Error Fetching data",
+                            fontSize = 16.sp,
+                        )
+                    }
+                }
+            }
+            when (val result = viewModel.fetchAdminresponse.value) {
                 is FetchingAdminDataState.Loading -> {
                     Box(
                         modifier = Modifier.fillMaxSize(),
@@ -160,7 +195,7 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                     }
                 }
                 is FetchingAdminDataState.Success -> {
-                    ShowLazyList(result.data)
+                    ShowLazyList(viewModel, result.data, adminIds)
                 }
                 is FetchingAdminDataState.Failure -> {
                     Box(
@@ -214,17 +249,18 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
 }
 
 @Composable
-fun ShowLazyList(admins: MutableList<AdminDataClass>) {
+fun ShowLazyList(viewModel: OwnerPageViewModel, admins: MutableList<AdminDataClass>, adminIds: MutableList<String>) {
     LazyColumn {
-        items(admins) { admin ->
-            AdminItem(admin,
+        itemsIndexed(admins) { index, admin ->
+            val adminId = adminIds.getOrNull(index) // Get the corresponding admin ID
+            AdminItem(viewModel, admin, adminId, // Pass both admin and adminId to your AdminItem composable
                 modifier = Modifier
-                .padding(
-                    top = dimensionResource(R.dimen.padding_small),
-                    bottom = dimensionResource(R.dimen.padding_small),
-                    start = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium)
-                )
+                    .padding(
+                        top = dimensionResource(R.dimen.padding_small),
+                        bottom = dimensionResource(R.dimen.padding_small),
+                        start = dimensionResource(R.dimen.padding_medium),
+                        end = dimensionResource(R.dimen.padding_medium)
+                    )
             )
         }
     }
@@ -232,7 +268,9 @@ fun ShowLazyList(admins: MutableList<AdminDataClass>) {
 
 @Composable
 fun AdminItem(
+    viewModel: OwnerPageViewModel,
     admin: AdminDataClass,
+    adminId: String?,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -262,12 +300,14 @@ fun AdminItem(
                 )
             }
             if (expanded) {
-                AdminOptions(modifier = Modifier.padding(
-                    start = dimensionResource(R.dimen.padding_medium),
-                    top = dimensionResource(R.dimen.padding_small),
-                    bottom = dimensionResource(R.dimen.padding_medium),
-                    end = dimensionResource(R.dimen.padding_medium)
-                ))
+                if (adminId != null) {
+                    AdminOptions(adminId, admin.permissions, viewModel,  modifier = Modifier.padding(
+                        start = dimensionResource(R.dimen.padding_medium),
+                        top = dimensionResource(R.dimen.padding_small),
+                        bottom = dimensionResource(R.dimen.padding_medium),
+                        end = dimensionResource(R.dimen.padding_medium)
+                    ))
+                }
             }
         }
     }
@@ -316,7 +356,18 @@ private fun AdminItemButton(
 }
 
 @Composable
-fun AdminOptions(modifier: Modifier = Modifier) {
+fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, viewModel: OwnerPageViewModel, modifier: Modifier = Modifier) {
+    var podcastPoster by remember { mutableStateOf(adminPermissions?.get("podcastPoster")) }
+    var podcastEditor by remember { mutableStateOf(adminPermissions?.get("podcastEditor")) }
+    var commentReviewer by remember { mutableStateOf(adminPermissions?.get("commentReviewer"))}
+
+    var newPodcastPosterState by remember { mutableStateOf(true) }
+    var newPodcastEditorState by remember { mutableStateOf(true) }
+    var newCommentReviewerState by remember { mutableStateOf(true)}
+
+    var enableSwitcher by remember { mutableStateOf(false) }
+
+    var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
     Column(
         modifier = modifier
     ) {
@@ -329,20 +380,41 @@ fun AdminOptions(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Button(
-                onClick = {
-                    // Remove the admin from database
-                }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text("Delete Admin")
-            }
-            Button(
-                onClick = {
-                    // Edit the admin in database
+                newPodcastPosterState = podcastPoster?.let { SentenceSwitch(it, enableSwitcher, "Can post podcasts") }!!
+                permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
+
+                newPodcastEditorState = podcastEditor?.let { SentenceSwitch(it, enableSwitcher,  "Can edit podcasts") }!!
+                permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
+
+                newCommentReviewerState = commentReviewer?.let { SentenceSwitch(it, enableSwitcher,  "Can review comments") }!!
+                permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = {
+                        // Remove the admin from database
+                        viewModel.deleteAdminById(adminId)
+                    }
+                ) {
+                    Text("Delete Admin")
                 }
-            ) {
-                Text("Edit Admin info")
+                Button(
+                    onClick = {
+                        // Edit the admin in database
+                        enableSwitcher = true
+                    }
+                ) {
+                    Text("Edit Admin info")
+                }
+
+
             }
+
         }
     }
 }
@@ -356,6 +428,9 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     var podcastPoster by remember { mutableStateOf(true) }
     var podcastEditor by remember { mutableStateOf(true) }
     var commentReviewer by remember { mutableStateOf(true) }
+    var newPodcastPosterState by remember { mutableStateOf(true) }
+    var newPodcastEditorState by remember { mutableStateOf(true) }
+    var newCommentReviewerState by remember { mutableStateOf(true)}
     var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
 
     var passValid = ValidatePassword()
@@ -386,9 +461,18 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
             onValueChange = { school = it },
             label = { Text("School") }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-        podcastPoster = SentenceSwitch("Can post podcasts")
+        newPodcastPosterState = podcastPoster?.let { SentenceSwitch(it, true,"Can post podcasts") }!!
+        permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
+
+        newPodcastEditorState = podcastEditor?.let { SentenceSwitch(it, true,"Can edit podcasts") }!!
+        permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
+
+        newCommentReviewerState = commentReviewer?.let { SentenceSwitch(it, true, "Can review comments") }!!
+        permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
+
+        /*podcastPoster = SentenceSwitch("Can post podcasts")
         permissions = permissions + mapOf("podcastPoster" to podcastPoster)
         //Log.i(TAG, "Hi " + podcastPoster)
 
@@ -398,7 +482,7 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 
         commentReviewer = SentenceSwitch("Can review comments")
         permissions = permissions + mapOf("commentReviewer" to commentReviewer)
-        //Log.i(TAG, "Hi " + permissions)
+        //Log.i(TAG, "Hi " + permissions)*/
 
 
 
@@ -406,6 +490,8 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
             onClick = {
                 val passStatus = passValid.execute(password)
                 if (passStatus){
+                    //Arro add your hashing here then replace the password in the
+                    // call to the addNewAdmin method.
                     viewModel.addNewAdmin(name, school, password, permissions)
                     showBadPass = false
                     name = ""
@@ -451,8 +537,8 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 }
 
 @Composable
-fun SentenceSwitch(sentence:String, modifier: Modifier = Modifier):Boolean {
-    var checked by remember { mutableStateOf(true) }
+fun SentenceSwitch(startingState:Boolean, enableSwitcher:Boolean, sentence:String, modifier: Modifier = Modifier):Boolean {
+    var checked by remember { mutableStateOf(startingState) }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -472,7 +558,10 @@ fun SentenceSwitch(sentence:String, modifier: Modifier = Modifier):Boolean {
         Switch(
             checked = checked,
             onCheckedChange = {
-                checked = it
+                if (enableSwitcher) {
+                    checked = it
+                }
+
             },
             thumbContent = if (checked) {
                 {
