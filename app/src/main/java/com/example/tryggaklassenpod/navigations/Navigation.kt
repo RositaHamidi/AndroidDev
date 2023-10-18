@@ -11,10 +11,12 @@ import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.AdminScreen
+import com.example.tryggaklassenpod.screens.CommentReviewScreen
 import com.example.tryggaklassenpod.screens.UploadPodcast
 import com.example.tryggaklassenpod.screens.EditPodcasts
 import com.example.tryggaklassenpod.screens.PodcastsList
 import com.example.tryggaklassenpod.screens.PlayerScreen
+import com.example.tryggaklassenpod.screens.CommentReviewScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
 
 
@@ -46,6 +48,7 @@ fun Navigation() {
         composable(route = Screen.PodcastsList.route){
             PodcastsList(navController = navController)
         }
+
         composable(route = Screen.EditPodcasts.route){
                 backStackEntry ->
             val podcastId = backStackEntry.arguments?.getString("podcastId") ?: ""
@@ -64,6 +67,12 @@ fun Navigation() {
                 navController = navController,
                 podcastId = podcastId ?: ""
             )
+        }
+        composable(
+            route = Screen.CommentReviewScreen.route
+        ) { backStackEntry ->
+            val episodeId = backStackEntry.arguments?.getString("episodeId")?.toIntOrNull() ?: 0
+            CommentReviewScreen(episodeId = episodeId)
         }
 
 

@@ -16,7 +16,7 @@ fun getPodcastDetails(podcastId: String, callback: (Episode) -> Unit) {
             if (podcastDetails != null) {
                 callback(podcastDetails)
             }
-        }
+       }
 
         override fun onCancelled(error: DatabaseError) {
             // Handle the error if the data fetching is unsuccessful

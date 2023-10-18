@@ -99,7 +99,7 @@ fun AdminScreen(navController: NavController) {
                                 containerColor = MaterialTheme.colorScheme.tertiary
                             ),
                             onClick = {
-                                navController.navigate("reviewComments")
+                                navController.navigate("CommentReviewScreen")
                             }
                         ) {
                             Column(

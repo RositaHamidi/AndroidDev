@@ -8,7 +8,7 @@ sealed class Screen(val route: String){
     object UploadPodcast: Screen("uploadPodcast")
     object PodcastsList: Screen("podcastsList")
     object EditPodcasts: Screen("editPodcasts")
-
+    object CommentReviewScreen: Screen("CommentReviewScreen")
     /*
     add your screens here as well as the Navigation.kt file
      */
