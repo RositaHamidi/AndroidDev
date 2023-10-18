@@ -1,7 +1,9 @@
 package com.example.tryggaklassenpod.screens
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -40,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.AdminDataClass
+import com.example.tryggaklassenpod.helperFunctions.PasswordHash
 import com.example.tryggaklassenpod.helperFunctions.ValidatePassword
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
@@ -47,6 +50,7 @@ import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun OwnerPageContent(modifier: Modifier = Modifier){
     val viewModel: OwnerPageViewModel = viewModel()
@@ -58,6 +62,7 @@ fun OwnerPageContent(modifier: Modifier = Modifier){
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabbedPage(viewModel: OwnerPageViewModel) {
@@ -118,6 +123,7 @@ fun TabbedPage(viewModel: OwnerPageViewModel) {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TabContent1(viewModel: OwnerPageViewModel) {
     // test empty list
@@ -147,7 +153,7 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                 .clip(shape = RoundedCornerShape(20.dp))
                 .padding(10.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(backgroundColor, shape = RoundedCornerShape(15.dp))
+                //.background(backgroundColor, shape = RoundedCornerShape(15.dp))
                 .border(
                     BorderStroke(2.dp, SolidColor(backgroundColor)),
                     shape = RoundedCornerShape(15.dp)
@@ -495,6 +501,9 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, adminIn
                         if(editable){
                             buttonText = "Enable editing info"
                             editable = false
+                            //val hashedPass = PasswordHash.hashPassword(adminInfo.)
+                            //Log.i(TAG, "Hi " + hashedPass.first)
+                            //viewModel.updateAdmin(name, school, hashedPass.first, permissions)
                         }else{
                             // Edit the admin in database
                             editable = true
@@ -521,6 +530,7 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, adminIn
     return editable
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
@@ -594,7 +604,9 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                 if (passStatus){
                     //Arro add your hashing here then replace the password in the
                     // call to the addNewAdmin method.
-                    viewModel.addNewAdmin(name, school, password, permissions)
+                    val hashedPass = PasswordHash.hashPassword(password)
+                    Log.i(TAG, "Hi " + hashedPass.first)
+                    viewModel.addNewAdmin(name, school, hashedPass.first, permissions)
                     showBadPass = false
                     name = ""
                     password = ""
