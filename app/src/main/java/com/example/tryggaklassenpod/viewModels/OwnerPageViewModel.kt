@@ -9,6 +9,7 @@ import com.example.tryggaklassenpod.sealed.DeleteAdminState
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
+import com.example.tryggaklassenpod.sealed.UpdateAdminState
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -21,6 +22,9 @@ class OwnerPageViewModel : ViewModel() {
 
     private val _message2 = mutableStateOf<DeleteAdminState?>(null)
     val deleteMessage: State<DeleteAdminState?> = _message2
+
+    private val _message3 = mutableStateOf<UpdateAdminState?>(null)
+    val updateMessage: State<UpdateAdminState?> = _message3
 
     val fetchAdminresponse: MutableState<FetchingAdminDataState> = mutableStateOf(FetchingAdminDataState.Empty)
     val fetchIDresponse: MutableState<FetchingAdminIDsState> = mutableStateOf(FetchingAdminIDsState.Empty)
@@ -110,8 +114,6 @@ class OwnerPageViewModel : ViewModel() {
             _message.value = InsertAdminDataState.Failure("Fill all the fields please")
         }
 
-
-
     }
 
     fun deleteAdminById(id:String){
@@ -127,6 +129,32 @@ class OwnerPageViewModel : ViewModel() {
             }
         } catch (e: Exception) {
             _message2.value = DeleteAdminState.Failure("An error occurred.")
+        }
+    }
+
+    fun editAdminInfo(adminID:String, username: String, password: String, school: String, permissions: Map<String, Boolean>) {
+        try {
+            // Your data to be inserted
+            val updatedAdmin = mapOf<String, Any>(
+                "username" to username,
+                "password" to password,
+                "school" to school,
+                "role" to "admin", // Automatically set the role as "admin"
+                "permissions" to permissions
+            )
+
+            val myRef = FirebaseDatabase.getInstance().getReference("admins")
+            myRef.child(adminID).updateChildren(updatedAdmin).addOnSuccessListener {
+                // Data has been successfully inserted with an automatically generated ID
+                println("Data has been updated for admin with ID: $adminID")
+                _message3.value = UpdateAdminState.Success("Admin updated successfully")
+            }.addOnFailureListener { error ->
+                // Handle the error if the data insertion fails
+                println("Error inserting data: $error")
+                _message3.value = UpdateAdminState.Failure("Admin couldn't be updated")
+            }
+        } catch (e: Exception) {
+            _message3.value = UpdateAdminState.Failure("An error occurred.")
         }
     }
 }

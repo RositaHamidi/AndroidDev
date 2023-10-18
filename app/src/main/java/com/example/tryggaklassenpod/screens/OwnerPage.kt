@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.screens
 
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.os.Build
 import android.util.Log
@@ -48,6 +49,8 @@ import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -309,11 +312,11 @@ fun AdminItem(
                     .padding(dimensionResource(R.dimen.padding_small))
             ) {
                 //Log.i(TAG, "Hi " + admin.username)
-                var pairRecieved = AdminInformation(editable, admin.username!!, admin.school!!,
+                val pairReceived = AdminInformation(editable, admin.username!!, admin.school!!,
                     admin.password!!
                 )
-                updatedInfo = pairRecieved.first
-                keepUpdating = pairRecieved.second
+                updatedInfo = pairReceived.first
+                keepUpdating = pairReceived.second
                 Spacer(Modifier.weight(1f))
                 AdminItemButton(
                     expanded = expanded,
@@ -382,17 +385,15 @@ fun AdminInformation(
                 )
             }
         } else{
-
-
             TextField(
                 value = name,
                 onValueChange = {
                     newName = it
                     name = it
-                    if(name != null){
-                        newInfo = newInfo + mapOf("name" to newName)
+                    newInfo = if(name != null){
+                        newInfo + mapOf("name" to newName)
                     } else {
-                        newInfo = newInfo + mapOf("name" to adminName)
+                        newInfo + mapOf("name" to adminName)
                     }
 
                 },
@@ -406,12 +407,13 @@ fun AdminInformation(
                 onValueChange = {
                     newSchool = it
                     school = it
-                    if(school != null){
-                        newInfo = newInfo + mapOf("school" to newSchool)
-                    } else {
-                        newInfo = newInfo + mapOf("school" to adminSchool)
-                    }
-                },
+                    newInfo =
+                        if(school != null){
+                            newInfo + mapOf("school" to newSchool)
+                        } else {
+                            newInfo + mapOf("school" to adminSchool)
+                        }
+                                },
                 label = { Text("School") }
             )
 
@@ -472,9 +474,9 @@ private fun AdminItemButton(
 fun ViewAdminPermissions(editable:Boolean, adminPermissions:Map<String, Boolean>?): Map<String, Boolean> {
 
 
-    var podcastPoster by remember { mutableStateOf(adminPermissions?.get("podcastPoster")) }
-    var podcastEditor by remember { mutableStateOf(adminPermissions?.get("podcastEditor")) }
-    var commentReviewer by remember { mutableStateOf(adminPermissions?.get("commentReviewer"))}
+    val podcastPoster by remember { mutableStateOf(adminPermissions?.get("podcastPoster")) }
+    val podcastEditor by remember { mutableStateOf(adminPermissions?.get("podcastEditor")) }
+    val commentReviewer by remember { mutableStateOf(adminPermissions?.get("commentReviewer"))}
 
     var newPodcastPosterState by remember { mutableStateOf(true) }
     var newPodcastEditorState by remember { mutableStateOf(true) }
@@ -533,9 +535,15 @@ fun AdminOptions(
                             if(editable){
                                 buttonText = "Edit info"
                                 editable = false
-                                //val hashedPass = PasswordHash.hashPassword(adminInfo.)
-                                //Log.i(TAG, "Hi " + hashedPass.first)
-                                //viewModel.updateAdmin(name, school, hashedPass.first, permissions)
+                                if (adminPermissions != null) {
+                                    viewModel.editAdminInfo(
+                                        adminId,
+                                        adminInfo?.get("name")!!,
+                                        adminInfo["password"]!!,
+                                        adminInfo["school"]!!,
+                                        adminPermissions
+                                    )
+                                }
                             }else{
                                 // Edit the admin in database
                                 editable = true
@@ -569,15 +577,15 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
     var name by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var school by remember { mutableStateOf("") }
-    var podcastPoster by remember { mutableStateOf(true) }
-    var podcastEditor by remember { mutableStateOf(true) }
-    var commentReviewer by remember { mutableStateOf(true) }
+    val podcastPoster by remember { mutableStateOf(true) }
+    val podcastEditor by remember { mutableStateOf(true) }
+    val commentReviewer by remember { mutableStateOf(true) }
     var newPodcastPosterState by remember { mutableStateOf(true) }
     var newPodcastEditorState by remember { mutableStateOf(true) }
     var newCommentReviewerState by remember { mutableStateOf(true)}
     var permissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
 
-    var passValid = ValidatePassword()
+    val passValid = ValidatePassword()
     var showBadPass by remember { mutableStateOf(false) }
     var InsertionStatusMessage by remember { mutableStateOf(false) } // Track if the message is shown
 
@@ -607,13 +615,13 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
         )
         Spacer(modifier = Modifier.height(20.dp))
 
-        newPodcastPosterState = podcastPoster?.let { SentenceSwitch(it, true,"Can post podcasts") }!!
+        newPodcastPosterState = podcastPoster.let { SentenceSwitch(it, true,"Can post podcasts") }!!
         permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
 
-        newPodcastEditorState = podcastEditor?.let { SentenceSwitch(it, true,"Can edit podcasts") }!!
+        newPodcastEditorState = podcastEditor.let { SentenceSwitch(it, true,"Can edit podcasts") }!!
         permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
 
-        newCommentReviewerState = commentReviewer?.let { SentenceSwitch(it, true, "Can review comments") }!!
+        newCommentReviewerState = commentReviewer.let { SentenceSwitch(it, true, "Can review comments") }!!
         permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
 
         /*podcastPoster = SentenceSwitch("Can post podcasts")
@@ -662,18 +670,14 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                 color = Color.Red)
         }
         if(InsertionStatusMessage) {
-            // Display the message under the button
+            // Display the toast with a message
             val message = viewModel.message.value
             if (message is InsertAdminDataState.Success) {
-                Text(
-                    text = (message).message,
-                    color = Color(0xFF46B44A) // Color for success message
-                )
+                val toast = CallToast(sentence = (message).message)
+                toast.show()
             } else if (message is InsertAdminDataState.Failure) {
-                Text(
-                    text = (message).error,
-                    color = Color.Red // Color for error message
-                )
+                val toast = CallToast(sentence = (message).error)
+                toast.show()
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -687,11 +691,6 @@ fun SentenceSwitch(startingState:Boolean, enableSwitcher:Boolean, sentence:Strin
     var checked by remember { mutableStateOf(startingState) }
     var switchColor by remember { mutableStateOf(Color(0xFF006971).copy(0.5f)) }
 
-    val backgroundColor = if (isDarkTheme) {
-        switchColor = Color(0xFF4DD8E5) // Dark theme background color
-    } else {
-        switchColor= Color(0xFF006971) // Light theme background color
-    }
     if(!enableSwitcher && isDarkTheme){
         switchColor = Color(0xFF4DD8E5).copy(0.4f)
     } else if(enableSwitcher && isDarkTheme ){
@@ -744,12 +743,18 @@ fun SentenceSwitch(startingState:Boolean, enableSwitcher:Boolean, sentence:Strin
     }
     return checked
 }
-fun checkPass(pass:String){
-    //Check password
+@SuppressLint("ShowToast")
+@Composable
+fun CallToast(sentence:String):Toast{
+    val context = LocalContext.current
+    val toast = Toast.makeText(
+        context, sentence,
+        Toast.LENGTH_LONG)
+    return toast
 }
 
 
 @Composable
 fun TabContent2(controller:NavController) {
-    var admin = AdminScreen(controller)
+    AdminScreen(controller)
 }
