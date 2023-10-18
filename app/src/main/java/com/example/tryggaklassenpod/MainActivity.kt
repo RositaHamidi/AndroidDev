@@ -12,13 +12,17 @@ import androidx.compose.ui.Modifier
 import com.example.tryggaklassenpod.navigations.Navigation
 import com.example.tryggaklassenpod.screens.OwnerPageContent
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
+import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
+
         setContent {
             TryggaKlassenPodTheme {
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
