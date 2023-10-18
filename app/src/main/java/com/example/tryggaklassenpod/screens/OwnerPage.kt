@@ -257,6 +257,7 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ShowLazyList(viewModel: OwnerPageViewModel, admins: MutableList<AdminDataClass>, adminIds: MutableList<String>) {
     LazyColumn {
@@ -275,6 +276,7 @@ fun ShowLazyList(viewModel: OwnerPageViewModel, admins: MutableList<AdminDataCla
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AdminItem(
     viewModel: OwnerPageViewModel,
@@ -282,6 +284,8 @@ fun AdminItem(
     adminId: String?,
     modifier: Modifier = Modifier
 ) {
+    var keepUpdating by remember { mutableStateOf(false)}
+
     var expanded by remember { mutableStateOf(false) }
     var editable by remember { mutableStateOf(false)}
     var updatedInfo by remember { mutableStateOf(mapOf<String, String>()) }
@@ -305,7 +309,11 @@ fun AdminItem(
                     .padding(dimensionResource(R.dimen.padding_small))
             ) {
                 //Log.i(TAG, "Hi " + admin.username)
-                updatedInfo = AdminInformation(editable, admin.username, admin.school, admin.password)
+                var pairRecieved = AdminInformation(editable, admin.username!!, admin.school!!,
+                    admin.password!!
+                )
+                updatedInfo = pairRecieved.first
+                keepUpdating = pairRecieved.second
                 Spacer(Modifier.weight(1f))
                 AdminItemButton(
                     expanded = expanded,
@@ -315,7 +323,7 @@ fun AdminItem(
             if (expanded) {
                 updatedPermissions = ViewAdminPermissions(editable, admin.permissions)
                 if (adminId != null) {
-                    editable = AdminOptions( adminId, updatedPermissions, updatedInfo, viewModel,  modifier = Modifier.padding(
+                    editable = AdminOptions( keepUpdating, adminId, updatedPermissions, updatedInfo, viewModel,  modifier = Modifier.padding(
                         start = dimensionResource(R.dimen.padding_medium),
                         top = dimensionResource(R.dimen.padding_small),
                         bottom = dimensionResource(R.dimen.padding_medium),
@@ -327,28 +335,30 @@ fun AdminItem(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AdminInformation(
     editable:Boolean,
-    adminName: String?,
-    adminSchool: String?,
-    adminPass: String?,
+    adminName: String,
+    adminSchool: String,
+    adminPass: String,
     modifier: Modifier = Modifier
-): Map<String, String> {
+): Pair<Map<String, String>, Boolean> {
     var name by remember { mutableStateOf(adminName) }
-    var password by remember { mutableStateOf(adminPass) }
     var school by remember { mutableStateOf(adminSchool) }
 
     var newName by remember { mutableStateOf("") }
     var newPass by remember { mutableStateOf("") }
     var newSchool by remember { mutableStateOf("")}
 
+    var showBadPass by remember { mutableStateOf(false) }
+
     var newInfo by remember { mutableStateOf<Map<String, String>>((
             mapOf(
-                "name" to adminName.orEmpty(),
-                "password" to adminPass.orEmpty(),
-                "school" to adminSchool.orEmpty()
+                "name" to adminName,
+                "password" to adminPass,
+                "school" to adminSchool
             ))) }
 
     Column(modifier = modifier) {
@@ -371,61 +381,75 @@ fun AdminInformation(
                     modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
                 )
             }
-            if (adminPass != null) {
-                Text(
-                    text = "Password: "+ password,
-                    style = MaterialTheme.typography.titleSmall,
-                    //
-                    modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
-                )
-            }
         } else{
 
-            name?.let {
-                TextField(
-                    value = it,
-                    onValueChange = {
-                        newName = it
-                        name = it
-                        if(name != null){
-                            newInfo = newInfo + mapOf("name" to newName)
-                        }
 
-                    },
-                    label = { Text("Name") }
-                )
-            }
+            TextField(
+                value = name,
+                onValueChange = {
+                    newName = it
+                    name = it
+                    if(name != null){
+                        newInfo = newInfo + mapOf("name" to newName)
+                    } else {
+                        newInfo = newInfo + mapOf("name" to adminName)
+                    }
+
+                },
+                label = { Text("Name") }
+            )
+
 
             Spacer(modifier = Modifier.height(16.dp))
             TextField(
-                value = school!!,
+                value = school,
                 onValueChange = {
                     newSchool = it
                     school = it
                     if(school != null){
                         newInfo = newInfo + mapOf("school" to newSchool)
+                    } else {
+                        newInfo = newInfo + mapOf("school" to adminSchool)
                     }
-
-                                },
+                },
                 label = { Text("School") }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
             TextField(
-                value = password!!,
+                value = newPass,
                 onValueChange = {
                     newPass = it
-                    password = it
-                    if(password != null){
-                        newInfo = newInfo + mapOf("password" to newPass)
+                    if(newPass != null){
+                        val passValid = ValidatePassword()
+                        val passStatus = passValid.execute(newPass)
+                        if (passStatus) {
+                            val hashedPass = PasswordHash.hashPassword(newPass)
+                            newInfo = newInfo + mapOf("password" to hashedPass.first)
+                            showBadPass = false
+                        } else {
+                            showBadPass = true
+                        }
+
+                    } else {
+                        newInfo = newInfo + mapOf("password" to adminPass)
                     }
-                                },
-                label = { Text("Password") }
+                },
+                label = { Text("New Password") }
             )
+        }
+        if(showBadPass){
+            Text(
+                text = "Please make sure your password is:\n" +
+                        "- At least 8 characters long\n" +
+                        "- Has at least one capital letter\n" +
+                        "- Has at least one number",
+                color = Color.Red)
         }
 
     }
-    return newInfo
+
+    return Pair(newInfo, showBadPass)
 }
 @Composable
 private fun AdminItemButton(
@@ -470,7 +494,14 @@ fun ViewAdminPermissions(editable:Boolean, adminPermissions:Map<String, Boolean>
     return permissions
 }
 @Composable
-fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, adminInfo:Map<String, String>?, viewModel: OwnerPageViewModel, modifier: Modifier = Modifier):Boolean {
+fun AdminOptions(
+    keepUpdating: Boolean,
+    adminId:String,
+    adminPermissions:Map<String, Boolean>?,
+    adminInfo:Map<String, String>?,
+    viewModel: OwnerPageViewModel,
+    modifier: Modifier = Modifier
+):Boolean {
     var editable by remember { mutableStateOf(false)}
 
     var buttonText by remember { mutableStateOf("Enable editing info") }
@@ -498,18 +529,19 @@ fun AdminOptions(adminId:String, adminPermissions:Map<String, Boolean>?, adminIn
 
                 Button(
                     onClick = {
-                        if(editable){
-                            buttonText = "Enable editing info"
-                            editable = false
-                            //val hashedPass = PasswordHash.hashPassword(adminInfo.)
-                            //Log.i(TAG, "Hi " + hashedPass.first)
-                            //viewModel.updateAdmin(name, school, hashedPass.first, permissions)
-                        }else{
-                            // Edit the admin in database
-                            editable = true
-                            buttonText = "Submit changes"
+                        if(!keepUpdating){
+                            if(editable){
+                                buttonText = "Edit info"
+                                editable = false
+                                //val hashedPass = PasswordHash.hashPassword(adminInfo.)
+                                //Log.i(TAG, "Hi " + hashedPass.first)
+                                //viewModel.updateAdmin(name, school, hashedPass.first, permissions)
+                            }else{
+                                // Edit the admin in database
+                                editable = true
+                                buttonText = "Submit changes"
+                            }
                         }
-
                     }
                 ) {
                     Text(buttonText)
@@ -602,8 +634,6 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
             onClick = {
                 val passStatus = passValid.execute(password)
                 if (passStatus){
-                    //Arro add your hashing here then replace the password in the
-                    // call to the addNewAdmin method.
                     val hashedPass = PasswordHash.hashPassword(password)
                     Log.i(TAG, "Hi " + hashedPass.first)
                     viewModel.addNewAdmin(name, school, hashedPass.first, permissions)
@@ -652,7 +682,25 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
 
 @Composable
 fun SentenceSwitch(startingState:Boolean, enableSwitcher:Boolean, sentence:String, modifier: Modifier = Modifier):Boolean {
+    val isDarkTheme = isSystemInDarkTheme()
+
     var checked by remember { mutableStateOf(startingState) }
+    var switchColor by remember { mutableStateOf(Color(0xFF006971).copy(0.5f)) }
+
+    val backgroundColor = if (isDarkTheme) {
+        switchColor = Color(0xFF4DD8E5) // Dark theme background color
+    } else {
+        switchColor= Color(0xFF006971) // Light theme background color
+    }
+    if(!enableSwitcher && isDarkTheme){
+        switchColor = Color(0xFF4DD8E5).copy(0.4f)
+    } else if(enableSwitcher && isDarkTheme ){
+        switchColor = Color(0xFF4DD8E5)
+    } else if(!enableSwitcher && !isDarkTheme ){
+        switchColor= Color(0xFF006971).copy(0.5f)
+    } else {
+        switchColor= Color(0xFF006971)
+    }
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start,
@@ -687,7 +735,11 @@ fun SentenceSwitch(startingState:Boolean, enableSwitcher:Boolean, sentence:Strin
                 }
             } else {
                 null
-            }
+            },
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = switchColor,
+            )
+
         )
     }
     return checked
