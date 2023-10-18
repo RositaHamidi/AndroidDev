@@ -35,7 +35,7 @@ fun CommentReviewScreen(episodeId: Int) {
             Text(text = comment.comment.toString())
             Button(
                 onClick = { publishComment(episodeId, comment, context ) },
-                modifier = Modifier.fillMaxWidth()
+                
             ) {
                 Text("Publish")
             }
