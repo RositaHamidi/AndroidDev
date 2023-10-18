@@ -81,14 +81,10 @@ fun UploadPodcast(navController: NavController) {
             storageLocationUrl = audioStorageRef.toString()
             Log.d("YourTag", "AudiodownloadUrl: $storageLocationUrl")
 
-            // Retrieve user email and password
-            val email = "anam@example.com"
-            val password = "password"
-
-            val audioUploader = AudioUploader(storageReference, Authentication())
+            val audioUploader = AudioUploader(storageReference)
 
             // Call the uploadAudio function with the selected audioUri
-            audioUploader.uploadAudio(podcastName, email, password, audioUri) { newDownloadUrl ->
+            audioUploader.uploadAudio(audioUri) { newDownloadUrl ->
                 // Handle the download URL here if needed
                 if (newDownloadUrl != null) {
                     downloadUrl = newDownloadUrl.toString()
@@ -125,11 +121,17 @@ fun UploadPodcast(navController: NavController) {
 
             Log.d("Image Url", "imageUrl: $imageUrl")
 
-            val email = "anam@example.com"
-            val password = "password"
+//            val email = "anam@example.com"
+//            val password = "password"
 
-            val imageUploader = ImageUploader(storageReference, Authentication())
-            imageUploader.uploadImage(podcastName, email, password, imageUri) { newDownloadUrl ->
+//            val imageUploader = ImageUploader(storageReference, Authentication())
+//            imageUploader.uploadImage(podcastName, email, password, imageUri) { newDownloadUrl ->
+
+            val imageUploader = ImageUploader(storageReference)
+            // Call the uploadAudio function with the selected audioUri
+            imageUploader.uploadImage(imageUri) { newDownloadUrl ->
+                // Handle the download URL here if needed
+
                 if (newDownloadUrl != null) {
                     downloadUrl = newDownloadUrl.toString()
                     Log.d("DownloadUrl", "downloadUrl: $downloadUrl")
@@ -296,3 +298,4 @@ fun UploadPodcast(navController: NavController) {
         }
                 }
             }
+

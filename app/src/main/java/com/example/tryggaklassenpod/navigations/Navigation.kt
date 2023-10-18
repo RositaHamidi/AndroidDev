@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.tryggaklassenpod.screens.AboutScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
+import com.example.tryggaklassenpod.screens.LoginScreen
 import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.CommentReviewScreen
 import com.example.tryggaklassenpod.screens.UploadPodcast
@@ -27,7 +28,7 @@ fun Navigation() {
 
     val podcastViewModel: PodcastViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = Screen.AdminScreen.route){
+    NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
 
         composable(route = Screen.HomeScreen.route){
             HomeScreen(podcastUiState = podcastViewModel.podcastUiState, navController = navController)
@@ -73,8 +74,12 @@ fun Navigation() {
         ) { backStackEntry ->
             val episodeId = backStackEntry.arguments?.getString("episodeId")?.toIntOrNull() ?: 0
             CommentReviewScreen(episodeId = episodeId)
-        }
+            }
 
+        composable(route = Screen.LoginScreen.route) {
+            LoginScreen(navController = navController)
+
+        }
 
         composable(
             route = "${Screen.PlayerScreen.route}/{episodeId}",
