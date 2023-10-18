@@ -7,4 +7,10 @@
     <string name="back">Back</string>
     <string name="expand_comments">Expand comments</string>
     <string name="placeholder_comments">Placeholder image for comments</string>
+    <string name="leave_a_reply">Leave a reply</string>
+    <string name="add_comment">Add comment</string>
+    <string name="cancel">Cancel</string>
+    <string name="write_here">Write here ..</string>
+    <string name="your_comment_was_added">Your comment was added.</string>
+    <string name="username">Username</string>
 </resources>
