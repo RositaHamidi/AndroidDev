@@ -12,4 +12,6 @@ sealed class Screen(val route: String){
      */
     object PlayerScreen: Screen("playerScreen")
 
+    object OwnerPage: Screen("OwnerPage")
+
 }
