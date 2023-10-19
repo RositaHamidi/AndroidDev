@@ -30,8 +30,11 @@ fun PlayerControllerArea(
     episodeDuration: Int,
     viewModel: PodcastViewModel
 ) {
-    if (viewModel.newPosition >= episodeDuration) {
+    if (viewModel.sliderPosition >= 0.992f) {
         viewModel.isPlaying = false
+        viewModel.newPosition = 0
+        viewModel.sliderPosition = 0.0f
+        viewModel.player.playAgain()
     }
 
     LaunchedEffect(viewModel.isPlaying) {
