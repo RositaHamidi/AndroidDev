@@ -28,7 +28,7 @@ fun Navigation() {
 
     val podcastViewModel: PodcastViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = Screen.AdminScreen.route){
+    NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
 
         composable(route = Screen.HomeScreen.route){
             HomeScreen(podcastUiState = podcastViewModel.podcastUiState, navController = navController)
