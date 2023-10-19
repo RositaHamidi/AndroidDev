@@ -145,11 +145,10 @@ class OwnerPageViewModel : ViewModel() {
 
             val myRef = FirebaseDatabase.getInstance().getReference("admins")
             myRef.child(adminID).updateChildren(updatedAdmin).addOnSuccessListener {
-                // Data has been successfully inserted with an automatically generated ID
                 println("Data has been updated for admin with ID: $adminID")
                 _message3.value = UpdateAdminState.Success("Admin updated successfully")
             }.addOnFailureListener { error ->
-                // Handle the error if the data insertion fails
+                // Handle the error if the data update fails
                 println("Error inserting data: $error")
                 _message3.value = UpdateAdminState.Failure("Admin couldn't be updated")
             }

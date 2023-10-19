@@ -51,6 +51,8 @@ import com.example.tryggaklassenpod.sealed.FetchingAdminIDsState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
+import com.example.tryggaklassenpod.sealed.DeleteAdminState
+import com.example.tryggaklassenpod.sealed.UpdateAdminState
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -321,6 +323,7 @@ fun AdminItem(
                 AdminItemButton(
                     expanded = expanded,
                     onClick = { expanded = !expanded },
+                    editable
                 )
             }
             if (expanded) {
@@ -422,19 +425,17 @@ fun AdminInformation(
                 value = newPass,
                 onValueChange = {
                     newPass = it
-                    if(newPass != null){
-                        val passValid = ValidatePassword()
-                        val passStatus = passValid.execute(newPass)
-                        if (passStatus) {
-                            val hashedPass = PasswordHash.hashPassword(newPass)
-                            newInfo = newInfo + mapOf("password" to hashedPass.first)
-                            showBadPass = false
-                        } else {
-                            showBadPass = true
-                        }
-
-                    } else {
+                    val passValid = ValidatePassword()
+                    val passStatus = passValid.execute(newPass)
+                    if(newPass.isNullOrEmpty()){
                         newInfo = newInfo + mapOf("password" to adminPass)
+                        showBadPass = false
+                    } else if(newPass != null && passStatus){
+                        val hashedPass = PasswordHash.hashPassword(newPass)
+                        newInfo = newInfo + mapOf("password" to hashedPass.first)
+                        showBadPass = false
+                    } else if(newPass != null && !passStatus){
+                        showBadPass = true
                     }
                 },
                 label = { Text("New Password") }
@@ -443,24 +444,32 @@ fun AdminInformation(
         if(showBadPass){
             Text(
                 text = "Please make sure your password is:\n" +
-                        "- At least 8 characters long\n" +
-                        "- Has at least one capital letter\n" +
-                        "- Has at least one number",
-                color = Color.Red)
+                        "    - At least 8 characters long\n" +
+                        "    - Has at least one capital letter\n" +
+                        "    - Has at least one number",
+                color = Color.Red,
+                modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium), top = dimensionResource(R.dimen.padding_medium)))
         }
 
     }
 
     return Pair(newInfo, showBadPass)
 }
+
 @Composable
 private fun AdminItemButton(
     expanded: Boolean,
     onClick: () -> Unit,
+    editable: Boolean,
     modifier: Modifier = Modifier
 ) {
     IconButton(
-        onClick = onClick,
+        onClick =
+        if (editable) {
+        /* Do nothing when editable is true */ {}
+        } else {
+            onClick
+        },
         modifier = modifier
     ) {
         Icon(
@@ -470,6 +479,7 @@ private fun AdminItemButton(
         )
     }
 }
+
 @Composable
 fun ViewAdminPermissions(editable:Boolean, adminPermissions:Map<String, Boolean>?): Map<String, Boolean> {
 
@@ -505,13 +515,18 @@ fun AdminOptions(
     modifier: Modifier = Modifier
 ):Boolean {
     var editable by remember { mutableStateOf(false)}
+    var statusMessage by remember { mutableStateOf(false) }
+    var deleteStatusMessage by remember { mutableStateOf(false) }
+    var updateStatusMessage by remember { mutableStateOf(false) }
 
     var buttonText by remember { mutableStateOf("Enable editing info") }
     Log.i(TAG, "Hi " + adminPermissions)
     Log.i(TAG, "Hi " + adminInfo)
 
     Column(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Options",
@@ -528,11 +543,10 @@ fun AdminOptions(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Button(
                     onClick = {
-                        if(!keepUpdating){
-                            if(editable){
+                        if (!keepUpdating) {
+                            if (editable) {
                                 buttonText = "Edit info"
                                 editable = false
                                 if (adminPermissions != null) {
@@ -544,10 +558,13 @@ fun AdminOptions(
                                         adminPermissions
                                     )
                                 }
-                            }else{
-                                // Edit the admin in database
+                                updateStatusMessage = true
+                                deleteStatusMessage = false // Reset delete message flag
+                            } else {
                                 editable = true
                                 buttonText = "Submit changes"
+                                updateStatusMessage = false
+                                deleteStatusMessage = false // Reset delete message flag
                             }
                         }
                     }
@@ -556,15 +573,68 @@ fun AdminOptions(
                 }
                 Button(
                     onClick = {
-                        // Remove the admin from database
                         viewModel.deleteAdminById(adminId)
+                        deleteStatusMessage = true
+                        updateStatusMessage = false
                     }
                 ) {
                     Text("Delete Admin")
                 }
-
             }
+            //val updateMessage = viewModel.updateMessage.value
+            /*if(updateStatusMessage) {
+                if (updateMessage is UpdateAdminState.Success){
+                    val toast = (updateMessage).message?.let { CallToast(sentence = it) }
+                    toast?.show()
+                } else if (updateMessage is UpdateAdminState.Failure){
+                    val toast = (updateMessage).error?.let { CallToast(sentence = it) }
+                    toast?.show()
+                }
+            }*/
 
+            // Display update or delete message
+
+
+            //val deleteMessage = viewModel.deleteMessage.value
+            /*if(deleteStatusMessage) {
+                if (deleteMessage is DeleteAdminState.Success) {
+                    val toast = CallToast(sentence = (deleteMessage).message)
+                    toast.show()
+                } else if (deleteMessage is DeleteAdminState.Failure) {
+                    val toast = CallToast(sentence = (deleteMessage).error)
+                    toast.show()
+                }
+            }*/
+
+        }
+        if (updateStatusMessage) {
+            val updateMessage = viewModel.updateMessage.value
+            if (updateMessage is UpdateAdminState.Success) {
+                Text(
+                    text = updateMessage.message ?: "",
+                    color = Color(0xFF46B44A) // Color for success message
+                )
+            } else if (updateMessage is UpdateAdminState.Failure) {
+                Text(
+                    text = updateMessage.error ?: "",
+                    color = Color.Red // Color for error message
+                )
+            }
+        }
+
+        if (deleteStatusMessage) {
+            val deleteMessage = viewModel.deleteMessage.value // Use a separate LiveData for delete messages
+            if (deleteMessage is DeleteAdminState.Success) {
+                Text(
+                    text = deleteMessage.message,
+                    color = Color(0xFF46B44A) // Color for success message
+                )
+            } else if (deleteMessage is DeleteAdminState.Failure) {
+                Text(
+                    text = deleteMessage.error,
+                    color = Color.Red // Color for error message
+                )
+            }
         }
     }
     return editable
@@ -680,6 +750,21 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                 toast.show()
             }
         }
+        /*if(InsertionStatusMessage) {
+            // Display the message under the button
+            val message = viewModel.message.value
+            if (message is InsertAdminDataState.Success) {
+                Text(
+                    text = (message).message,
+                    color = Color(0xFF46B44A) // Color for success message
+                )
+            } else if (message is InsertAdminDataState.Failure) {
+                Text(
+                    text = (message).error,
+                    color = Color.Red // Color for error message
+                )
+            }
+        }*/
         Spacer(modifier = Modifier.height(16.dp))
     }
 }
