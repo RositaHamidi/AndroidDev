@@ -79,8 +79,8 @@ class OwnerPageViewModel : ViewModel() {
     }
 
 
-    fun addNewAdmin(username:String, school:String, password:String, permissions: Map<String, Boolean>) {
-        if(username != "" && school != "" && password != "" ){
+    fun addNewAdmin(username:String, school:String, password:Map<String, String>, permissions: Map<String, Boolean>) {
+        if(username != "" && school != "" && password.isNotEmpty()){
             try {
                 // Your data to be inserted
                 val admin = AdminDataClass(
@@ -132,7 +132,7 @@ class OwnerPageViewModel : ViewModel() {
         }
     }
 
-    fun editAdminInfo(adminID:String, username: String, password: String, school: String, permissions: Map<String, Boolean>) {
+    fun editAdminInfo(adminID:String, username: String, password: Map<String, String>, school: String, permissions: Map<String, Boolean>) {
         try {
             // Your data to be inserted
             val updatedAdmin = mapOf<String, Any>(

@@ -293,7 +293,7 @@ fun AdminItem(
 
     var expanded by remember { mutableStateOf(false) }
     var editable by remember { mutableStateOf(false)}
-    var updatedInfo by remember { mutableStateOf(mapOf<String, String>()) }
+    var updatedInfo by remember { mutableStateOf(mapOf<String, Any>()) }
     //var updatedInfo = remember { mutableStateOf(mapOf("name" to "", "password" to "", "school" to ""))}
     var updatedPermissions by remember { mutableStateOf(mapOf("podcastPoster" to false, "podcastEditor" to false, "commentReviewer" to false) )}
     Card(
@@ -348,9 +348,9 @@ fun AdminInformation(
     editable:Boolean,
     adminName: String,
     adminSchool: String,
-    adminPass: String,
+    adminPass: Map<String, String>,
     modifier: Modifier = Modifier
-): Pair<Map<String, String>, Boolean> {
+): Pair<Map<String, Any>, Boolean> {
     var name by remember { mutableStateOf(adminName) }
     var school by remember { mutableStateOf(adminSchool) }
 
@@ -360,7 +360,7 @@ fun AdminInformation(
 
     var showBadPass by remember { mutableStateOf(false) }
 
-    var newInfo by remember { mutableStateOf<Map<String, String>>((
+    var newInfo by remember { mutableStateOf<Map<String, Any>>((
             mapOf(
                 "name" to adminName,
                 "password" to adminPass,
@@ -432,7 +432,7 @@ fun AdminInformation(
                         showBadPass = false
                     } else if(newPass != null && passStatus){
                         val hashedPass = PasswordHash.hashPassword(newPass)
-                        newInfo = newInfo + mapOf("password" to hashedPass.first)
+                        newInfo = newInfo + mapOf("password" to mapOf("salt" to hashedPass.second, "hashedPass" to hashedPass.first))
                         showBadPass = false
                     } else if(newPass != null && !passStatus){
                         showBadPass = true
@@ -510,12 +510,11 @@ fun AdminOptions(
     keepUpdating: Boolean,
     adminId:String,
     adminPermissions:Map<String, Boolean>?,
-    adminInfo:Map<String, String>?,
+    adminInfo:Map<String, Any>?,
     viewModel: OwnerPageViewModel,
     modifier: Modifier = Modifier
 ):Boolean {
     var editable by remember { mutableStateOf(false)}
-    var statusMessage by remember { mutableStateOf(false) }
     var deleteStatusMessage by remember { mutableStateOf(false) }
     var updateStatusMessage by remember { mutableStateOf(false) }
 
@@ -552,9 +551,9 @@ fun AdminOptions(
                                 if (adminPermissions != null) {
                                     viewModel.editAdminInfo(
                                         adminId,
-                                        adminInfo?.get("name")!!,
-                                        adminInfo["password"]!!,
-                                        adminInfo["school"]!!,
+                                        adminInfo?.get("name")!! as String,
+                                        adminInfo["password"]!! as Map<String, String>,
+                                        adminInfo["school"]!! as String,
                                         adminPermissions
                                     )
                                 }
@@ -714,7 +713,7 @@ fun AddAnAdminSection(viewModel: OwnerPageViewModel) {
                 if (passStatus){
                     val hashedPass = PasswordHash.hashPassword(password)
                     Log.i(TAG, "Hi " + hashedPass.first)
-                    viewModel.addNewAdmin(name, school, hashedPass.first, permissions)
+                    viewModel.addNewAdmin(name, school, mapOf("salt" to hashedPass.second, "hashedPass" to hashedPass.first), permissions)
                     showBadPass = false
                     name = ""
                     password = ""
