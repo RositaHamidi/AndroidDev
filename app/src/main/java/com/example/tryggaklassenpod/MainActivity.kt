@@ -9,13 +9,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.tryggaklassenpod.navigations.Navigation
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
+import java.io.File
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val dexOutputDir: File = codeCacheDir
+        dexOutputDir.setReadOnly()
         FirebaseApp.initializeApp(this)
-
         setContent {
             TryggaKlassenPodTheme {
 
