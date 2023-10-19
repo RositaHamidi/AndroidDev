@@ -51,12 +51,16 @@ fun PlayerScreen(
         val episode: Episode? = episodeId?.let { viewModel.getEpisodeById(it) }
         if (episode != null) {
             viewModel.episodeUrl = episode.episodeUrl
+            viewModel.player.preloadEpisode(episode.episodeUrl)
         }
 
         DisposableEffect(episodeId) {
             onDispose {
                 viewModel.isPlaying = false
                 viewModel.player.releasePlayer()
+                viewModel.episodeUrl = ""
+                viewModel.newPosition = 0
+                viewModel.sliderPosition = 0.0f
             }
         }
 
