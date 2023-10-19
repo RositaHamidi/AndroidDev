@@ -1,6 +1,5 @@
 package com.example.tryggaklassenpod.screens
 
-import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.Episode
 import com.example.tryggaklassenpod.ui.components.ErrorScreen
@@ -48,77 +47,84 @@ fun PlayerScreen(
             onRetry = {},
             buttonIncluded = false
         )
-    }
-    val episode: Episode? = episodeId?.let { viewModel.getEpisodeById(it) }
-    if (episode != null) {
-        viewModel.episodeUrl = episode.episodeUrl
-    }
-
-    DisposableEffect(episodeId) {
-        onDispose {
-            viewModel.isPlaying = false
-            viewModel.player.releasePlayer()
-        }
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 8.dp)
-    ) {
-        TopBarBack(goBack = goBack) {
-            viewModel.player.releasePlayer()
+    } else {
+        val episode: Episode? = episodeId?.let { viewModel.getEpisodeById(it) }
+        if (episode != null) {
+            viewModel.episodeUrl = episode.episodeUrl
         }
 
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .padding(start = 8.dp, end = 8.dp, bottom = 16.dp)
-
-        ) {
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .weight(10f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    episode?.imageUrl?.let {
-                        EpisodeCoverImage(
-                            imageUrl = it,
-                            title = episode.title,
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(28.dp))
+        DisposableEffect(episodeId) {
+            onDispose {
+                viewModel.isPlaying = false
+                viewModel.player.releasePlayer()
             }
-            item {
-                Column(
-                    modifier = Modifier
-                        .weight(10f)
-                ) {
-                    Card {
-                        Spacer(modifier = Modifier.height(14.dp))
-                        episode?.title?.let { EpisodeTitle(title = it) }
-                        episode?.episodeUrl?.let {
-                            PlayerControllerArea(
-                                episodeUrl = it,
-                                episodeDuration = episode.duration,
-                                viewModel = viewModel
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 8.dp)
+        ) {
+            TopBarBack(goBack = goBack) {
+                viewModel.player.releasePlayer()
+            }
+
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp, bottom = 16.dp)
+
+            ) {
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(10f),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        episode?.imageUrl?.let {
+                            EpisodeCoverImage(
+                                imageUrl = it,
+                                title = episode.title,
                             )
                         }
-                        Spacer(modifier = Modifier.height(28.dp))
+                    }
+                    Spacer(modifier = Modifier.height(28.dp))
+                }
+                item {
+                    Column(
+                        modifier = Modifier
+                            .weight(10f)
+                    ) {
+                        Card {
+                            Spacer(modifier = Modifier.height(14.dp))
+                            episode?.title?.let { EpisodeTitle(title = it) }
+                            episode?.episodeUrl?.let {
+                                PlayerControllerArea(
+                                    episodeUrl = it,
+                                    episodeDuration = episode.duration,
+                                    viewModel = viewModel
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(28.dp))
+                        }
                     }
                 }
-            }
-            item {
-                Spacer(modifier = Modifier.height(14.dp))
-                episode?.description?.let { EpisodeDescription(description = it) }
-            }
-            item {
-                Spacer(modifier = Modifier.weight(1f))
-                episode?.comments?.let { CommentsSection(comments = it) }
-                Spacer(modifier = Modifier.height(28.dp))
+                item {
+                    Spacer(modifier = Modifier.height(14.dp))
+                    episode?.description?.let { EpisodeDescription(description = it) }
+                }
+                item {
+                    Spacer(modifier = Modifier.weight(1f))
+                    episode?.comments?.let {
+                        CommentsSection(
+                            comments = it,
+                            episodeId = episodeId,
+                            viewModel = viewModel
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(28.dp))
+                }
             }
         }
     }
@@ -203,10 +209,10 @@ private fun TopBarBack(goBack: () -> Unit,  onBack:() -> Unit) {
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun PlayerScreenPreview() {
+private fun PlayerScreenPreview() {
     PlayerScreen(
         episodeId = 0,
-        viewModel = viewModel(),
+        viewModel = PodcastViewModel(),
         goBack = { },
     )
 }

@@ -13,4 +13,7 @@
     <string name="write_here">Write here ..</string>
     <string name="your_comment_was_added">Your comment was added.</string>
     <string name="username">Username</string>
+    <string name="comments">Comments</string>
+    <string name="error_has_occurred">Apologies. An error has occurred!</string>
+    <string name="comments_screening_text">* Thank you for being respectful. Comments will be screened for disrespectful content or bad language, before they are visible!</string>
 </resources>
