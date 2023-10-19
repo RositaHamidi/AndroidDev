@@ -47,7 +47,7 @@ import com.example.tryggaklassenpod.sealed.DeleteAdminState
 import com.example.tryggaklassenpod.sealed.UpdateAdminState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
-val addAdmin = OwnerPageAddingAdmin()
+val addAdmin = OwnerAddingAdmin()
 
 class OwnerPageShowEditAdmin {
     @RequiresApi(Build.VERSION_CODES.O)

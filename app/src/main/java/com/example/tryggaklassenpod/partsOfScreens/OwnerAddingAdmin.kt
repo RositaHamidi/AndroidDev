@@ -40,7 +40,7 @@ import com.example.tryggaklassenpod.helperFunctions.ValidatePassword
 import com.example.tryggaklassenpod.sealed.InsertAdminDataState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
-class OwnerPageAddingAdmin {
+class OwnerAddingAdmin {
 
     @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
