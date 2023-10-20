@@ -1,5 +1,7 @@
 package com.example.tryggaklassenpod.navigations
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -19,9 +21,11 @@ import com.example.tryggaklassenpod.screens.PodcastsList
 import com.example.tryggaklassenpod.screens.PlayerScreen
 import com.example.tryggaklassenpod.screens.CommentReviewScreen
 import com.example.tryggaklassenpod.screens.PodcastViewModel
+import com.example.tryggaklassenpod.screens.OwnerPageContent
 
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -29,7 +33,6 @@ fun Navigation() {
     val podcastViewModel: PodcastViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = Screen.HomeScreen.route){
-
         composable(route = Screen.HomeScreen.route){
             HomeScreen(podcastUiState = podcastViewModel.podcastUiState, navController = navController)
         }
@@ -97,6 +100,10 @@ fun Navigation() {
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(route = Screen.OwnerPage.route){
+            OwnerPageContent(navController = navController)
         }
     }
 }
