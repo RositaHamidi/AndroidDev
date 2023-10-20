@@ -14,10 +14,6 @@ import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -34,8 +30,6 @@ fun PlayerControllerArea(
     episodeUrl: String,
     viewModel: PodcastViewModel
 ) {
-    var episodeDuration by remember { mutableIntStateOf(0)}
-
     if (viewModel.sliderPosition >= 0.992f) {
         viewModel.isPlaying = false
         viewModel.newPosition = 0
@@ -46,7 +40,6 @@ fun PlayerControllerArea(
     LaunchedEffect(viewModel.episodeFullDuration) {
         while (viewModel.episodeFullDuration == 0) {
             viewModel.episodeFullDuration = viewModel.player.getFullDuration()
-            episodeDuration = viewModel.episodeFullDuration
             delay(500)
         }
     }
@@ -54,7 +47,7 @@ fun PlayerControllerArea(
     LaunchedEffect(viewModel.isPlaying) {
         while (viewModel.isPlaying) {
             viewModel.newPosition = viewModel.player.getCurrentInSeconds()
-            viewModel.sliderPosition = viewModel.newPosition.toFloat() / episodeDuration.toFloat()
+            viewModel.sliderPosition = viewModel.newPosition.toFloat() / viewModel.episodeFullDuration.toFloat()
             delay(500)
         }
     }
@@ -72,7 +65,7 @@ fun PlayerControllerArea(
             onValueChange = {
                 if (viewModel.player.canPlayerStart()){
                     viewModel.sliderPosition = it
-                    viewModel.player.seekTo((it * episodeDuration).toInt())
+                    viewModel.player.seekTo((it * viewModel.episodeFullDuration).toInt())
                 }
             },
             colors = SliderDefaults.colors(
@@ -87,7 +80,7 @@ fun PlayerControllerArea(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(text = viewModel.newPosition.toHoursMinuteSeconds())
-            Text(text = episodeDuration.toHoursMinuteSeconds())
+            Text(text = viewModel.episodeFullDuration.toHoursMinuteSeconds())
         }
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -96,7 +89,7 @@ fun PlayerControllerArea(
         ) {
             IconButton(
                 onClick = {
-                    if ( episodeDuration != 0) {
+                    if ( viewModel.episodeFullDuration != 0) {
                         viewModel.player.replay10Seconds()
                     }
                 },
@@ -112,7 +105,7 @@ fun PlayerControllerArea(
 
             IconButton(
                 onClick = {
-                    if (episodeDuration != 0) {
+                    if (viewModel.episodeFullDuration != 0) {
                         if (viewModel.isPlaying) {
                             viewModel.player.pauseEpisode()
                         } else {
@@ -123,7 +116,7 @@ fun PlayerControllerArea(
                 },
                 modifier = Modifier.size(70.dp)
             ) {
-                if (episodeDuration == 0) {
+                if (viewModel.episodeFullDuration == 0) {
                     LoadingScreen()
                 }
 
@@ -140,7 +133,7 @@ fun PlayerControllerArea(
             }
             IconButton(
                 onClick = {
-                    if ( episodeDuration != 0) {
+                    if ( viewModel.episodeFullDuration != 0) {
                         viewModel.player.forward30Seconds()
                     }
                   },
