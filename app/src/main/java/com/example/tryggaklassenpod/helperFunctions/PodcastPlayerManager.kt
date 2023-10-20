@@ -1,41 +1,40 @@
 package com.example.tryggaklassenpod.helperFunctions
 
 import android.media.MediaPlayer
-import android.util.Log
 import java.io.IOException
 
 class PodcastPlayerManager {
     private var mediaPlayer: MediaPlayer? = null
     private var currentPosition = 0
-    private var episodeDuration = 0
     private var currentEpisodeUrl: String? = null
+    private var epDuration = 0
 
 
     fun preloadEpisode(url: String) {
-        Log.d("preloadEpisode", "Episode preload called .........................")
-        Log.d("duration", "current $currentPosition.........")
 
-//        url != currentEpisodeUrl &&
         if (currentEpisodeUrl == null) {
-
-            Log.d("preloadEpisode", "inside episode preload .....x..x....x...x..x.........")
             currentEpisodeUrl = url
             mediaPlayer?.release()
             try {
                 mediaPlayer = MediaPlayer().apply {
                     setDataSource(url)
+                    setOnPreparedListener { mp ->
+                        epDuration = (mp.duration) / 1000
+                    }
                     prepareAsync()
                 }
-            } catch (e: IOException) {
-                Log.d("preloadEpisode", "exception .....x..x....x...x..x.........")
+            }
+            catch (e: IOException) {
                 releasePlayer()
             }
         }
     }
 
+    fun getFullDuration():Int {
+        return epDuration
+    }
 
     fun playEpisode(url: String) {
-        Log.d("playEpisode", "playEpisode called .........................*****")
         try {
             mediaPlayer?.let {
                 if (it.isPlaying) {
@@ -44,12 +43,10 @@ class PodcastPlayerManager {
                 } else {
                     it.start()
                     it.seekTo(currentPosition * 1000)
-//                    episodeDuration = it.duration / 1000
                 }
             }
-
-        } catch (e: IOException) {
-            Log.d("playEpisode", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
@@ -60,8 +57,8 @@ class PodcastPlayerManager {
                 currentPosition = it.currentPosition / 1000
                 it.pause()
             }
-        } catch (e: IOException) {
-            Log.d("pausePlayer", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
@@ -71,28 +68,27 @@ class PodcastPlayerManager {
             mediaPlayer?.stop()
             mediaPlayer?.release()
             currentPosition = 0
-        } catch (e: IOException) {
-            Log.d("stopPlayer", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
 
     fun releasePlayer() {
-        Log.d("Release", "REALSESE MEEEE .........................")
         mediaPlayer?.reset()
         mediaPlayer?.release()
         mediaPlayer = null
         currentPosition = 0
         currentEpisodeUrl = null
-        episodeDuration = 0
+        epDuration = 0
     }
 
     fun seekTo(position: Int) {
         try {
             mediaPlayer?.seekTo(position*1000)
             currentPosition = position
-        } catch (e: IOException) {
-            Log.d("seekTo", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
@@ -109,8 +105,8 @@ class PodcastPlayerManager {
                 }
                 it.seekTo(currentPosition*1000)
             }
-        } catch (e: IOException) {
-            Log.d("replay10", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
@@ -129,8 +125,8 @@ class PodcastPlayerManager {
                     it.seekTo(duration)
                 }
             }
-        } catch (e: IOException) {
-            Log.d("forward30", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
     }
@@ -143,8 +139,8 @@ class PodcastPlayerManager {
                 }
             }
             return currentPosition
-        } catch (e: IOException) {
-            Log.d("getCurrentTime", "exception .....x..x....x...x..x.........")
+        }
+        catch (e: IOException) {
             releasePlayer()
         }
         return currentPosition
