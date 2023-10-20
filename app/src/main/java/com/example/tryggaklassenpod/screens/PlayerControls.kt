@@ -47,6 +47,7 @@ fun PlayerControllerArea(
         while (viewModel.episodeFullDuration == 0) {
             viewModel.episodeFullDuration = viewModel.player.getFullDuration()
             episodeDuration = viewModel.episodeFullDuration
+            delay(500)
         }
     }
 
@@ -111,12 +112,14 @@ fun PlayerControllerArea(
 
             IconButton(
                 onClick = {
-                    if (viewModel.isPlaying && episodeDuration != 0) {
-                        viewModel.player.pauseEpisode()
-                    } else {
-                        viewModel.player.playEpisode(episodeUrl)
+                    if (episodeDuration != 0) {
+                        if (viewModel.isPlaying) {
+                            viewModel.player.pauseEpisode()
+                        } else {
+                            viewModel.player.playEpisode(episodeUrl)
+                        }
+                        viewModel.isPlaying = !viewModel.isPlaying
                     }
-                    viewModel.isPlaying = !viewModel.isPlaying
                 },
                 modifier = Modifier.size(70.dp)
             ) {
