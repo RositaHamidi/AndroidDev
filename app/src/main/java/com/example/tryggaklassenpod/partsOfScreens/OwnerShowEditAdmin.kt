@@ -8,6 +8,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,11 +42,14 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.dataClasses.AdminDataClass
 import com.example.tryggaklassenpod.helperFunctions.PasswordHash
 import com.example.tryggaklassenpod.helperFunctions.ValidatePassword
+import com.example.tryggaklassenpod.screens.showAdmins
 import com.example.tryggaklassenpod.sealed.DeleteAdminState
+import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
 import com.example.tryggaklassenpod.sealed.UpdateAdminState
 import com.example.tryggaklassenpod.viewModels.OwnerPageViewModel
 
@@ -361,6 +366,7 @@ class OwnerPageShowEditAdmin {
                     Button(
                         onClick = {
                             viewModel.deleteAdminById(adminId)
+
                             deleteStatusMessage = true
                             updateStatusMessage = false
                         }
@@ -401,3 +407,30 @@ class OwnerPageShowEditAdmin {
         return editable
     }
 }
+/*@Composable
+fun fetchAdmins(viewModel: OwnerPageViewModel){
+    when (val result = viewModel.fetchAdminresponse.value) {
+        is FetchingAdminDataState.Loading -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        is FetchingAdminDataState.Success -> {
+            admins = result.data
+            showAdmins.ShowLazyList(viewModel, admins, adminIds)
+        }
+        is FetchingAdminDataState.Failure -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = result.message,
+                    fontSize = 16.sp,
+                )
+            }
+        }
+}*/

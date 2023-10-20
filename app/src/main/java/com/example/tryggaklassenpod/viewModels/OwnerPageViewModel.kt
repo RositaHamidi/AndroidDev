@@ -26,6 +26,9 @@ class OwnerPageViewModel : ViewModel() {
     private val _message3 = mutableStateOf<UpdateAdminState?>(null)
     val updateMessage: State<UpdateAdminState?> = _message3
 
+    //private val _message4 = mutableStateOf(mutableListOf<AdminDataClass>())
+    //val adminList: State<mutableListOf<String>()> = _message4
+
     val fetchAdminresponse: MutableState<FetchingAdminDataState> = mutableStateOf(FetchingAdminDataState.Empty)
     val fetchIDresponse: MutableState<FetchingAdminIDsState> = mutableStateOf(FetchingAdminIDsState.Empty)
 
@@ -68,6 +71,7 @@ class OwnerPageViewModel : ViewModel() {
                         if (adminID != null)
                             tempList.add(adminID)
                     }
+                    //adminList = tempList
                     fetchIDresponse.value = FetchingAdminIDsState.Success(tempList)
                 }
 

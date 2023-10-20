@@ -30,6 +30,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.dataClasses.AdminDataClass
 import com.example.tryggaklassenpod.partsOfScreens.OwnerPageShowEditAdmin
 import com.example.tryggaklassenpod.partsOfScreens.addAdmin
 import com.example.tryggaklassenpod.sealed.FetchingAdminDataState
@@ -100,6 +101,7 @@ fun TabbedPage(viewModel: OwnerPageViewModel, navController: NavHostController) 
 fun TabContent1(viewModel: OwnerPageViewModel) {
     var adminIds by remember { mutableStateOf(mutableListOf<String>()) }
     val isDarkTheme = isSystemInDarkTheme()
+    var admins by remember { mutableStateOf(mutableListOf<AdminDataClass>()) }
 
     val backgroundColor = if (isDarkTheme) {
         Color(0xFF4DD8E5) // Dark theme background color
@@ -173,7 +175,8 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                     }
                 }
                 is FetchingAdminDataState.Success -> {
-                    showAdmins.ShowLazyList(viewModel, result.data, adminIds)
+                    admins = result.data
+                    showAdmins.ShowLazyList(viewModel, admins, adminIds)
                 }
                 is FetchingAdminDataState.Failure -> {
                     Box(
