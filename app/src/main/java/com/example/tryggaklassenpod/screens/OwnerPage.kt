@@ -24,6 +24,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -156,7 +157,7 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Error Fetching data",
+                            text = stringResource(R.string.error_fetching_msg),
                             fontSize = 16.sp,
                         )
                     }
@@ -191,7 +192,7 @@ fun TabContent1(viewModel: OwnerPageViewModel) {
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Error Fetching data",
+                            text = stringResource(R.string.error_fetching_msg),
                             fontSize = 16.sp,
                         )
                     }

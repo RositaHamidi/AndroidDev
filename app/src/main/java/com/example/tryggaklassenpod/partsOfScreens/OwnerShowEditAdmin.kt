@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.tryggaklassenpod.R
@@ -230,10 +231,7 @@ class OwnerPageShowEditAdmin {
             }
             if(showBadPass){
                 Text(
-                    text = "Please make sure your password is:\n" +
-                            "    - At least 8 characters long\n" +
-                            "    - Has at least one capital letter\n" +
-                            "    - Has at least one number",
+                    text = stringResource(R.string.Password_not_good),
                     color = Color.Red,
                     modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_medium), top = dimensionResource(
                         R.dimen.padding_medium)
@@ -308,7 +306,7 @@ class OwnerPageShowEditAdmin {
         var deleteStatusMessage by remember { mutableStateOf(false) }
         var updateStatusMessage by remember { mutableStateOf(false) }
 
-        var buttonText by remember { mutableStateOf("Enable editing info") }
+        var buttonText by remember { mutableStateOf("Edit info") }
         Log.i(ContentValues.TAG, "Hi " + adminPermissions)
         Log.i(ContentValues.TAG, "Hi " + adminInfo)
 

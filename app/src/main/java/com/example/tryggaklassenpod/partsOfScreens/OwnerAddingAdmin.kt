@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.helperFunctions.PasswordHash
@@ -87,13 +88,20 @@ class OwnerAddingAdmin {
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            newPodcastPosterState = podcastPoster.let { sentenceSwitch(it, true,"Can post podcasts") }!!
+            newPodcastPosterState = podcastPoster.let { sentenceSwitch(it, true,
+                stringResource(R.string.permission_1_explination)
+            ) }!!
             permissions = permissions + mapOf("podcastPoster" to newPodcastPosterState)
 
-            newPodcastEditorState = podcastEditor.let { sentenceSwitch(it, true,"Can edit podcasts") }!!
+            newPodcastEditorState = podcastEditor.let { sentenceSwitch(it, true,
+                stringResource(R.string.permission_2_explination)
+            ) }!!
             permissions = permissions + mapOf("podcastEditor" to newPodcastEditorState)
 
-            newCommentReviewerState = commentReviewer.let { sentenceSwitch(it, true, "Can review comments") }!!
+            newCommentReviewerState = commentReviewer.let { sentenceSwitch(it, true, stringResource(
+                R.string.permission_3_explination
+            )
+            ) }!!
             permissions = permissions + mapOf("commentReviewer" to newCommentReviewerState)
 
             Button(
@@ -120,10 +128,7 @@ class OwnerAddingAdmin {
             Spacer(modifier = Modifier.height(8.dp))
             if(showBadPass){
                 Text(
-                    text = "Please make sure your password is:\n" +
-                            "- At least 8 characters long\n" +
-                            "- Has at least one capital letter\n" +
-                            "- Has at least one number",
+                    text = stringResource(R.string.Password_not_good),
                     color = Color.Red)
             }
             if(insertionStatusMessage) {
