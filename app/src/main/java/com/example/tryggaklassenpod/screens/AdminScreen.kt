@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
@@ -28,6 +29,7 @@ import androidx.navigation.NavController
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,8 +49,11 @@ fun AdminScreen(navController: NavController) {
             ) {
                 Text(
                     text = "Welcome! Let us make a safe haven for children one podcast at a time",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.padding(16.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    textAlign = TextAlign.Center
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -95,13 +100,11 @@ fun AdminScreen(navController: NavController) {
                             modifier = Modifier
                                 .width(180.dp)
                                 .padding(8.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ),
+
                             onClick = {
-                                navController.navigate("reviewComments")
+                                navController.navigate("CommentReviewScreen")
                             }
-                        ) {
+                        )  {
                             Column(
                                 modifier = Modifier.padding(16.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -127,8 +130,9 @@ fun AdminScreen(navController: NavController) {
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
+
                     onClick = {
-                        // Handle navigation to the "Old Podcasts" screen
+                        navController.navigate("PodcastsList")
                     }
                 ) {
                     Column(
@@ -150,4 +154,5 @@ fun AdminScreen(navController: NavController) {
             }
         }
     }
+
 }

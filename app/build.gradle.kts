@@ -14,7 +14,6 @@ android {
         //please keep this as minSdk = 23 :)
         minSdk = 23
         targetSdk = 34
-
         versionCode = 1
         versionName = "1.0"
 
@@ -54,6 +53,10 @@ android {
 }
 
 dependencies {
+    //For the password checking
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
     implementation("androidx.compose.ui:ui-text-google-fonts:1.5.3")
     implementation("androidx.core:core-ktx:1.12.0")
@@ -64,6 +67,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+<<<<<<< HEAD
     implementation("androidx.navigation:navigation-compose:2.7.4")
     implementation("com.google.firebase:firebase-database-ktx:20.2.2")
     implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
@@ -79,6 +83,14 @@ dependencies {
 
 
 
+=======
+    implementation("androidx.navigation:navigation-compose:2.7.3")
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-database-ktx:20.2.2")
+    implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
+>>>>>>> origin
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -86,7 +98,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     // COIL dependency for images!
     implementation("io.coil-kt:coil-compose:2.4.0")
+    implementation("com.github.javafaker:javafaker:1.0.2")
 }

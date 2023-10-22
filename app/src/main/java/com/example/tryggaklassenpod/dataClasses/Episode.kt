@@ -1,7 +1,8 @@
+
 package com.example.tryggaklassenpod.dataClasses
 
 data class Episode(
-    val id: Int = 0,
+    var id: Int = 0,
     val imageUrl: String = "",
     val episodeUrl: String = "",
     val duration: Int = 0,
@@ -11,3 +12,4 @@ data class Episode(
     val comments: List<Comments>? = emptyList(),
     val categories: List<String>? = emptyList()
 )
+

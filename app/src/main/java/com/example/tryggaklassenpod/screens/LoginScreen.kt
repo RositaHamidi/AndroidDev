@@ -58,7 +58,7 @@ fun LoginScreen(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
             Image(
-                painter = painterResource(id = R.drawable.tryggaklassen_logo1),
+                painter = painterResource(id = R.drawable.tryggaklassen_podden),
                 contentDescription = "Logo",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -115,6 +115,12 @@ fun LoginScreen(navController: NavController) {
                         if (isAuthenticated) {
                             userRole = role
                             loggedIn = true
+
+                            if (role == "admin") {
+                                // Navigate to the admin screen
+                                navController.navigate(Screen.AdminScreen.route)
+                            }
+
                         } else {
                             showError = true
                         }
@@ -149,4 +155,5 @@ private fun authenticateUser(username: String, password: String, onAuthenticatio
     }.addOnFailureListener { exception ->
         onAuthenticationResult(false, null)
     }
+
 }

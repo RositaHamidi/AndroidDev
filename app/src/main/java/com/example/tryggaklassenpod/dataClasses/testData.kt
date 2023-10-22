@@ -1,3 +1,4 @@
+
 package com.example.tryggaklassenpod.dataClasses
 
 val episodesList: List<Episode> = listOf(

@@ -30,4 +30,6 @@ object PasswordHash {
 
         return Pair(hashedPassword.toString(), salt)
     }
+
 }
+
