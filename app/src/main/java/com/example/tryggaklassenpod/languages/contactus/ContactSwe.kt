@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -25,18 +27,21 @@ import com.example.tryggaklassenpod.languages.abouts.AppBarWithMenuAndOptions
 
 @Composable
 fun ContactSwe(navController: NavController){
-    Column {
+    Column (
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+        ){
         ContactsAppBar("Swedish", navController)
         Spacer(modifier = Modifier.height(8.dp))
         Card(
             modifier = Modifier
+                .background(Color(0xFF006971))
                 .fillMaxWidth()
-                .padding(16.dp)
-                .background(Color(0xFF006971)),
+                .padding(16.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp
-            ),
-        ) {
+            )
+        )  {
             Column(
                 modifier = Modifier
                     .background(Color(0xFF004F55))

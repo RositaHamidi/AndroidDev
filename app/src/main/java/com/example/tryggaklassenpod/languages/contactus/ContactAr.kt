@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -28,20 +30,21 @@ import com.example.tryggaklassenpod.R
 
 @Composable
 fun ContactAr(navController: NavController){
-    Column {
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+    ) {
         ContactsAppBar("العربية", navController)
         Spacer(modifier = Modifier.height(8.dp))
         Card(
             modifier = Modifier
-                .fillMaxWidth()
                 .background(Color(0xFF006971))
-                .padding(0.dp, 0.dp, 0.dp, 0.dp)
                 .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
+                .padding(16.dp),
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 10.dp
             )
-        ) {
+        )  {
             Column(
                 modifier = Modifier
                     .background(Color(0xFF004F55))

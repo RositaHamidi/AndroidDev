@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -49,7 +51,11 @@ import com.example.tryggaklassenpod.screens.Screen
 @Composable
 fun ContactEng(navController: NavController){
 
-    Column {
+    Column (
+        modifier = Modifier
+            .verticalScroll(rememberScrollState()),
+
+        ){
         ContactsAppBar("English", navController)
         Spacer(modifier = Modifier.height(8.dp))
         Card(
