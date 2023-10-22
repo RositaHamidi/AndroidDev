@@ -1,6 +1,7 @@
 package com.example.tryggaklassenpod.screens
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -99,7 +100,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         Box (
                             modifier = Modifier.padding(it)
                         ){
-                            showEpisodesList(episodes)
+                            showEpisodesList(episodes, navController)
                         }
 
                     }
@@ -174,31 +175,33 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 
 
 @Composable
-fun showEpisodesList(episodes: List<Episode>){
+fun showEpisodesList(episodes: List<Episode>, navController: NavController){
     LazyColumn (modifier = Modifier.padding(10.dp)){
         items(episodes){episode ->
-        EpisodeListItem(episode)
+            EpisodeListItem(episode, navController)
         }
     }
 }
 
 
 @Composable
-fun EpisodeListItem(episode: Episode){
+fun EpisodeListItem(episode: Episode, navController: NavController){
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+           ,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
         AsyncImage(
             model = episode.imageUrl,
-            contentDescription = "thumbnail")
+            contentDescription = "thumbnail",
+            modifier = Modifier.clickable { navController.navigate("${Screen.PlayerScreen.route}/${episode.id}") })
         Text(text = episode.title,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
-            )
+        )
         Text(text = episode.description)
 
     }
@@ -210,7 +213,3 @@ fun EpisodeListItem(episode: Episode){
 fun HomeScreenPreview(){
     HomeScreen(rememberNavController(), HomeViewModel() )
 }
-
-
-
-
