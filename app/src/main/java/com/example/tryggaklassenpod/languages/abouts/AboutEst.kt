@@ -44,15 +44,14 @@ fun AboutEst(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "El Podcast Trygga Klassen es tu recurso esencial para obtener perspicacias que" +
-                " mejoren el bienestar de niños y jóvenes. A través de conversaciones atractivas " +
-                "con expertos, abordamos cuestiones críticas como el abuso de sustancias, el acoso " +
-                "escolar, la salud mental, además de temas como el acoso, las amenazas, la " +
-                "violencia, la sexualidad, las drogas, el alcohol, la seguridad en el uso de " +
-                "computadoras e internet, la salud estudiantil y las enfermedades mentales. " +
-                "Nuestro objetivo es proporcionar soluciones prácticas para padres, profesores y " +
-                "estudiantes en estos temas vitales.\n\n" +
-                "Visita nuestro sitio web:",
+        Text(text = "Trygga Klassen Podcast on teie oluline ressurss, mis pakub teadmisi laste ja " +
+                "noorte heaolu suurendamiseks. Kaasahaaravate vestluste kaudu ekspertidega " +
+                "käsitleme kriitilisi teemasid, nagu ainetega seotud kuritarvitamine, kiusamine, " +
+                "vaimne tervis ning ka kiusamist, ähvardusi, vägivalda, seksuaalsust, narkootikume, " +
+                "alkoholi, arvuti- ja internetiohutust, õpilaste tervist ning vaimseid häireid. " +
+                "Meie eesmärk on pakkuda praktilisi lahendusi nendel elutähtsatel teemadel nii " +
+                "vanematele, õpetajatele kui ka õpilastele.\n\n" +
+                "Külasta meie veebisaiti:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(

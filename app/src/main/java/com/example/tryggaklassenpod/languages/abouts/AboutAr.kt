@@ -35,7 +35,7 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
 @Composable
-fun AboutFr(navController: NavController){
+fun AboutAr(navController: NavController){
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -44,16 +44,14 @@ fun AboutFr(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Le Podcast Trygga Klassen est votre ressource essentielle pour obtenir des " +
-                "perspectives sur l'amélioration du bien-être des enfants et des jeunes. À travers" +
-                " des conversations engageantes avec des experts, nous abordons des questions " +
-                "cruciales telles que l'abus de substances, le harcèlement, la santé mentale, " +
-                "ainsi que des thèmes comme le harcèlement, les menaces, la violence, la sexualité, " +
-                "les drogues, l'alcool, la sécurité informatique et sur internet, la santé des " +
-                "étudiants et les problèmes de santé mentale. Notre objectif est de fournir des " +
-                "solutions pratiques pour les parents, les enseignants et les élèves sur ces " +
-                "sujets essentiels.\n\n" +
-                "Visitez notre site web:",
+        Text(text = "بودكاست Trygga Klassen هو مصدرك الأساسي للتحليلات والنظريات حول تعزيز " +
+                "رفاهية الأطفال والشباب. من خلال محادثات جذابة مع خبراء متخصصين، نتناول " +
+                "قضايا حيوية مثل إساءة استخدام المواد الكيميائية والتنمر والصحة " +
+                "النفسية، بالإضافة إلى مواضيع مثل التنمر والتهديدات والعنف والجنس " +
+                "والمخدرات والكحول وسلامة الكمبيوتر والإنترنت وصحة الطلاب والأمراض النفسية. " +
+                "هدفنا هو تقديم حلاً عمليًا للآباء والأمهات والمعلمين والطلاب حول هذه " +
+                "المواضيع الحيوية.\n\n" +
+                "زوروا موقعنا على الويب:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -78,7 +76,7 @@ fun AboutFr(navController: NavController){
 
 
 @Composable
-fun TextWithLink2(txt: String, lnk: String){
+fun TextWithLink5(txt: String, lnk: String){
     val context = LocalContext.current
 
     val annotatedString = buildAnnotatedString {
@@ -120,6 +118,6 @@ fun TextWithLink2(txt: String, lnk: String){
 
 @Preview(showBackground = true)
 @Composable
-fun AboutFrPreview(){
-    AboutFr(rememberNavController())
+fun AboutArPreview(){
+    AboutAr(rememberNavController())
 }

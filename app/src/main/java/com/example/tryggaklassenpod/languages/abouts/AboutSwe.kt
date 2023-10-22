@@ -43,12 +43,12 @@ fun AboutSwe(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Trygga Klassen Podcasten är din viktigaste källa för insikter som förbättrar " +
-                "välmåendet för barn och unga. Genom engagerande samtal med experter behandlar vi " +
-                "kritiska ämnen som missbruk, mobbning, och mental hälsa, samt ämnen som rör " +
-                "mobbning, hot, våld, sexualitet, droger, alkohol, datorsäkerhet, studenthälsa och " +
-                "psykisk ohälsa. Vårt mål är att erbjuda praktiska lösningar för föräldrar, lärare " +
-                "och elever gällande dessa viktiga ämnen.\n\n" +
+        Text(text = "Trygga Klassen Podcasten är din väsentliga resurs för insikter som främjar " +
+                "barns och ungas välmående. Genom engagerande samtal med experter tar vi upp " +
+                "kritiska frågor såsom missbruk, mental hälsa, samt ämnen som mobbning, hot, våld, " +
+                "sexualitet, droger, alkohol, dator- och internetsäkerhet, elevhälsa och psykisk " +
+                "ohälsa. Vårt mål är att erbjuda praktiska lösningar för föräldrar, lärare och " +
+                "elever på dessa vitala ämnen.\n\n" +
                 "Besök vår webbplats:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
