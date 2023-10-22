@@ -1,6 +1,5 @@
 package com.example.tryggaklassenpod.languages.abouts
 
-package com.example.tryggaklassenpod.languages.abouts
 
 import android.content.Intent
 import android.net.Uri
