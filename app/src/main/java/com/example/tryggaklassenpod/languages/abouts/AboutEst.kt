@@ -75,46 +75,6 @@ fun AboutEst(navController: NavController){
 }
 
 
-@Composable
-fun TextWithLink4(txt: String, lnk: String){
-    val context = LocalContext.current
-
-    val annotatedString = buildAnnotatedString {
-        //append("Visit us at ")
-        pushStringAnnotation(
-            tag = "LINK",
-            annotation = lnk
-        )
-        withStyle(
-            style = SpanStyle(
-                color = md_theme_light_primary,
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-        ) {
-            append(txt)
-        }
-        pop()
-    }
-
-    ClickableText(
-        text = annotatedString,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(
-                tag = "LINK",
-                start = offset,
-                end = offset
-            ).firstOrNull()?.let { annotation ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(annotation.item))
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                if (intent.resolveActivity(context.packageManager) != null) {
-                    context.startActivity(intent)
-                }
-            }
-        }
-    )
-}
-
 
 @Preview(showBackground = true)
 @Composable
