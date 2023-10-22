@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -21,19 +23,25 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
 
 
 @Composable
-fun ContactEng(){
+fun ContactEng(navController: NavController){
     Card(
         modifier = Modifier
+            .background(Color(0xFF006971))
             .fillMaxWidth()
             .padding(16.dp),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
+        )
     ) {
         Column(
             modifier = Modifier
-                .background(Color(0xFF006971))
+                .background(Color(0xFF004F55))
                 .padding(16.dp)
         ) {
             // Image
@@ -82,5 +90,5 @@ fun ContactEng(){
 @Preview(showBackground = true)
 @Composable
 fun ContactEngPreview(){
-    ContactEng()
+    ContactEng(rememberNavController())
 }

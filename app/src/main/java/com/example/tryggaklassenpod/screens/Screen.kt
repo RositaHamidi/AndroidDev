@@ -9,6 +9,12 @@ sealed class Screen(val route: String){
     object AboutSp: Screen("AboutSp")
     object AboutEst: Screen("AboutEst")
     object AboutAr: Screen("AboutAr")
+    object ContactEng: Screen("ContactEng")
+    object ContactSwe: Screen("ContactSwe")
+    object ContactFr: Screen("ContactFr")
+    object ContactSpa: Screen("ContactSpa")
+    object ContactEst: Screen("ContactEst")
+    object ContactAr: Screen("ContactAr")
 
 
     object LoginScreen: Screen("LoginScreen")

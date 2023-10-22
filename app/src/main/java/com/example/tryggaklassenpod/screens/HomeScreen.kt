@@ -91,6 +91,11 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                         onClick = { navController.navigate(Screen.AboutEng.route) }
                                     )
 
+                                    DropdownMenuItem(
+                                        text = { Text(text = "Contact us") },
+                                        onClick = { navController.navigate(Screen.AboutEng.route) }
+                                    )
+
                                 }
                             }
 

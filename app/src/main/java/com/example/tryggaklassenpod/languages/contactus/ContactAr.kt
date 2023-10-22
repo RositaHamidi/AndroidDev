@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,20 +22,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
 
 @Composable
-fun ContactAr(){
+fun ContactAr(navController: NavController){
     Card(
         modifier = Modifier
             .fillMaxWidth()
+            .background(Color(0xFF006971))
             .padding(0.dp, 0.dp, 0.dp, 0.dp)
             .fillMaxWidth()
             .wrapContentSize(Alignment.Center),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
+        )
     ) {
         Column(
             modifier = Modifier
-                .background(Color(0xFF006971))
+                .background(Color(0xFF004F55))
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.End,
         ) {
@@ -99,8 +106,8 @@ fun ContactAr(){
                     .padding(0.dp, 0.dp, 0.dp, 0.dp)
                     .fillMaxWidth()
                     .clickable {
-                    // Handle the phone click action here
-                },
+                        // Handle the phone click action here
+                    },
                 textAlign = TextAlign.End
 
             )
@@ -112,5 +119,5 @@ fun ContactAr(){
 @Preview(showBackground = true)
 @Composable
 fun ContactArPreview(){
-    ContactAr()
+    ContactAr(rememberNavController())
 }

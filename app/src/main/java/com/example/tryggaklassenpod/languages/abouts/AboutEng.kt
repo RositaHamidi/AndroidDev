@@ -227,6 +227,7 @@ fun AppBarWithMenuAndOptions(lang: String, navController: NavController) {
 }
 
 
+
 @Preview(showBackground = true)
 @Composable
 fun AboutPreview(){
