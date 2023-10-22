@@ -45,11 +45,11 @@ fun AboutEng(navController: NavController){
 
         Text(text = "The Trygga Klassen Podcast is your essential resource for insights into " +
                 "enhancing the well-being of children and young people. Through engaging " +
-                "conversations with experts, we address critical issues such as substance abuse, " +
-                "bullying, mental health, as well as themes like bullying, threats, violence, " +
-                "sexuality, drugs, alcohol, computer and internet safety, student health, and " +
-                "mental illness. Our goal is to provide practical solutions for parents, teachers, " +
-                "and students on these vital topics.\n\n" +
+                "conversations with experts, we address critical issues such as substance abuse,  " +
+                "mental health, as well as themes like bullying, threats, violence, sexuality, " +
+                "drugs, alcohol, computer and internet safety, student health, and mental illness. " +
+                "Our goal is to provide practical solutions for parents, teachers, and students on " +
+                "these vital topics.\n\n" +
                 "Visit our website:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,

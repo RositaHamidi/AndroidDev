@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.languages.abouts
 
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -34,7 +35,7 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
 @Composable
-fun AboutSwe(navController: NavController){
+fun AboutFr(navController: NavController){
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -43,13 +44,16 @@ fun AboutSwe(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Trygga Klassen Podcasten är din väsentliga resurs för insikter som främjar " +
-                "barns och ungas välmående. Genom engagerande samtal med experter tar vi upp " +
-                "kritiska frågor såsom missbruk, mental hälsa, samt ämnen som mobbning, hot, våld, " +
-                "sexualitet, droger, alkohol, dator- och internetsäkerhet, elevhälsa och psykisk " +
-                "ohälsa. Vårt mål är att erbjuda praktiska lösningar för föräldrar, lärare och " +
-                "elever på dessa vitala ämnen.\n\n" +
-                "Besök vår webbplats:",
+        Text(text = "Le Podcast Trygga Klassen est votre ressource essentielle pour obtenir des " +
+                "perspectives sur l'amélioration du bien-être des enfants et des jeunes. À travers" +
+                " des conversations engageantes avec des experts, nous abordons des questions " +
+                "cruciales telles que l'abus de substances, le harcèlement, la santé mentale, " +
+                "ainsi que des thèmes comme le harcèlement, les menaces, la violence, la sexualité, " +
+                "les drogues, l'alcool, la sécurité informatique et sur internet, la santé des " +
+                "étudiants et les problèmes de santé mentale. Notre objectif est de fournir des " +
+                "solutions pratiques pour les parents, les enseignants et les élèves sur ces " +
+                "sujets essentiels.\n\n" +
+                "Visitez notre site web:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -76,6 +80,6 @@ fun AboutSwe(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun AboutSwePreview(){
-    AboutSwe(rememberNavController())
+fun AboutFrPreview(){
+    AboutFr(rememberNavController())
 }

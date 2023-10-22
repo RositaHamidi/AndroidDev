@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.languages.abouts
 
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -34,7 +35,7 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
 @Composable
-fun AboutSwe(navController: NavController){
+fun AboutEst(navController: NavController){
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -43,13 +44,14 @@ fun AboutSwe(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Trygga Klassen Podcasten är din väsentliga resurs för insikter som främjar " +
-                "barns och ungas välmående. Genom engagerande samtal med experter tar vi upp " +
-                "kritiska frågor såsom missbruk, mental hälsa, samt ämnen som mobbning, hot, våld, " +
-                "sexualitet, droger, alkohol, dator- och internetsäkerhet, elevhälsa och psykisk " +
-                "ohälsa. Vårt mål är att erbjuda praktiska lösningar för föräldrar, lärare och " +
-                "elever på dessa vitala ämnen.\n\n" +
-                "Besök vår webbplats:",
+        Text(text = "Trygga Klassen Podcast on oluline allikas, mis pakub arusaama ning teadmisi " +
+                "laste ja noorte heaolu parandamiseks. Kaasahaaravate vestluste kaudu asjatundjatega" +
+                " käsitleme kriitilisi teemasid, nagu ainete kuritarvitamine ja vaimne tervis, ning" +
+                " räägime teemadel, nagu kiusamine, ähvardused, vägivald, seksuaalsus, " +
+                "narkootikumid, alkohol, arvuti ja interneti ohutusest kui ka õpilaste tervisest. " +
+                "Meie eesmärk on pakkuda praktilisi lahendusi nendel elutähtsatel teemadel nii " +
+                "vanematele, õpetajatele kui ka õpilastele.\n\n" +
+                "Külasta ka meie veebilehte:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -76,6 +78,6 @@ fun AboutSwe(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun AboutSwePreview(){
-    AboutSwe(rememberNavController())
+fun AboutEstPreview(){
+    AboutEst(rememberNavController())
 }

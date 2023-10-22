@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.languages.abouts
 
+
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -34,7 +35,7 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
 @Composable
-fun AboutSwe(navController: NavController){
+fun AboutAr(navController: NavController){
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -43,13 +44,12 @@ fun AboutSwe(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Trygga Klassen Podcasten är din väsentliga resurs för insikter som främjar " +
-                "barns och ungas välmående. Genom engagerande samtal med experter tar vi upp " +
-                "kritiska frågor såsom missbruk, mental hälsa, samt ämnen som mobbning, hot, våld, " +
-                "sexualitet, droger, alkohol, dator- och internetsäkerhet, elevhälsa och psykisk " +
-                "ohälsa. Vårt mål är att erbjuda praktiska lösningar för föräldrar, lärare och " +
-                "elever på dessa vitala ämnen.\n\n" +
-                "Besök vår webbplats:",
+        Text(text = "بودكاست Trygga Klassen هو مصدرك الأساسي للتحليلات والنقاشات حول تعزيز صحة الأطفال والشباب." +
+                "من خلال المحادثات المثيرة للاهتمام مع الخبراء المختصين، سنتناول قضايا حيوية مثل الإدمان على المخدرات والتنمر والصحة النفسية، بالإضافة إلى مواضيع تدور حول العنف والجنس والكحول والأمان على الانترنت وصحة الطلاب والأمراض النفسية. " +
+                "هدفنا هو تقديم حلول عملية للآباء و الأمهات والمعلمين والطلاب حول هذه المواضيع الحيوية." +
+                "\n\n" +
+                "زوروا موقعنا على الرابط التالي:"
+            ,
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -76,6 +76,6 @@ fun AboutSwe(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun AboutSwePreview(){
-    AboutSwe(rememberNavController())
+fun AboutArPreview(){
+    AboutAr(rememberNavController())
 }
