@@ -28,89 +28,93 @@ import com.example.tryggaklassenpod.R
 
 @Composable
 fun ContactAr(navController: NavController){
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF006971))
-            .padding(0.dp, 0.dp, 0.dp, 0.dp)
-            .fillMaxWidth()
-            .wrapContentSize(Alignment.Center),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
-        )
-    ) {
-        Column(
+    Column {
+        ContactsAppBar("العربية", navController)
+        Spacer(modifier = Modifier.height(8.dp))
+        Card(
             modifier = Modifier
-                .background(Color(0xFF004F55))
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.End,
+                .fillMaxWidth()
+                .background(Color(0xFF006971))
+                .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 10.dp
+            )
         ) {
-            // Image
-            Image(
-                painter = painterResource(id = R.drawable.po),
-                contentDescription = null, // Provide a suitable description
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Text content
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
-                horizontalArrangement = Arrangement.End,
-            ) {
-                Text("\u202Eفي المدرسة؟ \u202C", color = Color.White,)
-                Text(" Trygga klassen ", color = Color.White,)
-                Text("\u202Eهل لديك اهتمام باستخدام \u202C", color = Color.White,)
-            }
-
-            Text(
-                text = "تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.",
-                modifier = Modifier
+                    .background(Color(0xFF004F55))
                     .fillMaxWidth(),
-                color = Color.White,
-                textAlign = TextAlign.End
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Contact information
-            Text(
-                text = "\u202Eمعلومات التواصل:\u202C",
-                color = Color(0xFF4DD9E6),
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
-                    .fillMaxWidth(),
-                textAlign = TextAlign.End
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
-                horizontalArrangement = Arrangement.End,
+                horizontalAlignment = Alignment.End,
             ) {
-                Text(" po@lotusmodellen.se ", color = Color.White,)
-                Text("\u202Eبريد إلكتروني: \u202C", color = Color.White,)
+                // Image
+                Image(
+                    painter = painterResource(id = R.drawable.po),
+                    contentDescription = null, // Provide a suitable description
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Text content
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    Text("\u202Eفي المدرسة؟ \u202C", color = Color.White,)
+                    Text(" Trygga klassen ", color = Color.White,)
+                    Text("\u202Eهل لديك اهتمام باستخدام \u202C", color = Color.White,)
+                }
+
+                Text(
+                    text = "تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.",
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    color = Color.White,
+                    textAlign = TextAlign.End
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Contact information
+                Text(
+                    text = "\u202Eمعلومات التواصل:\u202C",
+                    color = Color(0xFF4DD9E6),
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.End
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    Text(" po@lotusmodellen.se ", color = Color.White,)
+                    Text("\u202Eبريد إلكتروني: \u202C", color = Color.White,)
+                }
+
+
+                Text(
+                    text = "\u202Eهاتف: \u202C0706255750 ",
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            // Handle the phone click action here
+                        },
+                    textAlign = TextAlign.End
+
+                )
             }
-
-
-            Text(
-                text = "\u202Eهاتف: \u202C0706255750 ",
-                color = Color.White,
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
-                    .fillMaxWidth()
-                    .clickable {
-                        // Handle the phone click action here
-                    },
-                textAlign = TextAlign.End
-
-            )
         }
     }
 }

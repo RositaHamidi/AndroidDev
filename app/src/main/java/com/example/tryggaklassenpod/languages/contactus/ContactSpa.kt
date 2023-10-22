@@ -24,58 +24,62 @@ import com.example.tryggaklassenpod.R
 
 @Composable
 fun ContactSp(navController: NavController){
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .background(Color(0xFF006971)),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
-        ),
-    ) {
-        Column(
+    Column {
+        ContactsAppBar("Spanish", navController)
+        Spacer(modifier = Modifier.height(8.dp))
+        Card(
             modifier = Modifier
-                .background(Color(0xFF004F55))
+                .fillMaxWidth()
                 .padding(16.dp)
+                .background(Color(0xFF006971)),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 10.dp
+            ),
         ) {
-            // Image
-            Image(
-                painter = painterResource(id = R.drawable.po),
-                contentDescription = null, // Provide a suitable description
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-            )
+                    .background(Color(0xFF004F55))
+                    .padding(16.dp)
+            ) {
+                // Image
+                Image(
+                    painter = painterResource(id = R.drawable.po),
+                    contentDescription = null, // Provide a suitable description
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Text content
-            Text(
-                text = "¿Estás interesado en utilizar Trygga Klassen en la escuela? Envíanos un mensaje, un correo electrónico o llama, y podremos contarte más sobre nosotros, el concepto y las herramientas digitales que utilizamos.",
-                color = Color.White
-            )
+                // Text content
+                Text(
+                    text = "¿Estás interesado en utilizar Trygga Klassen en la escuela? Envíanos un mensaje, un correo electrónico o llama, y podremos contarte más sobre nosotros, el concepto y las herramientas digitales que utilizamos.",
+                    color = Color.White
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Contact information
-            Text(
-                text = "Contacto:",
-                color = Color(0xFF4DD9E6)
-            )
-            Text(
-                text = "Correo Electrónico: p-o@lotusmodellen.se",
-                color = Color.White,
-                modifier = Modifier.clickable {
-                    // Handle the email click action here
-                }
-            )
-            Text(
-                text = "Teléfono: +46706255750",
-                color = Color.White,
-                modifier = Modifier.clickable {
-                    // Handle the phone click action here
-                }
-            )
+                // Contact information
+                Text(
+                    text = "Contacto:",
+                    color = Color(0xFF4DD9E6)
+                )
+                Text(
+                    text = "Correo Electrónico: p-o@lotusmodellen.se",
+                    color = Color.White,
+                    modifier = Modifier.clickable {
+                        // Handle the email click action here
+                    }
+                )
+                Text(
+                    text = "Teléfono: +46706255750",
+                    color = Color.White,
+                    modifier = Modifier.clickable {
+                        // Handle the phone click action here
+                    }
+                )
+            }
         }
     }
 }
