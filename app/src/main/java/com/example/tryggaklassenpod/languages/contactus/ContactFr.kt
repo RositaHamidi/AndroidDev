@@ -20,7 +20,7 @@ import com.example.tryggaklassenpod.R
 
 
 @Composable
-fun ContactSp(){
+fun ContactFr(){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +44,7 @@ fun ContactSp(){
 
             // Text content
             Text(
-                text = "¿Estás interesado en utilizar Trygga Klassen en la escuela? Envíanos un mensaje, un correo electrónico o llama, y podremos contarte más sobre nosotros, el concepto y las herramientas digitales que utilizamos.",
+                text = "Êtes-vous intéressé par l'utilisation de Tryggra Klassen à l'école ? Envoyez-nous un message, un e-mail ou appelez-nous et nous pouvons vous en dire plus sur nous, le concept et les outils numériques que nous utilisons.",
                 color = Color.White
             )
 
@@ -52,18 +52,18 @@ fun ContactSp(){
 
             // Contact information
             Text(
-                text = "Contacto:",
+                text = "Contact:",
                 color = Color(0xFF4DD9E6)
             )
             Text(
-                text = "Correo Electrónico: p-o@lotusmodellen.se",
+                text = "E-mail: p-o@lotusmodellen.se",
                 color = Color.White,
                 modifier = Modifier.clickable {
                     // Handle the email click action here
                 }
             )
             Text(
-                text = "Teléfono: +46706255750",
+                text = "Téléphone: +46706255750",
                 color = Color.White,
                 modifier = Modifier.clickable {
                     // Handle the phone click action here
@@ -76,6 +76,6 @@ fun ContactSp(){
 
 @Preview(showBackground = true)
 @Composable
-fun ContactSpPreview(){
-    ContactSp()
+fun ContactFrPreview(){
+    ContactFr()
 }
