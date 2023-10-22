@@ -41,6 +41,8 @@ fun AboutSwe(navController: NavController){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        AppBarWithMenuAndOptions("Swedish", navController)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(text = "Trygga Klassen Podcasten är din väsentliga resurs för insikter som främjar " +

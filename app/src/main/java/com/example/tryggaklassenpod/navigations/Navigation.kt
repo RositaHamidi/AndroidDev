@@ -11,7 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.tryggaklassenpod.languages.abouts.AboutAr
 import com.example.tryggaklassenpod.languages.abouts.AboutEng
+import com.example.tryggaklassenpod.languages.abouts.AboutEst
+import com.example.tryggaklassenpod.languages.abouts.AboutFr
+import com.example.tryggaklassenpod.languages.abouts.AboutSp
+import com.example.tryggaklassenpod.languages.abouts.AboutSwe
 import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.LoginScreen
@@ -41,6 +46,23 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
 
         composable(route = Screen.AboutEng.route){
             AboutEng(navController = navController)
+        }
+
+        composable(route = Screen.AboutSwe.route){
+            AboutSwe(navController = navController)
+        }
+
+        composable(route = Screen.AboutFr.route){
+            AboutFr(navController = navController)
+        }
+        composable(route = Screen.AboutSp.route){
+            AboutSp(navController = navController)
+        }
+        composable(route = Screen.AboutEst.route){
+            AboutEst(navController = navController)
+        }
+        composable(route = Screen.AboutAr.route){
+            AboutAr(navController = navController)
         }
 
         composable(route = Screen.LoginScreen.route) {

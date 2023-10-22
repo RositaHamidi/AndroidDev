@@ -43,6 +43,8 @@ fun AboutAr(navController: NavController){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        AppBarWithMenuAndOptions("عربی", navController)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(

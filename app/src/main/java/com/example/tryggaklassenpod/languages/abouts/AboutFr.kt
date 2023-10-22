@@ -42,6 +42,8 @@ fun AboutFr(navController: NavController){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        AppBarWithMenuAndOptions("French", navController)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(text = "Le Podcast Trygga Klassen est votre ressource essentielle pour obtenir des " +
