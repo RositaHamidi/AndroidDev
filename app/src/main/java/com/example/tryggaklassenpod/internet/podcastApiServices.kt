@@ -14,7 +14,7 @@ interface ApiService{
 
 object RetrofitInstance {
 
-    private const val BASE_URL = "https://trygga-klassen-podcast-default-rtdb.firebaseio.com/pods/"
+    private const val BASE_URL = "https://trygga-klassen-podcast-default-rtdb.firebaseio.com//podcast/"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
