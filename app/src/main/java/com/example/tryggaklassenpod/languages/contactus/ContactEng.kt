@@ -58,7 +58,7 @@ fun ContactEng(){
             // Contact information
             Text(
                 text = "Contact:",
-                color = Color.Blue // Style the contact text with a different color
+                color = Color(0xFF4DD9E6)
             )
             Text(
                 text = "Email: p-o@lotusmodellen.se",

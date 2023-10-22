@@ -20,7 +20,7 @@ import com.example.tryggaklassenpod.R
 
 
 @Composable
-fun ContactSwe(){
+fun ContactEst(){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -44,7 +44,7 @@ fun ContactSwe(){
 
             // Text content
             Text(
-                text = "Är du intresserad av att använda Trygga klassen i skolan? Skicka oss ett meddelande, e-posta eller ring så kan vi berätta mer om oss, konceptet och de digitala verktyg vi använder.",
+                text = "Kui oled huvitatud Trygga Klassen'i kasutamisest koolis? Saatke meile sõnum, email või helistage ja räägime teile lähemalt kes me oleme, kontseptsioonist ja kasutatavatest digivahenditest",
                 color = Color.White
             )
 
@@ -56,7 +56,7 @@ fun ContactSwe(){
                 color = Color(0xFF4DD9E6)
             )
             Text(
-                text = "E-post: p-o@lotusmodellen.se",
+                text = "Meili: p-o@lotusmodellen.se",
                 color = Color.White,
                 modifier = Modifier.clickable {
                     // Handle the email click action here
@@ -76,6 +76,6 @@ fun ContactSwe(){
 
 @Preview(showBackground = true)
 @Composable
-fun ContactSwePreview(){
-    ContactSwe()
+fun ContactEstPreview(){
+    ContactEst()
 }
