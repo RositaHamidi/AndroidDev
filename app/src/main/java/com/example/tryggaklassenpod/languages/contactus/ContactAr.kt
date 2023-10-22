@@ -50,17 +50,24 @@ fun ContactAr(){
             Spacer(modifier = Modifier.height(16.dp))
 
             // Text content
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(0.dp, 0.dp, 0.dp, 0.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
-                Text("\u202Eفي المدرسة؟ تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.\u202C", color = Color.White,)
+                Text("\u202Eفي المدرسة؟ \u202C", color = Color.White,)
                 Text(" Trygga klassen ", color = Color.White,)
                 Text("\u202Eهل لديك اهتمام باستخدام \u202C", color = Color.White,)
             }
+
+            Text(
+                text = "تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.",
+                modifier = Modifier
+                    .fillMaxWidth(),
+                color = Color.White,
+                textAlign = TextAlign.End
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
