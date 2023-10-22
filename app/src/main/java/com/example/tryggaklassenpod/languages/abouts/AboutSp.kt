@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.languages.abouts
 
+package com.example.tryggaklassenpod.languages.abouts
 
 import android.content.Intent
 import android.net.Uri
@@ -35,7 +36,7 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
 @Composable
-fun AboutFr(navController: NavController){
+fun AboutSp(navController: NavController){
 
     Column (
         modifier = Modifier.fillMaxWidth()
@@ -44,17 +45,15 @@ fun AboutFr(navController: NavController){
     ) {
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "Le Podcast Trygga Klassen est votre ressource essentielle pour obtenir des " +
-                "perspectives sur l'amélioration du bien-être des enfants et des jeunes. À travers " +
-                "des conversations engageantes avec des experts, nous abordons des questions " +
-                "cruciales telles que l'abus de substances, le harcèlement, la santé mentale, " +
-                "ainsi que des thèmes tels que le harcèlement, les menaces, la violence, la " +
-                "sexualité, les drogues, l'alcool, la sécurité informatique et sur internet, la " +
-                "santé des étudiants et les problèmes de santé mentale. Notre objectif est de " +
-                "fournir des solutions pratiques pour les parents, les enseignants et les élèves " +
-                "sur ces sujets essentiels.\n" +
-                "\n" +
-                "Visitez notre site web:",
+        Text(text = "El Podcast Trygga Klassen es tu recurso esencial para obtener perspicacias que" +
+                " mejoren el bienestar de niños y jóvenes. A través de conversaciones atractivas " +
+                "con expertos, abordamos cuestiones críticas como el abuso de sustancias, el acoso " +
+                "escolar, la salud mental, además de temas como el acoso, las amenazas, la " +
+                "violencia, la sexualidad, las drogas, el alcohol, la seguridad en el uso de " +
+                "computadoras e internet, la salud estudiantil y las enfermedades mentales. " +
+                "Nuestro objetivo es proporcionar soluciones prácticas para padres, profesores y " +
+                "estudiantes en estos temas vitales.\n\n" +
+                "Visita nuestro sitio web:",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -79,7 +78,7 @@ fun AboutFr(navController: NavController){
 
 
 @Composable
-fun TextWithLink2(txt: String, lnk: String){
+fun TextWithLink3(txt: String, lnk: String){
     val context = LocalContext.current
 
     val annotatedString = buildAnnotatedString {
@@ -121,6 +120,6 @@ fun TextWithLink2(txt: String, lnk: String){
 
 @Preview(showBackground = true)
 @Composable
-fun AboutFrPreview(){
-    AboutFr(rememberNavController())
+fun AboutSpPreview(){
+    AboutSp(rememberNavController())
 }
