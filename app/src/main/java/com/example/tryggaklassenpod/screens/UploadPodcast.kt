@@ -265,7 +265,6 @@ fun UploadPodcast(navController: NavController) {
                             val episodeData = Episode(
                                 id = newId,
                                 episodeUrl = audioLatestUrl,
-                                duration = durationInt,
                                 imageUrl = imageLatestUrl,
                                 title = podcastName,
                                 description = podcastDescription,
@@ -274,7 +273,6 @@ fun UploadPodcast(navController: NavController) {
                             newEpisodeReference.setValue(episodeData).addOnSuccessListener {
                                 podcastName = ""
                                 podcastDescription = ""
-                                duration = ""
                                 selectedFileName = null
                                 selectedImageFileName = null
                                 Toast.makeText(context, "Upload successful", Toast.LENGTH_SHORT).show()
