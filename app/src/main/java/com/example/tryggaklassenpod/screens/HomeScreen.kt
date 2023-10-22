@@ -88,7 +88,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     )
                                     DropdownMenuItem(
                                         text = { Text(text = "About us") },
-                                        onClick = { navController.navigate(Screen.AboutScreen.route) }
+                                        onClick = { navController.navigate(Screen.AboutEng.route) }
                                     )
 
                                 }
@@ -143,7 +143,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     )
                                     DropdownMenuItem(
                                         text = { Text(text = "About us") },
-                                        onClick = { navController.navigate(Screen.AboutScreen.route) }
+                                        onClick = {navController.navigate(Screen.AboutEng.route)},
                                     )
 
                                 }
