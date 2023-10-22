@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -23,12 +25,16 @@ fun ContactAr(){
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(0.dp, 0.dp, 0.dp, 0.dp)
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center),
     ) {
         Column(
             modifier = Modifier
                 .background(Color(0xFF006971))
-                .padding(16.dp)
+                .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center)
         ) {
             // Image
             Image(
@@ -52,19 +58,31 @@ fun ContactAr(){
             // Contact information
             Text(
                 text = "معلومات التواصل:",
-                color = Color(0xFF4DD9E6)
+                color = Color(0xFF4DD9E6),
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center)
             )
             Text(
                 text = "بريد إلكتروني: p-o@lotusmodellen.se",
                 color = Color.White,
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center)
+                    .clickable {
                     // Handle the email click action here
                 }
             )
             Text(
                 text = "هاتف: +46706255750",
                 color = Color.White,
-                modifier = Modifier.clickable {
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
+                    .fillMaxWidth()
+                    .wrapContentSize(Alignment.Center)
+                    .clickable {
                     // Handle the phone click action here
                 }
             )
