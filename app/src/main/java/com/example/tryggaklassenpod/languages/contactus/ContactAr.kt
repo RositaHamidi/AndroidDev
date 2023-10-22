@@ -51,13 +51,16 @@ fun ContactAr(){
 
             // Text content
 
-            Text(
-                text = "\u202Eهل لديك اهتمام باستخدام Trygga klassen في المدرسة؟ تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.\u202C",
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
-
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                Text("\u202Eفي المدرسة؟ تواصل معنا عبر البريد الإلكتروني أو اتصل بنا وسنخبرك المزيد عنا وعن المفهوم والأدوات الرقمية التي نستخدمها.\u202C", color = Color.White,)
+                Text(" Trygga klassen ", color = Color.White,)
+                Text("\u202Eهل لديك اهتمام باستخدام \u202C", color = Color.White,)
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
