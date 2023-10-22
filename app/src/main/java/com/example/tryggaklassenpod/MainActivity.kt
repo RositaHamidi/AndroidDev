@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val dexOutputDir: File = codeCacheDir
         dexOutputDir.setReadOnly()
         FirebaseApp.initializeApp(this)

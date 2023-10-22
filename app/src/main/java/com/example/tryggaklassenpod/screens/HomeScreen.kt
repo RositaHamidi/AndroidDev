@@ -1,11 +1,9 @@
 package com.example.tryggaklassenpod.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -30,10 +28,8 @@ import androidx.navigation.NavController
 import com.example.tryggaklassenpod.dataClasses.Episode
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -63,7 +59,6 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
         ) {
             MaterialTheme {
                 Scaffold(
-                    containerColor = Color(0xFF004F55),
                     topBar = {
                         TopAppBar(
                             title = {
@@ -72,11 +67,10 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth(),
                                     style = TextStyle(
-                                        color = Color(0xFF006971),
-                                        fontFamily = FontFamily.SansSerif,
+                                        color = Color.Blue,
+                                        fontFamily = FontFamily.Monospace,
                                         fontSize = 30.sp,
-                                    ),
-                                    fontStyle = FontStyle.Italic
+                                    )
                                 )
                             },
                             actions = {
@@ -105,7 +99,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         Box (
                             modifier = Modifier.padding(it)
                         ){
-                            showEpisodesList(episodes, navController)
+                            showEpisodesList(episodes)
                         }
 
                     }
@@ -130,7 +124,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     style = TextStyle(
                                         color = Color.Blue,
                                         fontFamily = FontFamily.Monospace,
-                                        fontSize = 25.sp,
+                                        fontSize = 30.sp,
                                     )
                                 )
                             },
@@ -180,49 +174,32 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 
 
 @Composable
-fun showEpisodesList(episodes: List<Episode>, navController: NavController){
-    LazyColumn (modifier = Modifier.padding(5.dp)
-
-    ){
+fun showEpisodesList(episodes: List<Episode>){
+    LazyColumn (modifier = Modifier.padding(10.dp)){
         items(episodes){episode ->
-        EpisodeListItem(episode, navController)
+            EpisodeListItem(episode)
         }
     }
 }
 
 
 @Composable
-fun EpisodeListItem(episode: Episode, navController: NavController){
+fun EpisodeListItem(episode: Episode){
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
-            .clickable { navController.navigate(
-                route = "${Screen.PlayerScreen.route}/${episode.id}"
-            ).toString() }
-            .shadow(elevation = 5.dp, shape = RoundedCornerShape(5.dp)),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
         AsyncImage(
             model = episode.imageUrl,
-            contentDescription = "thumbnail",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)
-        )
+            contentDescription = "thumbnail")
         Text(text = episode.title,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            style = TextStyle(
-                color = Color.White,),
-            modifier = Modifier.padding(10.dp)
-            )
-        Text(text = episode.description,
-            style = TextStyle(
-                color = Color(0xFFD8E2FF),),
-            modifier = Modifier.padding(10.dp)
+            fontSize = 30.sp,
         )
+        Text(text = episode.description)
 
     }
 }
@@ -233,6 +210,3 @@ fun EpisodeListItem(episode: Episode, navController: NavController){
 fun HomeScreenPreview(){
     HomeScreen(rememberNavController(), HomeViewModel() )
 }
-
-
-
