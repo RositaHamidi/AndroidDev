@@ -1,6 +1,8 @@
 package com.example.tryggaklassenpod.screens
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -30,6 +32,7 @@ import com.example.tryggaklassenpod.dataClasses.Episode
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
@@ -37,6 +40,8 @@ import coil.compose.AsyncImage
 import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.externalResources.MixcloudEmbedActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -105,6 +110,19 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         Box (
                             modifier = Modifier.padding(it)
                         ){
+                            Image(
+                                painter = painterResource(id = R.drawable.sample_audio),
+                                contentDescription = "Sample Image",
+                                modifier = Modifier
+                                    .size(100.dp)
+                                    .clickable {
+                                        // Launch the MixcloudEmbedActivity
+                                        val intent =
+                                            Intent(myContext, MixcloudEmbedActivity::class.java)
+                                        myContext.startActivity(intent)
+                                    }
+                            )
+                            Spacer(modifier = Modifier.padding(5.dp))
                             showEpisodesList(episodes, navController)
                         }
 
