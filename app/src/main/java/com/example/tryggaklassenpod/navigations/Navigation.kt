@@ -11,7 +11,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.tryggaklassenpod.screens.AboutScreen
+import com.example.tryggaklassenpod.languages.abouts.AboutAr
+import com.example.tryggaklassenpod.languages.abouts.AboutEng
+import com.example.tryggaklassenpod.languages.abouts.AboutEst
+import com.example.tryggaklassenpod.languages.abouts.AboutFr
+import com.example.tryggaklassenpod.languages.abouts.AboutSp
+import com.example.tryggaklassenpod.languages.abouts.AboutSwe
+import com.example.tryggaklassenpod.languages.contactus.ContactAr
+import com.example.tryggaklassenpod.languages.contactus.ContactEng
+import com.example.tryggaklassenpod.languages.contactus.ContactEst
+import com.example.tryggaklassenpod.languages.contactus.ContactFr
+import com.example.tryggaklassenpod.languages.contactus.ContactSp
+import com.example.tryggaklassenpod.languages.contactus.ContactSwe
 import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.LoginScreen
@@ -38,8 +49,42 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
             HomeScreen(navController = navController, homeViewModel)
         }
 
-        composable(route = Screen.AboutScreen.route){
-            AboutScreen(navController = navController)
+
+        composable(route = Screen.AboutEng.route){
+            AboutEng(navController = navController)
+        }
+        composable(route = Screen.AboutSwe.route){
+            AboutSwe(navController = navController)
+        }
+        composable(route = Screen.AboutFr.route){
+            AboutFr(navController = navController)
+        }
+        composable(route = Screen.AboutSp.route){
+            AboutSp(navController = navController)
+        }
+        composable(route = Screen.AboutEst.route){
+            AboutEst(navController = navController)
+        }
+        composable(route = Screen.AboutAr.route){
+            AboutAr(navController = navController)
+        }
+        composable(route = Screen.ContactEng.route){
+            ContactEng(navController = navController)
+        }
+        composable(route = Screen.ContactSwe.route){
+            ContactSwe(navController = navController)
+        }
+        composable(route = Screen.ContactFr.route){
+            ContactFr(navController = navController)
+        }
+        composable(route = Screen.ContactSpa.route){
+            ContactSp(navController = navController)
+        }
+        composable(route = Screen.ContactEst.route){
+            ContactEst(navController = navController)
+        }
+        composable(route = Screen.ContactAr.route){
+            ContactAr(navController = navController)
         }
 
         composable(route = Screen.LoginScreen.route) {

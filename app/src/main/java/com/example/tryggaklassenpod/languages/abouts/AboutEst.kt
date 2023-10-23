@@ -42,6 +42,8 @@ fun AboutEst(navController: NavController){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        AppBarWithMenuAndOptions("Estonian", navController)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
         Text(text = "Trygga Klassen Podcast on oluline allikas, mis pakub arusaama ning teadmisi " +

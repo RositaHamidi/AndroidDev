@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -42,22 +43,27 @@ fun AboutAr(navController: NavController){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        AppBarWithMenuAndOptions("العربية", navController)
+
         Spacer(modifier = Modifier.padding(10.dp))
 
-        Text(text = "بودكاست Trygga Klassen هو مصدرك الأساسي للتحليلات والنقاشات حول تعزيز صحة الأطفال والشباب." +
-                "من خلال المحادثات المثيرة للاهتمام مع الخبراء المختصين، سنتناول قضايا حيوية مثل الإدمان على المخدرات والتنمر والصحة النفسية، بالإضافة إلى مواضيع تدور حول العنف والجنس والكحول والأمان على الانترنت وصحة الطلاب والأمراض النفسية. " +
-                "هدفنا هو تقديم حلول عملية للآباء و الأمهات والمعلمين والطلاب حول هذه المواضيع الحيوية." +
-                "\n\n" +
-                "زوروا موقعنا على الرابط التالي:"
-            ,
+        Text(
+            text = "\u202Eبودكاست تريجا كلاسن هو مصدرك الأساسي للرؤى حول تعزيز رفاهية الأطفال والشباب. من خلال المحادثات المثيرة للاهتمام مع الخبراء المختصين، سنتناول قضايا حيوية مثل الإدمان على المخدرات والتنمر والصحة النفسية، بالإضافة إلى مواضيع تدور حول العنف والجنس والكحول والأمان على الانترنت وصحة الطلاب والأمراض النفسية.  هدفنا هو تقديم حلول عملية للآباء و الأمهات والمعلمين والطلاب حول هذه المواضيع الحيوية.\u202C\n",
             modifier = Modifier.fillMaxWidth(.9f),
-            textAlign = TextAlign.Justify,
+            textAlign = TextAlign.End,
             style = LocalTextStyle.current.merge(
                 TextStyle(
                     lineHeight = 1.5.em,)
             )
 
         )
+
+        Text(
+            text = "\u202Eزوروا موقعنا على الرابط التالي:\u202C",
+            modifier = Modifier.fillMaxWidth(.9f),
+            textAlign = TextAlign.End
+        )
+
         Spacer(modifier = Modifier.padding(5.dp))
 
         Image(
