@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
-import com.example.tryggaklassenpod.externalResources.callYoutubeInstance
+import com.example.tryggaklassenpod.externalResources.CallYoutubeInstance
 import com.example.tryggaklassenpod.screens.Screen
 import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
@@ -95,11 +95,11 @@ fun AboutEng(navController: NavController){
         Spacer(modifier = Modifier.padding(5.dp))
         TextWithLink(txt = "Trggaklassen", lnk = "https://tryggaklassen.se/")
 
-        Spacer(modifier = Modifier.padding(5.dp))
-        callYoutubeInstance()
+        Spacer(modifier = Modifier.padding(10.dp))
 
-        Spacer(modifier = Modifier.padding(5.dp))
+        CallYoutubeInstance()
 
+        Spacer(modifier = Modifier.padding(10.dp))
 
     }
 }
@@ -230,7 +230,7 @@ fun AppBarWithMenuAndOptions(lang: String, navController: NavController) {
             }
         },
 
-    )
+        )
 }
 
 

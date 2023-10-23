@@ -5,27 +5,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.webkit.WebSettingsCompat
-import androidx.webkit.WebViewFeature
-
+import com.example.tryggaklassenpod.R
 
 class YouTubeIframeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,38 +47,49 @@ class YouTubeIframeActivity : ComponentActivity() {
 
 
 @Composable
-fun callYoutubeInstance(){
-    AndroidView(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(315.dp), // Adjust height as needed
-        factory = { context ->
-            val webView = WebView(context)
+fun CallYoutubeInstance() {
+    val buttonClicked = remember { mutableStateOf(false) }
+    val myContext = LocalContext.current
 
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(
-                    webView.settings,
-                    WebSettingsCompat.FORCE_DARK_ON
-                )
+    // UI
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.youtube_sample),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+        )
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.padding(30.dp))
+            FloatingActionButton(
+                onClick = {
+                    // buttonClicked state
+                    buttonClicked.value = true
+                },
+                modifier = Modifier.padding(16.dp),
+                containerColor = Color.Red,
+                contentColor = Color.White
+            ) {
+                Icon(Icons.Default.PlayArrow, "playbutton", modifier = Modifier.size(30.dp))
             }
 
-            webView.loadData(
-                """
-                    <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/Li1BjZg0PD4?si=ZJaicsCSHW-gmfYS"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                    ></iframe>
-                    """.trimIndent(),
-                "text/html",
-                "utf-8"
-            )
-
-            webView
+            // if the button was clicked
+            if (buttonClicked.value) {
+                // YouTubeIframeActivity
+                val intent = Intent(LocalContext.current, YouTubeIframeActivity::class.java)
+                LocalContext.current.startActivity(intent)
+            }
         }
-    )
+    }
 }
+
+
+

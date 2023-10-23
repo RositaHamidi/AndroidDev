@@ -76,13 +76,16 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation( "androidx.compose.foundation:foundation:1.5.3")
-    implementation( "androidx.compose.runtime:runtime-livedata:1.5.3")
-    implementation( "androidx.compose.runtime:runtime:1.5.3")
+    implementation( "androidx.compose.foundation:foundation:1.5.4")
+    implementation( "androidx.compose.runtime:runtime-livedata:1.5.4")
+    implementation( "androidx.compose.runtime:runtime:1.5.4")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
+    implementation("androidx.webkit:webkit:1.8.0")
+    implementation("androidx.activity:activity-compose:1.8.0")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.webkit:webkit:1.8.0")
+
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
