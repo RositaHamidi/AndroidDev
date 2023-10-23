@@ -3,6 +3,7 @@ package com.example.tryggaklassenpod.screens
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,6 +43,7 @@ import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.externalResources.HighPriorityPodcast
 import com.example.tryggaklassenpod.externalResources.MixcloudEmbedActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -109,30 +111,32 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                     },
                     content = {
                         Box (
-                            modifier = Modifier.padding(it)
+                            modifier = Modifier
+                                .padding(it)
+                                .background(Color(0xFF006971))
                         ){
                             Column(
-                                modifier = Modifier.fillMaxSize(),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                // Load the sample image using the painterResource function
-                                val imagePainter: Painter =
-                                    painterResource(id = R.drawable.sample_audio)
+                                HighPriorityPodcast()
+//                                // Load the sample image using the painterResource function
+//                                val imagePainter: Painter =
+//                                    painterResource(id = R.drawable.sample_audio)
+//
+//                                Image(
+//                                    painter = imagePainter,
+//                                    contentDescription = "Sample Image",
+//                                    modifier = Modifier
+//                                        .fillMaxWidth(0.9f)
+//                                        .clickable {
+//                                            // Launch the MixcloudEmbedActivity
+//                                            val intent =
+//                                                Intent(myContext, MixcloudEmbedActivity::class.java)
+//                                            myContext.startActivity(intent)
+//                                        }
+//                                )
 
-                                Image(
-                                    painter = imagePainter,
-                                    contentDescription = "Sample Image",
-                                    modifier = Modifier
-                                        .size(100.dp)
-                                        .clickable {
-                                            // Launch the MixcloudEmbedActivity
-                                            val intent =
-                                                Intent(myContext, MixcloudEmbedActivity::class.java)
-                                            myContext.startActivity(intent)
-                                        }
-                                )
-                                Spacer(modifier = Modifier.padding(5.dp))
                                 showEpisodesList(episodes, navController)
                             }
 
@@ -187,14 +191,17 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         )
                     },
                     content = {
-                        Box(modifier = Modifier.padding(it)){
+                        Box(Modifier.padding(it)
+                            ){
                             Column(
+                                modifier = Modifier.padding(10.dp),
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
-                                Text(text = "Loading...",
+                                Spacer(modifier = Modifier.padding(20.dp))
+                                Text(text = "Please check your Internet connection...",
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 30.sp,
+                                    fontSize = 20.sp,
                                 )
                             }
                         }
