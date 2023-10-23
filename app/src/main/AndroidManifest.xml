@@ -31,10 +31,21 @@
             </intent-filter>
         </activity>
 
+
         <activity
             android:name="com.example.tryggaklassenpod.externalResources.MixcloudEmbedActivity"
             android:label="Mixcloud Embed Activity"
             android:exported="true"> <!-- Set to true to make it available to other apps -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.example.tryggaklassenpod.externalResources.YouTubeIframeActivity"
+            android:label="YouTubeIframeActivity"
+            android:exported="true"> <!-- Add this attribute -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
