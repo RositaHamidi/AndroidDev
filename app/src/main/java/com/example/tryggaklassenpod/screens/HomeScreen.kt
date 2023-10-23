@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import com.example.tryggaklassenpod.dataClasses.Episode
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -110,20 +111,31 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                         Box (
                             modifier = Modifier.padding(it)
                         ){
-                            Image(
-                                painter = painterResource(id = R.drawable.sample_audio),
-                                contentDescription = "Sample Image",
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .clickable {
-                                        // Launch the MixcloudEmbedActivity
-                                        val intent =
-                                            Intent(myContext, MixcloudEmbedActivity::class.java)
-                                        myContext.startActivity(intent)
-                                    }
-                            )
-                            Spacer(modifier = Modifier.padding(5.dp))
-                            showEpisodesList(episodes, navController)
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                // Load the sample image using the painterResource function
+                                val imagePainter: Painter =
+                                    painterResource(id = R.drawable.sample_audio)
+
+                                Image(
+                                    painter = imagePainter,
+                                    contentDescription = "Sample Image",
+                                    modifier = Modifier
+                                        .size(100.dp)
+                                        .clickable {
+                                            // Launch the MixcloudEmbedActivity
+                                            val intent =
+                                                Intent(myContext, MixcloudEmbedActivity::class.java)
+                                            myContext.startActivity(intent)
+                                        }
+                                )
+                                Spacer(modifier = Modifier.padding(5.dp))
+                                showEpisodesList(episodes, navController)
+                            }
+
                         }
 
                     }
