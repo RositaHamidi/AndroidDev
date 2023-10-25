@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.languages.otherAppsLink.EmailLinkCompose
+import com.example.tryggaklassenpod.languages.otherAppsLink.PhoneLinkCompose
 
 
 @Composable
@@ -34,7 +37,6 @@ fun ContactSp(navController: NavController){
         Spacer(modifier = Modifier.height(8.dp))
         Card(
             modifier = Modifier
-                .background(Color(0xFF006971))
                 .fillMaxWidth()
                 .padding(16.dp),
             elevation = CardDefaults.cardElevation(
@@ -70,20 +72,32 @@ fun ContactSp(navController: NavController){
                     text = "Contacto:",
                     color = Color(0xFF4DD9E6)
                 )
-                Text(
-                    text = "Correo Electrónico: p-o@lotusmodellen.se",
-                    color = Color.White,
-                    modifier = Modifier.clickable {
-                        // Handle the email click action here
-                    }
-                )
-                Text(
-                    text = "Teléfono: +46706255750",
-                    color = Color.White,
-                    modifier = Modifier.clickable {
-                        // Handle the phone click action here
-                    }
-                )
+                Spacer(modifier = Modifier.padding(3.dp))
+                Row {
+                    Text(
+                        text = "Correo Electrónico: ",
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+                            // Handle the email click action here
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    EmailLinkCompose()
+                }
+                Spacer(modifier = Modifier.padding(3.dp))
+
+                Row {
+                    Text(
+                        text = "Teléfono: ",
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+                            // Handle the phone click action here
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    PhoneLinkCompose()
+                }
+
             }
         }
     }
