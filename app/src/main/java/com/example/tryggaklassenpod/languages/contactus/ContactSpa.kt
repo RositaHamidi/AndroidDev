@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.languages.otherAppsLink.EmailLinkCompose
+import com.example.tryggaklassenpod.languages.otherAppsLink.PhoneLinkCompose
 
 
 @Composable
@@ -71,6 +72,7 @@ fun ContactSp(navController: NavController){
                     text = "Contacto:",
                     color = Color(0xFF4DD9E6)
                 )
+                Spacer(modifier = Modifier.padding(3.dp))
                 Row {
                     Text(
                         text = "Correo Electrónico: ",
@@ -79,17 +81,23 @@ fun ContactSp(navController: NavController){
                             // Handle the email click action here
                         }
                     )
+                    Spacer(modifier = Modifier.padding(5.dp))
                     EmailLinkCompose()
                 }
-                Spacer(modifier = Modifier.padding(5.dp))
+                Spacer(modifier = Modifier.padding(3.dp))
 
-                Text(
-                    text = "Teléfono: +46706255750",
-                    color = Color.White,
-                    modifier = Modifier.clickable {
-                        // Handle the phone click action here
-                    }
-                )
+                Row {
+                    Text(
+                        text = "Teléfono: ",
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+                            // Handle the phone click action here
+                        }
+                    )
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    PhoneLinkCompose()
+                }
+
             }
         }
     }

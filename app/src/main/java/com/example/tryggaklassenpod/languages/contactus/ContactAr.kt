@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.languages.otherAppsLink.EmailLinkCompose
+import com.example.tryggaklassenpod.languages.otherAppsLink.PhoneLinkCompose
 
 @Composable
 fun ContactAr(navController: NavController){
@@ -93,6 +94,7 @@ fun ContactAr(navController: NavController){
                         .fillMaxWidth(),
                     textAlign = TextAlign.End
                 )
+                Spacer(modifier = Modifier.padding(3.dp))
 
                 Row(
                     modifier = Modifier
@@ -104,20 +106,19 @@ fun ContactAr(navController: NavController){
                     Spacer(modifier = Modifier.padding(5.dp))
                     Text("\u202Eبريد إلكتروني: \u202C", color = Color.White,)
                 }
+                Spacer(modifier = Modifier.padding(3.dp))
 
-
-                Text(
-                    text = "\u202Eهاتف: \u202C0706255750 ",
-                    color = Color.White,
+                Row(
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 0.dp, 0.dp)
                         .fillMaxWidth()
-                        .clickable {
-                            // Handle the phone click action here
-                        },
-                    textAlign = TextAlign.End
+                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    PhoneLinkCompose()
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    Text("\u202Eهاتف: \u202C", color = Color.White,)
+                }
 
-                )
             }
         }
     }
