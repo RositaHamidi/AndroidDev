@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.languages.otherAppsLink.EmailLinkCompose
 
 @Composable
 fun ContactAr(navController: NavController){
@@ -38,7 +39,6 @@ fun ContactAr(navController: NavController){
         Spacer(modifier = Modifier.height(8.dp))
         Card(
             modifier = Modifier
-                .background(Color(0xFF006971))
                 .fillMaxWidth()
                 .padding(16.dp),
             elevation = CardDefaults.cardElevation(
@@ -48,7 +48,8 @@ fun ContactAr(navController: NavController){
             Column(
                 modifier = Modifier
                     .background(Color(0xFF004F55))
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 horizontalAlignment = Alignment.End,
             ) {
                 // Image
@@ -99,7 +100,8 @@ fun ContactAr(navController: NavController){
                         .padding(0.dp, 0.dp, 0.dp, 0.dp),
                     horizontalArrangement = Arrangement.End,
                 ) {
-                    Text(" po@lotusmodellen.se ", color = Color.White,)
+                    EmailLinkCompose()
+                    Spacer(modifier = Modifier.padding(5.dp))
                     Text("\u202Eبريد إلكتروني: \u202C", color = Color.White,)
                 }
 
