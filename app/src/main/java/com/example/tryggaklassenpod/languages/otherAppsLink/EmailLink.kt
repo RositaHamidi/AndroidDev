@@ -17,8 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun EmailLinkCompose() {
-    val email = "p-o@lotusmodellen.se"
+fun EmailLinkCompose(email: String = "p-o@lotusmodellen.se") {
 
     // email launcher initialization
     val emailLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
