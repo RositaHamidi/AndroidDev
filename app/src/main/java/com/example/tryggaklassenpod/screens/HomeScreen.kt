@@ -104,6 +104,11 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                         onClick = { navController.navigate(Screen.ContactEng.route) }
                                     )
 
+                                    DropdownMenuItem(
+                                        text = { Text(text = "Partners/Sponsers") },
+                                        onClick = { navController.navigate(Screen.PartnerSponser.route) }
+                                    )
+
                                 }
                             }
 
@@ -184,6 +189,16 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                         text = { Text(text = "About us") },
                                         onClick = {navController.navigate(Screen.AboutEng.route)},
                                     )
+                                    DropdownMenuItem(
+                                        text = { Text(text = "Contact us") },
+                                        onClick = { navController.navigate(Screen.ContactEng.route) }
+                                    )
+
+                                    DropdownMenuItem(
+                                        text = { Text(text = "Partners/Sponsers") },
+                                        onClick = { navController.navigate(Screen.PartnerSponser.route) }
+                                    )
+
 
                                 }
                             }
