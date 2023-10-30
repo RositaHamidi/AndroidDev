@@ -76,8 +76,8 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth(),
                                     style = TextStyle(
-                                        color = Color.Blue,
-                                        fontFamily = FontFamily.Monospace,
+                                        color = Color(0xFF00363B),
+                                        fontFamily = FontFamily.Serif,
                                         fontSize = 30.sp,
                                     )
                                 )
