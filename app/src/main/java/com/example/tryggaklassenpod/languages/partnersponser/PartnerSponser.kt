@@ -1,5 +1,6 @@
 package com.example.tryggaklassenpod.languages.partnersponser
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -31,14 +33,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.languages.otherAppsLink.EmailLinkCompose
+import com.example.tryggaklassenpod.R
 
 @Composable
 fun PartnerSponser(navController: NavController){
     Column (
         modifier = Modifier
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .background(Color(0xFF004F55)),
         ){
         SPtopAppBar(navController)
+        CurrentPartners()
+        Spacer(modifier = Modifier.padding(10.dp))
         sponserContent()
     }
 }
@@ -47,7 +53,6 @@ fun PartnerSponser(navController: NavController){
 fun sponserContent(){
     Column(
         modifier = Modifier
-            .background(Color(0xFF004F55))
             .padding(5.dp)
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -64,7 +69,7 @@ fun sponserContent(){
             color = Color.White
         )
         Spacer(modifier = Modifier.padding(10.dp))
-        Text(text = "Alternative 1 Gold partner",
+        Text(text = "Option 1 Gold partner",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -99,7 +104,7 @@ fun sponserContent(){
         EmailLinkCompose("kontakt@lotusmodellen.se")
 
         Spacer(modifier = Modifier.padding(10.dp))
-        Text(text = "Alternative 2 Silver partner",
+        Text(text = "Option 2 Silver partner",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
             style = LocalTextStyle.current.merge(
@@ -135,13 +140,13 @@ fun sponserContent(){
 @Composable
 fun SPtopAppBar(navController: NavController){
     TopAppBar(title = { Text(
-        text = "Sponsers - Partners",
+        text = "Our Sponsers / Partners",
         textAlign = TextAlign.Center,
         modifier = Modifier.fillMaxWidth(),
         style = TextStyle(
             color = Color(0xFF00363B),
             fontFamily = FontFamily.Serif,
-            fontSize = 30.sp,
+            fontSize = 25.sp,
         )
     ) },
     navigationIcon = {
@@ -152,6 +157,53 @@ fun SPtopAppBar(navController: NavController){
         }
     },
     )
+}
+
+@Composable
+fun CurrentPartners(){
+    Column(
+        modifier = Modifier
+            .padding(5.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.padding(10.dp))
+        Text(text = "Gold Partners: ",
+            modifier = Modifier.fillMaxWidth(.9f),
+            textAlign = TextAlign.Justify,
+            style = LocalTextStyle.current.merge(
+                TextStyle(
+                    lineHeight = 1.5.em,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 20.sp,
+                    )
+            ),
+            color = Color.Yellow)
+        Spacer(modifier = Modifier.padding(5.dp))
+        Image(
+            painter = painterResource(id = R.drawable.goldpartner),
+            contentDescription = "logo"
+        )
+        Spacer(modifier = Modifier.padding(10.dp))
+        Text(text = "Silver Partners: ",
+            modifier = Modifier.fillMaxWidth(.9f),
+            textAlign = TextAlign.Justify,
+            style = LocalTextStyle.current.merge(
+                TextStyle(
+                    lineHeight = 1.5.em,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 20.sp,
+                )
+            ),
+            color = Color(0xFF899294))
+        Spacer(modifier = Modifier.padding(5.dp))
+        Image(
+            painter = painterResource(id = R.drawable.silverpartner),
+            contentDescription = "logo"
+        )
+    }
 }
 
 

@@ -78,7 +78,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     style = TextStyle(
                                         color = Color(0xFF00363B),
                                         fontFamily = FontFamily.Serif,
-                                        fontSize = 30.sp,
+                                        fontSize = 25.sp,
                                     )
                                 )
                             },
