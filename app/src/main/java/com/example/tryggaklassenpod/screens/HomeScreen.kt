@@ -235,7 +235,10 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
 fun showEpisodesList(episodes: List<Episode>, navController: NavController){
     LazyColumn (modifier = Modifier.padding(10.dp)){
         items(episodes){episode ->
-            EpisodeListItem(episode, navController)
+            if (episode != null){
+                EpisodeListItem(episode, navController)
+
+            }
         }
     }
 }
