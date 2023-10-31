@@ -23,6 +23,7 @@ import com.example.tryggaklassenpod.languages.contactus.ContactEst
 import com.example.tryggaklassenpod.languages.contactus.ContactFr
 import com.example.tryggaklassenpod.languages.contactus.ContactSp
 import com.example.tryggaklassenpod.languages.contactus.ContactSwe
+import com.example.tryggaklassenpod.languages.partnersponser.PartnerSponser
 import com.example.tryggaklassenpod.screens.AdminScreen
 import com.example.tryggaklassenpod.screens.HomeScreen
 import com.example.tryggaklassenpod.screens.LoginScreen
@@ -85,6 +86,9 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
         }
         composable(route = Screen.ContactAr.route){
             ContactAr(navController = navController)
+        }
+        composable(route = Screen.PartnerSponser.route){
+            PartnerSponser(navController = navController)
         }
 
         composable(route = Screen.LoginScreen.route) {

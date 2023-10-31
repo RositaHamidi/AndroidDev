@@ -15,6 +15,7 @@ sealed class Screen(val route: String){
     object ContactSpa: Screen("ContactSpa")
     object ContactEst: Screen("ContactEst")
     object ContactAr: Screen("ContactAr")
+    object PartnerSponser: Screen("PartnerSponser")
 
 
     object LoginScreen: Screen("LoginScreen")
