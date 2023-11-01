@@ -48,7 +48,7 @@ fun ContactAr(navController: NavController){
         )  {
             Column(
                 modifier = Modifier
-                    .background(Color(0xFF004F55))
+                    .background(Color(0xFF006971))
                     .fillMaxWidth()
                     .padding(16.dp),
                 horizontalAlignment = Alignment.End,
