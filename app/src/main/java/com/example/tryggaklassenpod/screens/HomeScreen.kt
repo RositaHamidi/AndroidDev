@@ -68,6 +68,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
         ) {
             MaterialTheme {
                 Scaffold(
+                    containerColor  = Color(0xFF006971),
                     topBar = {
                         TopAppBar(
                             title = {
@@ -159,6 +160,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
         ){
             MaterialTheme {
                 Scaffold(
+                    containerColor  = Color(0xFF006971),
                     topBar = {
                         TopAppBar(
                             title = {
@@ -167,9 +169,9 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth(),
                                     style = TextStyle(
-                                        color = Color.Blue,
-                                        fontFamily = FontFamily.Monospace,
-                                        fontSize = 30.sp,
+                                        color = Color(0xFF00363B),
+                                        fontFamily = FontFamily.Serif,
+                                        fontSize = 25.sp,
                                     )
                                 )
                             },
@@ -207,6 +209,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                     },
                     content = {
                         Box(Modifier.padding(it)
+                            .background(Color(0xFF006971))
                             ){
                             Column(
                                 modifier = Modifier.padding(10.dp),
@@ -217,6 +220,7 @@ fun HomeScreen(navController: NavController, homeViewModel: HomeViewModel) {
                                 Text(text = "Please check your Internet connection...",
                                     fontWeight = FontWeight.Bold,
                                     fontSize = 20.sp,
+                                    color = Color.White
                                 )
                             }
                         }
