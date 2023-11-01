@@ -46,7 +46,7 @@ fun ContactEst(navController: NavController){
         )  {
             Column(
                 modifier = Modifier
-                    .background(Color(0xFF004F55))
+                    .background(Color(0xFF006971))
                     .padding(16.dp)
             ) {
                 // Image

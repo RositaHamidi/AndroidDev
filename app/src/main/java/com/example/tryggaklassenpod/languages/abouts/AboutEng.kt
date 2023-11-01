@@ -157,7 +157,7 @@ fun AppBarWithMenuAndOptions(lang: String, navController: NavController) {
 
     TopAppBar(
         title = {Text(
-            text = "Abuout us",
+            text = "About us",
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
             style = TextStyle(

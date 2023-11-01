@@ -37,10 +37,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
@@ -70,7 +74,7 @@ fun ContactEng(navController: NavController){
         ) {
             Column(
                 modifier = Modifier
-                    .background(Color(0xFF004F55))
+                    .background(Color(0xFF006971))
                     .padding(16.dp)
             ) {
                 // Image
@@ -95,7 +99,7 @@ fun ContactEng(navController: NavController){
                 // Contact information
                 Text(
                     text = "Contact:",
-                    color = Color(0xFF4DD9E6)
+                    color = Color(0xFF4DD8E5)
                 )
                 Spacer(modifier = Modifier.padding(3.dp))
                 Row {
@@ -136,7 +140,16 @@ fun ContactsAppBar(lang: String, navController: NavController) {
     var menuTxt by remember { mutableStateOf(lang)    }
 
     TopAppBar(
-        title = {},
+        title = {Text(
+            text = "Contact us",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+            style = TextStyle(
+                color = Color(0xFF00363B),
+                fontFamily = FontFamily.Serif,
+                fontSize = 25.sp,
+            )
+        )},
         navigationIcon = {
             IconButton(
                 onClick = { navController.popBackStack() }
