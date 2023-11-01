@@ -264,7 +264,7 @@ fun EpisodeListItem(episode: Episode, navController: NavController){
             modifier = Modifier.clickable { navController.navigate("${Screen.PlayerScreen.route}/${episode.id}") })
         Text(text = episode.title,
             fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
+            fontSize = 20.sp,
         )
         Text(text = episode.description)
 

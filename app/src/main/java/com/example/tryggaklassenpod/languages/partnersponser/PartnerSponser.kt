@@ -120,7 +120,7 @@ fun sponserContent(){
         Spacer(modifier = Modifier.padding(3.dp))
         Text(
             text = "The company logo is visible in our podcast under Silver partner. " +
-                    "\n\nPrice: 3,000 excl. VAT\n" +
+                    "\n\nPrice: 3,000 excluding VAT\n" +
                     "Order via email to: ",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
