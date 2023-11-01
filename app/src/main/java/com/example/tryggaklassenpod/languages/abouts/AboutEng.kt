@@ -3,6 +3,7 @@ package com.example.tryggaklassenpod.languages.abouts
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
@@ -60,6 +62,7 @@ fun AboutEng(navController: NavController){
 
     Column (
         modifier = Modifier
+            .background(Color(0xFF006971))
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -81,7 +84,8 @@ fun AboutEng(navController: NavController){
             style = LocalTextStyle.current.merge(
                 TextStyle(
                     lineHeight = 1.5.em,)
-            )
+            ),
+            color = Color.White
 
         )
         Spacer(modifier = Modifier.padding(5.dp))
@@ -117,7 +121,7 @@ fun TextWithLink(txt: String, lnk: String){
         )
         withStyle(
             style = SpanStyle(
-                color = md_theme_light_primary,
+                color = Color(0xFF4DD8E5),
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
             )
@@ -152,7 +156,16 @@ fun AppBarWithMenuAndOptions(lang: String, navController: NavController) {
     var menuTxt by remember { mutableStateOf(lang)    }
 
     TopAppBar(
-        title = {},
+        title = {Text(
+            text = "Abuout us",
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth(),
+            style = TextStyle(
+                color = Color(0xFF00363B),
+                fontFamily = FontFamily.Serif,
+                fontSize = 25.sp,
+            )
+        )},
         navigationIcon = {
             IconButton(
                 onClick = { navController.popBackStack() }

@@ -40,7 +40,7 @@ fun PartnerSponser(navController: NavController){
     Column (
         modifier = Modifier
             .verticalScroll(rememberScrollState())
-            .background(Color(0xFF004F55)),
+            .background(Color(0xFF006971)),
         ){
         SPtopAppBar(navController)
         CurrentPartners()
@@ -57,7 +57,7 @@ fun sponserContent(){
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(15.dp))
         Text(text = "Trygga Klassen Offers companies to become a preventive partner - sponsor," +
                 " we offer two options.",
             modifier = Modifier.fillMaxWidth(.9f),
@@ -90,7 +90,7 @@ fun sponserContent(){
                     "The aim of the training is to increase knowledge about alcohol and drugs, " +
                     "everything is evaluated with digital tools and that there is the \"red button\"," +
                     " for advice and support. The license right to the training is 12 months. " +
-                    "\nPrice: SEK 19,900 excluding VAT\n" +
+                    "\n\nPrice: SEK 19,900 excluding VAT\n" +
                     "Order via email to: ",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
@@ -101,9 +101,10 @@ fun sponserContent(){
             ),
             color = Color.White
         )
+        Spacer(modifier = Modifier.padding(3.dp))
         EmailLinkCompose("kontakt@lotusmodellen.se")
 
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(12.dp))
         Text(text = "Option 2 Silver partner",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
@@ -119,7 +120,7 @@ fun sponserContent(){
         Spacer(modifier = Modifier.padding(3.dp))
         Text(
             text = "The company logo is visible in our podcast under Silver partner. " +
-                    "\nPrice: 3,000 excl. VAT\n" +
+                    "\n\nPrice: 3,000 excl. VAT\n" +
                     "Order via email to: ",
             modifier = Modifier.fillMaxWidth(.9f),
             textAlign = TextAlign.Justify,
@@ -130,6 +131,7 @@ fun sponserContent(){
             ),
             color = Color.White
         )
+        Spacer(modifier = Modifier.padding(3.dp))
         EmailLinkCompose("kontakt@lotusmodellen.se")
         Spacer(modifier = Modifier.padding(10.dp))
 

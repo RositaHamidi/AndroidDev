@@ -4,6 +4,7 @@ package com.example.tryggaklassenpod.languages.abouts
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.externalResources.CallYoutubeInstance
 import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
@@ -38,7 +41,9 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 fun AboutFr(navController: NavController){
 
     Column (
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .background(Color(0xFF006971))
+            .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -61,7 +66,8 @@ fun AboutFr(navController: NavController){
             style = LocalTextStyle.current.merge(
                 TextStyle(
                     lineHeight = 1.5.em,)
-            )
+            ),
+            color = Color.White
 
         )
         Spacer(modifier = Modifier.padding(5.dp))
@@ -74,6 +80,11 @@ fun AboutFr(navController: NavController){
 
         Spacer(modifier = Modifier.padding(5.dp))
         TextWithLink(txt = "Trggaklassen", lnk = "https://tryggaklassen.se/")
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        CallYoutubeInstance()
+
+        Spacer(modifier = Modifier.padding(10.dp))
 
     }
 }

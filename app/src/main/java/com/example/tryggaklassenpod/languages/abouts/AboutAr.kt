@@ -4,6 +4,7 @@ package com.example.tryggaklassenpod.languages.abouts
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.R
+import com.example.tryggaklassenpod.externalResources.CallYoutubeInstance
 import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 
 
@@ -39,7 +41,9 @@ import com.example.tryggaklassenpod.ui.theme.md_theme_light_primary
 fun AboutAr(navController: NavController){
 
     Column (
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .background(Color(0xFF006971))
+            .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -54,14 +58,16 @@ fun AboutAr(navController: NavController){
             style = LocalTextStyle.current.merge(
                 TextStyle(
                     lineHeight = 1.5.em,)
-            )
+            ),
+            color = Color.White
 
         )
 
         Text(
             text = "\u202Eزوروا موقعنا على الرابط التالي:\u202C",
             modifier = Modifier.fillMaxWidth(.9f),
-            textAlign = TextAlign.End
+            textAlign = TextAlign.End,
+            color = Color.White
         )
 
         Spacer(modifier = Modifier.padding(5.dp))
@@ -74,6 +80,11 @@ fun AboutAr(navController: NavController){
 
         Spacer(modifier = Modifier.padding(5.dp))
         TextWithLink(txt = "Trggaklassen", lnk = "https://tryggaklassen.se/")
+        Spacer(modifier = Modifier.padding(10.dp))
+
+        CallYoutubeInstance()
+
+        Spacer(modifier = Modifier.padding(10.dp))
 
     }
 }
