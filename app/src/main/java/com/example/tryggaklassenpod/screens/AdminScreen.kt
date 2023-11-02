@@ -29,7 +29,10 @@ import androidx.navigation.NavController
 import com.example.tryggaklassenpod.R
 import com.example.tryggaklassenpod.ui.theme.TryggaKlassenPodTheme
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,9 +74,6 @@ fun AdminScreen(navController: NavController) {
                             modifier = Modifier
                                 .width(180.dp)
                                 .padding(8.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            ),
                             onClick = {
                                 navController.navigate("uploadPodcast")
                             }
@@ -104,7 +104,7 @@ fun AdminScreen(navController: NavController) {
                             onClick = {
                                 navController.navigate("CommentReviewScreen")
                             }
-                        )  {
+                        ) {
                             Column(
                                 modifier = Modifier.padding(16.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
@@ -127,9 +127,6 @@ fun AdminScreen(navController: NavController) {
                     modifier = Modifier
                         .width(180.dp)
                         .padding(8.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
 
                     onClick = {
                         navController.navigate("PodcastsList")
@@ -154,5 +151,10 @@ fun AdminScreen(navController: NavController) {
             }
         }
     }
+}
 
+@Preview(showBackground = true)
+@Composable
+fun AdminPreview(){
+    AdminScreen(rememberNavController())
 }

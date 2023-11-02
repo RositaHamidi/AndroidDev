@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -70,7 +72,7 @@ fun PlayerScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         ) {
             TopBarBack(goBack = goBack) {
@@ -86,8 +88,8 @@ fun PlayerScreen(
                 item {
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .weight(10f),
+                            .fillMaxWidth(),
+                            //.weight(10f),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         episode?.imageUrl?.let {
@@ -97,15 +99,15 @@ fun PlayerScreen(
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.height(28.dp))
+                    Spacer(modifier = Modifier.height(14.dp))
                 }
                 item {
                     Column(
-                        modifier = Modifier
-                            .weight(10f)
+                        //modifier = Modifier
+                          //  .weight(10f)
                     ) {
                         Card {
-                            Spacer(modifier = Modifier.height(14.dp))
+                            //Spacer(modifier = Modifier.height(14.dp))
                             episode?.title?.let { EpisodeTitle(title = it) }
                             episode?.episodeUrl?.let {
                                 PlayerControllerArea(
@@ -133,6 +135,7 @@ fun PlayerScreen(
                     Spacer(modifier = Modifier.height(28.dp))
                 }
             }
+            Spacer(modifier = Modifier.padding(30.dp))
         }
     }
 }
@@ -148,8 +151,7 @@ fun EpisodeTitle(title: String, modifier:Modifier = Modifier) {
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            textAlign = TextAlign.Center,
         )
         Divider(
             modifier = Modifier
@@ -189,10 +191,11 @@ fun EpisodeCoverImage(
     AsyncImage(
         model = imageUrl,
         contentDescription = title,
-        contentScale = ContentScale.Fit,
+        contentScale = ContentScale.Crop,
         modifier = modifier
-            .sizeIn(maxWidth = 400.dp, maxHeight = 400.dp)
-            .aspectRatio(1f)
+            //.fillMaxWidth()
+            .size(275.dp)
+            //.aspectRatio(1f)
             .clip(MaterialTheme.shapes.medium)
     )
 }
@@ -221,6 +224,7 @@ private fun PlayerScreenPreview() {
         episodeId = 0,
         viewModel = PodcastViewModel(),
         goBack = { },
+        modifier = Modifier
     )
 }
 

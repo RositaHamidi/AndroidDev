@@ -36,8 +36,12 @@ import androidx.compose.foundation.layout.Column
 import com.example.tryggaklassenpod.helperFunctions.Authentication
 import com.example.tryggaklassenpod.helperFunctions.ImageUploader
 import android.widget.Toast
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.tryggaklassenpod.MainActivity
 import com.example.tryggaklassenpod.helperFunctions.getNextId
 import kotlinx.coroutines.launch
@@ -152,7 +156,9 @@ fun UploadPodcast(navController: NavController) {
     }
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     )
     {
         Text(
@@ -303,3 +309,8 @@ fun UploadPodcast(navController: NavController) {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun UploadPreview(){
+    UploadPodcast(rememberNavController())
+}
