@@ -34,6 +34,7 @@ import com.example.tryggaklassenpod.screens.PodcastsList
 import com.example.tryggaklassenpod.veiwModel.HomeViewModel
 import com.example.tryggaklassenpod.screens.OwnerPageContent
 import com.example.tryggaklassenpod.screens.PodcastViewModel
+import com.example.tryggaklassenpod.screens.viewComments
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -130,7 +131,7 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
             route = Screen.CommentReviewScreen.route
         ) { backStackEntry ->
             val episodeId = backStackEntry.arguments?.getString("episodeId")?.toIntOrNull() ?: 0
-            CommentReviewScreen(episodeId = episodeId)
+            CommentReviewScreen(navController = navController)
             }
 
         composable(route = Screen.LoginScreen.route) {
@@ -168,6 +169,19 @@ fun Navigation(homeViewModel: HomeViewModel = viewModel()) {
 
         composable(route = Screen.OwnerPage.route){
             OwnerPageContent(navController = navController)
+        }
+
+        composable(
+            route = "${Screen.ViewComments.route}/{episodeId}",
+            arguments = listOf(
+                navArgument("episodeId") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+
+            val episodeId = backStackEntry.arguments?.getInt("episodeId")
+            if (episodeId != null) {
+                viewComments(episodeId)
+            }
         }
     }
 }

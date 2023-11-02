@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -266,7 +267,11 @@ fun EpisodeListItem(episode: Episode, navController: NavController){
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
         )
-        Text(text = episode.description)
+        Text(
+            text = episode.description,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
+        )
 
     }
 }
